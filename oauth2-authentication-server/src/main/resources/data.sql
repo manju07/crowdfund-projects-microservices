@@ -45,10 +45,10 @@ INSERT IGNORE INTO `user`
 (`id`,`created_time`,`email`,`fname`,`lname`,`gender`,`password`,`phone`,`updated_time`,`user_name`,`is_enabled`,`is_deleted`,`created_by`,`updated_by`)
 VALUES
 (3,CURRENT_TIMESTAMP,'manju_sponsor@gmail.com','Manjunath','Asundi','Male','$2a$12$XiqT0bmmBJx5Sl/dGOtSl.FrSqFzjyZuZPJVwa3In0wxKtGYeej2u',
-'+919886988915', current_timestamp, 'manju_sponsor@gmail.com', 1, 0, 'system', 'system');
+'+917892793767', current_timestamp, 'manju_sponsor@gmail.com', 1, 0, 'system', 'system');
 
 INSERT IGNORE INTO `user_role`
 VALUES(1,1),(2,2),(3,3);
 
 INSERT IGNORE INTO address_seq_gen (next_val) VALUES(2);
-INSERT IGNORE INTO corporate_domain_seq_gen (next_val) VALUES(2);
+--INSERT IGNORE INTO corporate_domain_seq_gen (next_val) VALUES(2);

@@ -95,28 +95,32 @@ public class User implements Serializable {
     private String gender;
 
     @JsonManagedReference
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "allot_individual_badge", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "badge_id"))
-    private Set<Badge> badgeSet = new HashSet<Badge>();
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private Address address;
 
-    public void addBadge(Badge badge) {
-        badgeSet.add(badge);
-    }
+//    @JsonManagedReference
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinTable(name = "allot_individual_badge", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "badge_id"))
+//    private Set<Badge> badgeSet = new HashSet<Badge>();
 
-    public void removeBadge(Badge badge) {
-        badgeSet.remove(badge);
-    }
+//    public void addBadge(Badge badge) {
+//        badgeSet.add(badge);
+//    }
+//
+//    public void removeBadge(Badge badge) {
+//        badgeSet.remove(badge);
+//    }
 
-    @JsonBackReference
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinTable(name = "corporate_employee", joinColumns = {
-            @JoinColumn(name = "employee_id", referencedColumnName = "id") }, inverseJoinColumns = {
-                    @JoinColumn(name = "corporate_id", referencedColumnName = "id") })
-    private Corporate corporate;
+//    @JsonBackReference
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinTable(name = "corporate_employee", joinColumns = {
+//            @JoinColumn(name = "employee_id", referencedColumnName = "id") }, inverseJoinColumns = {
+//                    @JoinColumn(name = "corporate_id", referencedColumnName = "id") })
+//    private Corporate corporate;
 
-    @JsonBackReference
-    @OneToMany(mappedBy = "engagementManager")
-    private Set<Engagement> engagementList = new HashSet<Engagement>();
+//    @JsonBackReference
+//    @OneToMany(mappedBy = "engagementManager")
+//    private Set<Engagement> engagementList = new HashSet<Engagement>();
 
     @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -134,13 +138,13 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public void addEngagement(Engagement engagement) {
-        this.engagementList.add(engagement);
-    }
-
-    public void removeEngagement(Engagement engagement) {
-        this.engagementList.remove(engagement);
-    }
+//    public void addEngagement(Engagement engagement) {
+//        this.engagementList.add(engagement);
+//    }
+//
+//    public void removeEngagement(Engagement engagement) {
+//        this.engagementList.remove(engagement);
+//    }
 
     public User(String fName, String lName, String phone, String userName, String email, String password, Role role) {
         this.fName = fName;

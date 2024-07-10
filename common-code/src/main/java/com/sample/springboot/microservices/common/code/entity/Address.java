@@ -25,7 +25,7 @@ import lombok.ToString;
 
 /**
  * Address Entity
- * 
+ *
  * @author Manjunath Asundi
  */
 @Entity
@@ -68,5 +68,5 @@ public class Address implements Serializable {
 
     @JsonBackReference
     @OneToOne(mappedBy = "address", fetch = FetchType.LAZY)
-    private Corporate corporate;
+    private User user;
 }
