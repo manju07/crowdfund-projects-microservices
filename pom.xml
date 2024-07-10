@@ -24,7 +24,7 @@
 		<module>eureka-naming-server</module>
 		<module>common-code</module>
 		<module>oauth2-authentication-server</module>
-		<module>group-service</module>
+		<module>project-service</module>
 		<module>user-service</module>
 		<module>zuul-api-gateway-server</module>
 	</modules>
