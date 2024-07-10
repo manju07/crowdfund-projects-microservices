@@ -12,9 +12,7 @@ import lombok.ToString;
 @Getter
 @NoArgsConstructor
 @ToString
-public class AddressDto {
-    private Long id;
-
+public class AddressDTO {
     private String area;
 
     private String city;

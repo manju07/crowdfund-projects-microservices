@@ -10,10 +10,10 @@
 	</parent>
 
 	<groupId>com.sample.springboot.microservices</groupId>
-	<artifactId>sample-app</artifactId>
+	<artifactId>crowdfund-projects-services</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>crowdfund-innovator-projects-services</name>
+	<name>crowdfund-projects-services</name>
 
 	<properties>
 		<java.version>1.8</java.version>

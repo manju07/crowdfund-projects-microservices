@@ -15,12 +15,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.sample.springboot.microservices.common.code.entity.constant.UserRole;
+import com.sample.springboot.microservices.common.code.constant.UserRole;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 /**
  * Role entity
@@ -33,6 +30,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @NoArgsConstructor
+@Data
 public class Role implements Serializable {
 
     private static final long serialVersionUID = 4634758593179611656L;

@@ -1,47 +1,32 @@
 package com.sample.springboot.microservices.common.code.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
+import org.hibernate.annotations.*;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.NamedQueries;
-import org.hibernate.annotations.NamedQuery;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.annotations.Where;
-
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
 /**
  * User Entity
- * 
+ *
  * @author Manjunath Asundi
  */
 @Entity(name = "user")
 @Table(name = "user")
 @NamedQueries(value = {
-        @NamedQuery(name = "get_data_by_role", query = "select u from user u join u.role r where r.name=:role and u.createdBy=:createdBy") })
+        @NamedQuery(name = "get_data_by_role", query = "select u from user u join u.role r where r.name=:role and u.createdBy=:createdBy")})
 @SQLDelete(sql = "update user set is_deleted=true where id =?")
 @Where(clause = "is_deleted=false")
 @Setter
@@ -98,18 +83,18 @@ public class User implements Serializable {
     @OneToOne(cascade = CascadeType.PERSIST)
     private Address address;
 
-//    @JsonManagedReference
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JoinTable(name = "allot_individual_badge", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "badge_id"))
-//    private Set<Badge> badgeSet = new HashSet<Badge>();
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "innovator_project", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "project_id"))
+    private Set<Project> projectSet = new HashSet<Project>();
 
-//    public void addBadge(Badge badge) {
-//        badgeSet.add(badge);
-//    }
-//
-//    public void removeBadge(Badge badge) {
-//        badgeSet.remove(badge);
-//    }
+    public void addProject(Project project) {
+        projectSet.add(project);
+    }
+
+    public void removeProject(Project project) {
+        projectSet.remove(project);
+    }
 
 //    @JsonBackReference
 //    @OneToOne(cascade = CascadeType.ALL)
@@ -125,8 +110,8 @@ public class User implements Serializable {
     @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = {
-        @JoinColumn(name = "user_id", referencedColumnName = "id") }, inverseJoinColumns = {
-                @JoinColumn(name = "role_id", referencedColumnName = "id") })
+            @JoinColumn(name = "user_id", referencedColumnName = "id")}, inverseJoinColumns = {
+            @JoinColumn(name = "role_id", referencedColumnName = "id")})
     private Role role;
 
     public User(String fName, String lName, String phone, String userName, String email, String password) {
