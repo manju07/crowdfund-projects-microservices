@@ -35,10 +35,10 @@ public class Project implements Serializable {
     @SequenceGenerator(name = "project_seq_gen", initialValue = 1, allocationSize = 1)
     private Long id;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, unique = true, length = 100)
     private String name;
 
-    @Column(nullable = false, unique = true, length = 4098)
+    @Column(nullable = false, length = 4098)
     private String description;
 
     @Column(nullable = false)

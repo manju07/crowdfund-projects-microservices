@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.http.HttpStatus;
 
 /**
  * @author Manjunath Asundi
@@ -19,23 +20,23 @@ public class CustomException extends Exception {
     private static final long serialVersionUID = 7108160092721922439L;
 
     private Timestamp timestamp;
-    private int status;
+    private HttpStatus status;
     private String message;
-    private String details;
+    private String description;
 
-    public CustomException(String details) {
-        super(details);
+    public CustomException(String description) {
+        super(description);
         this.timestamp = new Timestamp(System.currentTimeMillis());
-        this.message = "Internal Server Error";
-        this.status = 500;
-        this.details = details;
+        this.message = description;
+        this.status = HttpStatus.INTERNAL_SERVER_ERROR;
+        this.description = description;
     }
 
-    public CustomException(String message, int status, String details) {
-        super(details);
+    public CustomException(String message, HttpStatus status, String description) {
+        super(description);
         this.timestamp = new Timestamp(System.currentTimeMillis());
         this.status = status;
         this.message = message;
-        this.details = details;
+        this.description = description;
     }
 }

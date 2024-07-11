@@ -180,11 +180,6 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/user-service/src/main/java/com/crowdfund/projects/microservices/userservice/service/impl/UserServiceImpl.java</url>
-          <line>60</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/user-service/src/main/java/com/crowdfund/projects/microservices/userservice/service/impl/UserServiceImpl.java</url>
           <line>52</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
@@ -192,6 +187,121 @@
           <url>file://$PROJECT_DIR$/project-service/src/main/java/com/crowdfund/projects/microservices/projectservice/controller/ProjectController.java</url>
           <line>38</line>
           <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/project-service/src/main/java/com/crowdfund/projects/microservices/projectservice/exception/ProjectServiceGlobalExceptionHandler.java</url>
+          <line>51</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/project-service/src/main/java/com/crowdfund/projects/microservices/projectservice/exception/ProjectServiceGlobalExceptionHandler.java</url>
+          <line>67</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/project-service/src/main/java/com/crowdfund/projects/microservices/projectservice/exception/ProjectServiceGlobalExceptionHandler.java</url>
+          <line>76</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/user-service/src/main/java/com/crowdfund/projects/microservices/userservice/service/impl/UserServiceImpl.java</url>
+          <line>62</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/user-service/src/main/java/com/crowdfund/projects/microservices/userservice/exception/UserServiceGlobalExceptionHandler.java</url>
+          <line>66</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/user-service/src/main/java/com/crowdfund/projects/microservices/userservice/exception/UserServiceGlobalExceptionHandler.java</url>
+          <line>233</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/user-service/src/main/java/com/crowdfund/projects/microservices/userservice/exception/UserServiceGlobalExceptionHandler.java</url>
+          <line>244</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/user-service/src/main/java/com/crowdfund/projects/microservices/userservice/exception/UserServiceGlobalExceptionHandler.java</url>
+          <line>256</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/user-service/src/main/java/com/crowdfund/projects/microservices/userservice/exception/UserServiceGlobalExceptionHandler.java</url>
+          <line>222</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/user-service/src/main/java/com/crowdfund/projects/microservices/userservice/exception/UserServiceGlobalExceptionHandler.java</url>
+          <line>211</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/user-service/src/main/java/com/crowdfund/projects/microservices/userservice/exception/UserServiceGlobalExceptionHandler.java</url>
+          <line>200</line>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/user-service/src/main/java/com/crowdfund/projects/microservices/userservice/exception/UserServiceGlobalExceptionHandler.java</url>
+          <line>189</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/user-service/src/main/java/com/crowdfund/projects/microservices/userservice/exception/UserServiceGlobalExceptionHandler.java</url>
+          <line>177</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/user-service/src/main/java/com/crowdfund/projects/microservices/userservice/exception/UserServiceGlobalExceptionHandler.java</url>
+          <line>166</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/user-service/src/main/java/com/crowdfund/projects/microservices/userservice/exception/UserServiceGlobalExceptionHandler.java</url>
+          <line>155</line>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/user-service/src/main/java/com/crowdfund/projects/microservices/userservice/exception/UserServiceGlobalExceptionHandler.java</url>
+          <line>142</line>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/user-service/src/main/java/com/crowdfund/projects/microservices/userservice/exception/UserServiceGlobalExceptionHandler.java</url>
+          <line>131</line>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/user-service/src/main/java/com/crowdfund/projects/microservices/userservice/exception/UserServiceGlobalExceptionHandler.java</url>
+          <line>120</line>
+          <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/user-service/src/main/java/com/crowdfund/projects/microservices/userservice/exception/UserServiceGlobalExceptionHandler.java</url>
+          <line>109</line>
+          <option name="timeStamp" value="26" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/user-service/src/main/java/com/crowdfund/projects/microservices/userservice/exception/UserServiceGlobalExceptionHandler.java</url>
+          <line>97</line>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/user-service/src/main/java/com/crowdfund/projects/microservices/userservice/exception/UserServiceGlobalExceptionHandler.java</url>
+          <line>49</line>
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/user-service/src/main/java/com/crowdfund/projects/microservices/userservice/exception/UserServiceGlobalExceptionHandler.java</url>
+          <line>75</line>
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/user-service/src/main/java/com/crowdfund/projects/microservices/userservice/exception/UserServiceGlobalExceptionHandler.java</url>
+          <line>86</line>
+          <option name="timeStamp" value="30" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

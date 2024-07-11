@@ -48,8 +48,8 @@ public class ProjectServiceGlobalExceptionHandler extends ResponseEntityExceptio
    * @return the response entity
    */
   @ExceptionHandler(ResourceNotFoundException.class)
-  public ResponseEntity<?> resourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
-    log.error(ex.getMessage(), ex);
+  public ResponseEntity<Object> resourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
+    log.error("resourceNotFoundException " + ex.getMessage(), ex);
     ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
         HttpStatus.NOT_FOUND.value(), ex.getMessage(),
         request.getDescription(false));
@@ -63,19 +63,28 @@ public class ProjectServiceGlobalExceptionHandler extends ResponseEntityExceptio
    * @param request   WebRequest
    * @return the response entity
    */
-  @ExceptionHandler(value = { Exception.class, CustomException.class })
-  public ResponseEntity<?> globleExcpetionHandler(Exception exception, WebRequest request) {
-    log.error(exception.getMessage(), exception);
+  @ExceptionHandler(value = Exception.class)
+  public ResponseEntity<Object> globalExceptionHandler(Exception exception, WebRequest request) {
+    log.error("globalExceptionHandler " + exception.getMessage(), exception);
     ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
         HttpStatus.INTERNAL_SERVER_ERROR.value(),
         exception.getMessage(), request.getDescription(false));
     return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
+  @ExceptionHandler(value = CustomException.class )
+  public ResponseEntity<Object> customExceptionHandler(CustomException exception, WebRequest request) {
+    log.error("customExceptionHandler " + exception.getMessage(), exception);
+    ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
+            exception.getStatus(),
+            exception.getMessage(), request.getDescription(false));
+    return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
+  }
+
   @Override
   protected ResponseEntity<Object> handleAsyncRequestTimeoutException(AsyncRequestTimeoutException ex,
       HttpHeaders headers, HttpStatus status, WebRequest webRequest) {
-    log.error(ex.getMessage(), ex);
+    log.error("handleAsyncRequestTimeoutException"+ ex.getMessage(), ex);
     ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
         status.value(),
         ex.getMessage(), webRequest.getDescription(false));
@@ -85,7 +94,7 @@ public class ProjectServiceGlobalExceptionHandler extends ResponseEntityExceptio
   @Override
   protected ResponseEntity<Object> handleBindException(BindException ex, HttpHeaders headers, HttpStatus status,
       WebRequest request) {
-    log.error(ex.getMessage(), ex);
+    log.error("handleBindException"+ex.getMessage(), ex);
     ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
         status.value(),
         ex.getMessage(), request.getDescription(false));

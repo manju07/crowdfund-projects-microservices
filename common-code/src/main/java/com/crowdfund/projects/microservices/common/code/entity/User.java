@@ -79,7 +79,7 @@ public class User implements Serializable {
     private Address address;
 
     @JsonManagedReference
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "innovator_project", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "project_id"))
     private Set<Project> projectSet = new HashSet<Project>();
 
@@ -90,17 +90,6 @@ public class User implements Serializable {
     public void removeProject(Project project) {
         projectSet.remove(project);
     }
-
-//    @JsonBackReference
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinTable(name = "corporate_employee", joinColumns = {
-//            @JoinColumn(name = "employee_id", referencedColumnName = "id") }, inverseJoinColumns = {
-//                    @JoinColumn(name = "corporate_id", referencedColumnName = "id") })
-//    private Corporate corporate;
-
-//    @JsonBackReference
-//    @OneToMany(mappedBy = "engagementManager")
-//    private Set<Engagement> engagementList = new HashSet<Engagement>();
 
     @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

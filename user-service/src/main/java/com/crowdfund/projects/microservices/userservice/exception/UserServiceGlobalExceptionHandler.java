@@ -1,7 +1,9 @@
 package com.crowdfund.projects.microservices.userservice.exception;
 
-import java.sql.Timestamp;
-
+import com.crowdfund.projects.microservices.common.code.exception.CustomException;
+import com.crowdfund.projects.microservices.common.code.exception.ErrorResponse;
+import com.crowdfund.projects.microservices.common.code.exception.ResourceNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
@@ -25,224 +27,238 @@ import org.springframework.web.multipart.support.MissingServletRequestPartExcept
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.crowdfund.projects.microservices.common.code.exception.CustomException;
-import com.crowdfund.projects.microservices.common.code.exception.ErrorResponse;
-import com.crowdfund.projects.microservices.common.code.exception.ResourceNotFoundException;
-
-import lombok.extern.slf4j.Slf4j;
+import java.sql.Timestamp;
 
 /**
  * The type Global exception handler.
- * 
+ *
  * @author Manjunath Asundi
  */
 @ControllerAdvice
 @Slf4j
 public class UserServiceGlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-  /**
-   * Resource not found exception response entity.
-   * 
-   * @param exception type of exception
-   * @param request   WebRequest
-   * @return the response entity
-   */
-  @ExceptionHandler(ResourceNotFoundException.class)
-  public ResponseEntity<?> resourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
-    log.error(ex.getMessage(), ex);
-    ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
-        HttpStatus.NOT_FOUND.value(), ex.getMessage(),
-        request.getDescription(false));
-    return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
-  }
+    /**
+     * Resource not found exception response entity.
+     *
+     * @param ex type of exception
+     * @param request   WebRequest
+     * @return the response entity
+     */
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<?> resourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
+        log.error(ex.getMessage(), ex);
+        ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
+                HttpStatus.NOT_FOUND.value(),
+                ex.getMessage(),
+                ex.getMessage());
+        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+    }
 
-  /**
-   * Globle excpetion handler response entity.
-   * 
-   * @param exception type of exception
-   * @param request   WebRequest
-   * @return the response entity
-   */
-  @ExceptionHandler(value = {CustomException.class })
-  public ResponseEntity<?> customExcpetionHandler(CustomException exception, WebRequest request) {
-    log.error(exception.getMessage(), exception);
-    ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
-        exception.getStatus(),
-        exception.getMessage(), exception.getDetails());
-    return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
-  }
+    /**
+     * Globle excpetion handler response entity.
+     *
+     * @param exception type of exception
+     * @param request   WebRequest
+     * @return the response entity
+     */
+    @ExceptionHandler(value = {CustomException.class})
+    public ResponseEntity<Object> customExceptionHandler(CustomException exception, WebRequest request) {
+        log.error(exception.getMessage(), exception);
+        ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
+                exception.getStatus().value(),
+                exception.getMessage(), exception.getDescription());
+        return new ResponseEntity<>(errorDetails, exception.getStatus());
+    }
 
-  @ExceptionHandler(value = { Exception.class })
-  public ResponseEntity<?> globleExcpetionHandler(Exception exception, WebRequest request) {
-    log.error(exception.getMessage(), exception);
-    ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
-        HttpStatus.INTERNAL_SERVER_ERROR.value(),
-        exception.getMessage(), request.getDescription(false));
-    return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
-  }
+    @ExceptionHandler(value = {Exception.class})
+    public ResponseEntity<Object> globalExceptionHandler(Exception exception, WebRequest request) {
+        log.error(exception.getMessage(), exception);
+        ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
+                exception.getMessage());
+        return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
-  @Override
-  protected ResponseEntity<Object> handleAsyncRequestTimeoutException(AsyncRequestTimeoutException ex,
-      HttpHeaders headers, HttpStatus status, WebRequest webRequest) {
-    log.error(ex.getMessage(), ex);
-    ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
-        status.value(),
-        ex.getMessage(), webRequest.getDescription(false));
-    return new ResponseEntity<>(errorDetails, status);
-  }
+    @Override
+    protected ResponseEntity<Object> handleAsyncRequestTimeoutException(AsyncRequestTimeoutException ex,
+                                                                        HttpHeaders headers, HttpStatus status, WebRequest webRequest) {
+        log.error(ex.getMessage(), ex);
+        ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
+                status.value(),
+                status.getReasonPhrase(),
+                ex.getMessage());
+        return new ResponseEntity<>(errorDetails, status);
+    }
 
-  @Override
-  protected ResponseEntity<Object> handleBindException(BindException ex, HttpHeaders headers, HttpStatus status,
-      WebRequest request) {
-    log.error(ex.getMessage(), ex);
-    ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
-        status.value(),
-        ex.getMessage(), request.getDescription(false));
-    return new ResponseEntity<>(errorDetails, status);
-  }
+    @Override
+    protected ResponseEntity<Object> handleBindException(BindException ex, HttpHeaders headers, HttpStatus status,
+                                                         WebRequest request) {
+        log.error(ex.getMessage(), ex);
+        ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
+                status.value(),
+                status.getReasonPhrase(),
+                ex.getMessage());
+        return new ResponseEntity<>(errorDetails, status);
+    }
 
-  @Override
-  protected ResponseEntity<Object> handleConversionNotSupported(ConversionNotSupportedException ex,
-      HttpHeaders headers,
-      HttpStatus status, WebRequest request) {
-    log.error(ex.getMessage(), ex);
-    ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
-        status.value(),
-        ex.getMessage(), request.getDescription(false));
-    return new ResponseEntity<>(errorDetails, status);
-  }
+    @Override
+    protected ResponseEntity<Object> handleConversionNotSupported(ConversionNotSupportedException ex,
+                                                                  HttpHeaders headers,
+                                                                  HttpStatus status, WebRequest request) {
+        log.error(ex.getMessage(), ex);
+        ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
+                status.value(),
+                status.getReasonPhrase(),
+                ex.getMessage());
+        return new ResponseEntity<>(errorDetails, status);
+    }
 
-  @Override
-  protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
-      HttpStatus status, WebRequest request) {
-    log.error(ex.getMessage(), ex);
-    ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
-        status.value(),
-        ex.getMessage(), request.getDescription(false));
-    return new ResponseEntity<>(errorDetails, status);
-  }
+    @Override
+    protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
+                                                             HttpStatus status, WebRequest request) {
+        log.error(ex.getMessage(), ex);
+        ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
+                status.value(),
+                status.getReasonPhrase(),
+                ex.getMessage());
+        return new ResponseEntity<>(errorDetails, status);
+    }
 
-  @Override
-  protected ResponseEntity<Object> handleHttpMediaTypeNotAcceptable(HttpMediaTypeNotAcceptableException ex,
-      HttpHeaders headers, HttpStatus status, WebRequest request) {
-    log.error(ex.getMessage(), ex);
-    ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
-        status.value(),
-        ex.getMessage(), request.getDescription(false));
-    return new ResponseEntity<>(errorDetails, status);
-  }
+    @Override
+    protected ResponseEntity<Object> handleHttpMediaTypeNotAcceptable(HttpMediaTypeNotAcceptableException ex,
+                                                                      HttpHeaders headers, HttpStatus status, WebRequest request) {
+        log.error(ex.getMessage(), ex);
+        ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
+                status.value(),
+                status.getReasonPhrase(),
+                ex.getMessage());
+        return new ResponseEntity<>(errorDetails, status);
+    }
 
-  @Override
-  protected ResponseEntity<Object> handleHttpMediaTypeNotSupported(HttpMediaTypeNotSupportedException ex,
-      HttpHeaders headers, HttpStatus status, WebRequest request) {
-    log.error(ex.getMessage(), ex);
-    ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
-        status.value(),
-        ex.getMessage(), request.getDescription(false));
-    return new ResponseEntity<>(errorDetails, status);
-  }
+    @Override
+    protected ResponseEntity<Object> handleHttpMediaTypeNotSupported(HttpMediaTypeNotSupportedException ex,
+                                                                     HttpHeaders headers, HttpStatus status, WebRequest request) {
+        log.error(ex.getMessage(), ex);
+        ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
+                status.value(),
+                status.getReasonPhrase(),
+                ex.getMessage());
+        return new ResponseEntity<>(errorDetails, status);
+    }
 
-  @Override
-  protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
-      HttpHeaders headers,
-      HttpStatus status, WebRequest request) {
-    log.error(ex.getMessage(), ex);
-    ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
-        status.value(),
-        ex.getMessage(), request.getDescription(false));
-    return new ResponseEntity<>(errorDetails, status);
-  }
+    @Override
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
+                                                                  HttpHeaders headers,
+                                                                  HttpStatus status, WebRequest request) {
+        log.error(ex.getMessage(), ex);
+        ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
+                status.value(),
+                status.getReasonPhrase(),
+                ex.getMessage());
+        return new ResponseEntity<>(errorDetails, status);
+    }
 
-  @Override
-  protected ResponseEntity<Object> handleHttpMessageNotWritable(HttpMessageNotWritableException ex,
-      HttpHeaders headers,
-      HttpStatus status, WebRequest request) {
-    log.error(ex.getMessage(), ex);
-    ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
-        status.value(),
-        ex.getMessage(), request.getDescription(false));
-    return new ResponseEntity<>(errorDetails, status);
-  }
+    @Override
+    protected ResponseEntity<Object> handleHttpMessageNotWritable(HttpMessageNotWritableException ex,
+                                                                  HttpHeaders headers,
+                                                                  HttpStatus status, WebRequest request) {
+        log.error(ex.getMessage(), ex);
+        ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
+                status.value(),
+                status.getReasonPhrase(),
+                ex.getMessage());
+        return new ResponseEntity<>(errorDetails, status);
+    }
 
-  @Override
-  protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex,
-      HttpHeaders headers, HttpStatus status, WebRequest request) {
-    log.error(ex.getMessage(), ex);
-    ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
-        status.value(),
-        ex.getMessage(), request.getDescription(false));
-    return new ResponseEntity<>(errorDetails, status);
-  }
+    @Override
+    protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex,
+                                                                         HttpHeaders headers, HttpStatus status, WebRequest request) {
+        log.error(ex.getMessage(), ex);
+        ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
+                status.value(),
+                status.getReasonPhrase(),
+                ex.getMessage());
+        return new ResponseEntity<>(errorDetails, status);
+    }
 
-  @Override
-  protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-      HttpHeaders headers,
-      HttpStatus status, WebRequest request) {
-    log.error(ex.getMessage(), ex);
-    ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
-        status.value(),
-        ex.getMessage(), request.getDescription(false));
-    return new ResponseEntity<>(errorDetails, status);
-  }
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+                                                                  HttpHeaders headers,
+                                                                  HttpStatus status, WebRequest request) {
+        log.error(ex.getMessage(), ex);
+        ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
+                status.value(),
+                status.getReasonPhrase(),
+                ex.getMessage());
+        return new ResponseEntity<>(errorDetails, status);
+    }
 
-  @Override
-  protected ResponseEntity<Object> handleMissingPathVariable(MissingPathVariableException ex, HttpHeaders headers,
-      HttpStatus status, WebRequest request) {
-    log.error(ex.getMessage(), ex);
-    ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
-        status.value(),
-        ex.getMessage(), request.getDescription(false));
-    return new ResponseEntity<>(errorDetails, status);
-  }
+    @Override
+    protected ResponseEntity<Object> handleMissingPathVariable(MissingPathVariableException ex, HttpHeaders headers,
+                                                               HttpStatus status, WebRequest request) {
+        log.error(ex.getMessage(), ex);
+        ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
+                status.value(),
+                status.getReasonPhrase(),
+                ex.getMessage());
+        return new ResponseEntity<>(errorDetails, status);
+    }
 
-  @Override
-  protected ResponseEntity<Object> handleMissingServletRequestParameter(MissingServletRequestParameterException ex,
-      HttpHeaders headers, HttpStatus status, WebRequest request) {
-    log.error(ex.getMessage(), ex);
-    ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
-        status.value(),
-        ex.getMessage(), request.getDescription(false));
-    return new ResponseEntity<>(errorDetails, status);
-  }
+    @Override
+    protected ResponseEntity<Object> handleMissingServletRequestParameter(MissingServletRequestParameterException ex,
+                                                                          HttpHeaders headers, HttpStatus status, WebRequest request) {
+        log.error(ex.getMessage(), ex);
+        ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
+                status.value(),
+                status.getReasonPhrase(),
+                ex.getMessage());
+        return new ResponseEntity<>(errorDetails, status);
+    }
 
-  @Override
-  protected ResponseEntity<Object> handleMissingServletRequestPart(MissingServletRequestPartException ex,
-      HttpHeaders headers, HttpStatus status, WebRequest request) {
-    log.error(ex.getMessage(), ex);
-    ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
-        status.value(),
-        ex.getMessage(), request.getDescription(false));
-    return new ResponseEntity<>(errorDetails, status);
-  }
+    @Override
+    protected ResponseEntity<Object> handleMissingServletRequestPart(MissingServletRequestPartException ex,
+                                                                     HttpHeaders headers, HttpStatus status, WebRequest request) {
+        log.error(ex.getMessage(), ex);
+        ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
+                status.value(),
+                status.getReasonPhrase(),
+                ex.getMessage());
+        return new ResponseEntity<>(errorDetails, status);
+    }
 
-  @Override
-  protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers,
-      HttpStatus status, WebRequest request) {
-    log.error(ex.getMessage(), ex);
-    ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
-        status.value(),
-        ex.getMessage(), request.getDescription(false));
-    return new ResponseEntity<>(errorDetails, status);
-  }
+    @Override
+    protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers,
+                                                                   HttpStatus status, WebRequest request) {
+        log.error(ex.getMessage(), ex);
+        ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
+                status.value(),
+                status.getReasonPhrase(),
+                ex.getMessage());
+        return new ResponseEntity<>(errorDetails, status);
+    }
 
-  @Override
-  protected ResponseEntity<Object> handleServletRequestBindingException(ServletRequestBindingException ex,
-      HttpHeaders headers, HttpStatus status, WebRequest request) {
-    log.error(ex.getMessage(), ex);
-    ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
-        status.value(),
-        ex.getMessage(), request.getDescription(false));
-    return new ResponseEntity<>(errorDetails, status);
-  }
+    @Override
+    protected ResponseEntity<Object> handleServletRequestBindingException(ServletRequestBindingException ex,
+                                                                          HttpHeaders headers, HttpStatus status, WebRequest request) {
+        log.error(ex.getMessage(), ex);
+        ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
+                status.value(),
+                status.getReasonPhrase(),
+                ex.getMessage());
+        return new ResponseEntity<>(errorDetails, status);
+    }
 
-  @Override
-  protected ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex, HttpHeaders headers,
-      HttpStatus status,
-      WebRequest request) {
-    log.error(ex.getMessage(), ex);
-    ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
-        status.value(),
-        ex.getMessage(), request.getDescription(false));
-    return new ResponseEntity<>(errorDetails, status);
-  }
+    @Override
+    protected ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex, HttpHeaders headers,
+                                                        HttpStatus status,
+                                                        WebRequest request) {
+        log.error(ex.getMessage(), ex);
+        ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
+                status.value(),
+                status.getReasonPhrase(),
+                ex.getMessage());
+        return new ResponseEntity<>(errorDetails, status);
+    }
 }

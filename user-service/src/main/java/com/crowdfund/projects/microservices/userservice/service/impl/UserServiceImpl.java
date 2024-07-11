@@ -11,6 +11,7 @@ import com.crowdfund.projects.microservices.userservice.repository.RoleRepositor
 import com.crowdfund.projects.microservices.userservice.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -41,14 +42,14 @@ public class UserServiceImpl implements UserService {
     public User addUser(User user) throws ResourceNotFoundException, CustomException {
         try {
             if (userRepository.findByEmail(user.getEmail()).isPresent())
-                throw new CustomException("Email already exist");
+                throw new CustomException("bad request", HttpStatus.BAD_REQUEST, "Email already exist");
 
             if (userRepository.findByPhone(user.getPhone()).isPresent())
-                throw new CustomException("Phone number already exist");
+                throw new CustomException("bad request", HttpStatus.BAD_REQUEST, "Phone number already exist");
 
             Role role = roleRepository.findByName(user.getRole().getName());
             if (role == null)
-                throw new CustomException("Role doesn't exist");
+                throw new CustomException("bad request", HttpStatus.BAD_REQUEST, "Role doesn't exist");
 
             user.setRole(role);
             String userName = UserData.getUserName();

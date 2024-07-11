@@ -34,7 +34,7 @@ import javax.validation.Valid;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value = "/user", produces = "application/json")
-@Api(value = "Sample-App", description = "User operations")
+@Api(value = "User-App", description = "User operations")
 @Validated
 @Slf4j
 public class UserController {
@@ -72,6 +72,6 @@ public class UserController {
 
     private void validateUserAddDTO(UserReqDTO userAddDto, UserRole userRole) throws CustomException {
         if (userAddDto.getRole()!=null &&  !userRole.equals(userAddDto.getRole()))
-            throw new CustomException("You can create account for "+ userRole.name() +"only...!");
+            throw new CustomException("Bad Request", HttpStatus.BAD_REQUEST, "You can create account for "+ userRole.name() +" only...!");
     }
 }
