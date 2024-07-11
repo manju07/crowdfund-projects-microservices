@@ -3,12 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.sample.springboot.microservices</groupId>
-		<artifactId>sample-app</artifactId>
+		<groupId>com.crowdfund.projects.microservices</groupId>
+		<artifactId>crowdfund-projects-microservices</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<groupId>com.sample.springboot.microservices</groupId>
 	<artifactId>zuul-api-gateway-server</artifactId>
 	<name>zuul-api-gateway-server</name>
 	<description>zuul-api-gateway-server</description>

@@ -11,10 +11,9 @@
         <module name="cloud-config-server" />
         <module name="eureka-naming-server" />
         <module name="oauth2-authentication-server" />
-        <module name="user-service" />
         <module name="zuul-api-gateway-server" />
       </profile>
-      <profile name="Annotation profile for crowdfund-innovator-projects-services" enabled="true">
+      <profile name="Annotation profile for crowdfund-projects-services" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -28,8 +27,12 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
         </processorPath>
         <module name="project-service" />
+        <module name="user-service" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="sample-app" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
@@ -38,7 +41,7 @@
       <module name="eureka-naming-server" options="-parameters" />
       <module name="oauth2-authentication-server" options="-parameters" />
       <module name="project-service" options="-parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=false -Amapstruct.suppressGeneratorTimestamp=false -Amapstruct.defaultInjectionStrategy=constructor" />
-      <module name="user-service" options="-parameters" />
+      <module name="user-service" options="-parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=false -Amapstruct.suppressGeneratorTimestamp=false -Amapstruct.defaultInjectionStrategy=constructor" />
       <module name="zuul-api-gateway-server" options="-parameters" />
     </option>
   </component>

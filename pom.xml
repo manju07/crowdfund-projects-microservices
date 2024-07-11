@@ -9,8 +9,8 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>com.sample.springboot.microservices</groupId>
-	<artifactId>crowdfund-projects-services</artifactId>
+	<groupId>com.crowdfund.projects.microservices</groupId>
+	<artifactId>crowdfund-projects-microservices</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>crowdfund-projects-services</name>
@@ -23,7 +23,7 @@
 		<module>cloud-config-server</module>
 		<module>eureka-naming-server</module>
 		<module>common-code</module>
-		<module>oauth2-authentication-server</module>
+<!--		<module>oauth2-authentication-server</module>-->
 		<module>project-service</module>
 		<module>user-service</module>
 		<module>zuul-api-gateway-server</module>
