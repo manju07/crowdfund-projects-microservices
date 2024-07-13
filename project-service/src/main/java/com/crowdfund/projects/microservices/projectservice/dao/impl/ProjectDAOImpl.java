@@ -1,28 +1,44 @@
 package com.crowdfund.projects.microservices.projectservice.dao.impl;
 
 import com.crowdfund.projects.microservices.common.code.entity.Project;
+import com.crowdfund.projects.microservices.common.code.entity.User;
+import com.crowdfund.projects.microservices.common.code.exception.CustomException;
 import com.crowdfund.projects.microservices.common.code.exception.ResourceNotFoundException;
 import com.crowdfund.projects.microservices.projectservice.dao.ProjectDAO;
 import com.crowdfund.projects.microservices.projectservice.repository.ProjectRepository;
+import com.crowdfund.projects.microservices.projectservice.repository.UserRepository;
+import com.crowdfund.projects.microservices.projectservice.util.UserData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Collections;
 import java.util.Objects;
 import java.util.Optional;
 
 @Component
 @Slf4j
-public class ProjectDAOImpl implements ProjectDAO  {
+public class ProjectDAOImpl implements ProjectDAO {
 
     @Autowired
     private ProjectRepository projectRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
-    public Project addProject(Project project) {
+    public Project addProject(Project project) throws CustomException {
         try {
+            String userName = UserData.getUserName();
+            Optional<User> user = userRepository.findByUserName(userName);
+            if (!user.isPresent())
+                throw new CustomException("Invalid User", HttpStatus.NOT_FOUND, "User doesn't exist");
+            project.setUser(user.get());
+            project.setCreatedBy(userName);
+            project.setUpdatedBy(userName);
             Project response = projectRepository.save(project);
             return response;
         } catch (Exception e) {
@@ -34,6 +50,8 @@ public class ProjectDAOImpl implements ProjectDAO  {
     @Override
     public Project updateProject(Project project) {
         try {
+            String userName = UserData.getUserName();
+            project.setUpdatedBy(userName);
             Project response = projectRepository.save(project);
             return response;
         } catch (Exception e) {
@@ -60,7 +78,7 @@ public class ProjectDAOImpl implements ProjectDAO  {
             if (optionalProject.isPresent()) {
                 return optionalProject.get();
             }
-            throw new ResourceNotFoundException("Project does not exist with id" + projectId);
+            throw new ResourceNotFoundException("Project does not exist with id = " + projectId);
         } catch (Exception e) {
             log.error("ProjectDAOImpl -  deleteProject exception", e);
             throw e;
@@ -68,14 +86,17 @@ public class ProjectDAOImpl implements ProjectDAO  {
     }
 
     @Override
-    public List<Project> getAll(int offset, int limit) {
+    public Page<Project> getAll(int offset, int limit) {
         try {
-            List<Project> projectList = projectRepository.findAll();
-            if (Objects.nonNull(projectList) && (!projectList.isEmpty()) ) {
-                return projectList;
+            Page<Project> projectPage = projectRepository.findAll(PageRequest.of(offset, limit));
+
+            if (Objects.nonNull(projectPage) && (!projectPage.isEmpty())) {
+//                return projectPage.stream().collect(Collectors.toList());
+                return projectPage;
             }
+
             log.info("Project list is empty");
-            return Arrays.asList();
+            return Page.empty();
         } catch (Exception e) {
             log.error("ProjectDAOImpl -  deleteProject exception", e);
             throw e;

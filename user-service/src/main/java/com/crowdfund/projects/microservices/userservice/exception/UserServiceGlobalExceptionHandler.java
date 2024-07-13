@@ -37,17 +37,16 @@ import java.sql.Timestamp;
 @ControllerAdvice
 @Slf4j
 public class UserServiceGlobalExceptionHandler extends ResponseEntityExceptionHandler {
-
     /**
      * Resource not found exception response entity.
      *
-     * @param ex type of exception
-     * @param request   WebRequest
+     * @param ex      type of exception
+     * @param request WebRequest
      * @return the response entity
      */
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<?> resourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
-        log.error(ex.getMessage(), ex);
+    public ResponseEntity<Object> resourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
+        log.error("resourceNotFoundException " + ex.getMessage(), ex);
         ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
                 HttpStatus.NOT_FOUND.value(),
                 ex.getMessage(),
@@ -64,7 +63,7 @@ public class UserServiceGlobalExceptionHandler extends ResponseEntityExceptionHa
      */
     @ExceptionHandler(value = {CustomException.class})
     public ResponseEntity<Object> customExceptionHandler(CustomException exception, WebRequest request) {
-        log.error(exception.getMessage(), exception);
+        log.error("customExceptionHandler", exception.getMessage(), exception);
         ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
                 exception.getStatus().value(),
                 exception.getMessage(), exception.getDescription());
@@ -73,7 +72,7 @@ public class UserServiceGlobalExceptionHandler extends ResponseEntityExceptionHa
 
     @ExceptionHandler(value = {Exception.class})
     public ResponseEntity<Object> globalExceptionHandler(Exception exception, WebRequest request) {
-        log.error(exception.getMessage(), exception);
+        log.error("globalExceptionHandler", exception.getMessage(), exception);
         ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
@@ -84,7 +83,7 @@ public class UserServiceGlobalExceptionHandler extends ResponseEntityExceptionHa
     @Override
     protected ResponseEntity<Object> handleAsyncRequestTimeoutException(AsyncRequestTimeoutException ex,
                                                                         HttpHeaders headers, HttpStatus status, WebRequest webRequest) {
-        log.error(ex.getMessage(), ex);
+        log.error("handleAsyncRequestTimeoutException", ex.getMessage(), ex);
         ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
                 status.value(),
                 status.getReasonPhrase(),
@@ -95,7 +94,7 @@ public class UserServiceGlobalExceptionHandler extends ResponseEntityExceptionHa
     @Override
     protected ResponseEntity<Object> handleBindException(BindException ex, HttpHeaders headers, HttpStatus status,
                                                          WebRequest request) {
-        log.error(ex.getMessage(), ex);
+        log.error("handleBindException", ex.getMessage(), ex);
         ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
                 status.value(),
                 status.getReasonPhrase(),
@@ -107,7 +106,7 @@ public class UserServiceGlobalExceptionHandler extends ResponseEntityExceptionHa
     protected ResponseEntity<Object> handleConversionNotSupported(ConversionNotSupportedException ex,
                                                                   HttpHeaders headers,
                                                                   HttpStatus status, WebRequest request) {
-        log.error(ex.getMessage(), ex);
+        log.error("handleConversionNotSupported", ex.getMessage(), ex);
         ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
                 status.value(),
                 status.getReasonPhrase(),
@@ -118,7 +117,7 @@ public class UserServiceGlobalExceptionHandler extends ResponseEntityExceptionHa
     @Override
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
                                                              HttpStatus status, WebRequest request) {
-        log.error(ex.getMessage(), ex);
+        log.error("handleExceptionInternal", ex.getMessage(), ex);
         ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
                 status.value(),
                 status.getReasonPhrase(),
@@ -129,7 +128,7 @@ public class UserServiceGlobalExceptionHandler extends ResponseEntityExceptionHa
     @Override
     protected ResponseEntity<Object> handleHttpMediaTypeNotAcceptable(HttpMediaTypeNotAcceptableException ex,
                                                                       HttpHeaders headers, HttpStatus status, WebRequest request) {
-        log.error(ex.getMessage(), ex);
+        log.error("handleHttpMediaTypeNotAcceptable", ex.getMessage(), ex);
         ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
                 status.value(),
                 status.getReasonPhrase(),
@@ -140,7 +139,7 @@ public class UserServiceGlobalExceptionHandler extends ResponseEntityExceptionHa
     @Override
     protected ResponseEntity<Object> handleHttpMediaTypeNotSupported(HttpMediaTypeNotSupportedException ex,
                                                                      HttpHeaders headers, HttpStatus status, WebRequest request) {
-        log.error(ex.getMessage(), ex);
+        log.error("handleHttpMediaTypeNotSupported", ex.getMessage(), ex);
         ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
                 status.value(),
                 status.getReasonPhrase(),
@@ -152,7 +151,7 @@ public class UserServiceGlobalExceptionHandler extends ResponseEntityExceptionHa
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
                                                                   HttpHeaders headers,
                                                                   HttpStatus status, WebRequest request) {
-        log.error(ex.getMessage(), ex);
+        log.error("handleHttpMessageNotReadable", ex.getMessage(), ex);
         ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
                 status.value(),
                 status.getReasonPhrase(),
@@ -164,7 +163,7 @@ public class UserServiceGlobalExceptionHandler extends ResponseEntityExceptionHa
     protected ResponseEntity<Object> handleHttpMessageNotWritable(HttpMessageNotWritableException ex,
                                                                   HttpHeaders headers,
                                                                   HttpStatus status, WebRequest request) {
-        log.error(ex.getMessage(), ex);
+        log.error("handleHttpMessageNotWritable", ex.getMessage(), ex);
         ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
                 status.value(),
                 status.getReasonPhrase(),
@@ -175,7 +174,7 @@ public class UserServiceGlobalExceptionHandler extends ResponseEntityExceptionHa
     @Override
     protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex,
                                                                          HttpHeaders headers, HttpStatus status, WebRequest request) {
-        log.error(ex.getMessage(), ex);
+        log.error("handleHttpRequestMethodNotSupported", ex.getMessage(), ex);
         ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
                 status.value(),
                 status.getReasonPhrase(),
@@ -187,7 +186,7 @@ public class UserServiceGlobalExceptionHandler extends ResponseEntityExceptionHa
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                   HttpHeaders headers,
                                                                   HttpStatus status, WebRequest request) {
-        log.error(ex.getMessage(), ex);
+        log.error("handleMethodArgumentNotValid", ex.getMessage(), ex);
         ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
                 status.value(),
                 status.getReasonPhrase(),
@@ -198,7 +197,7 @@ public class UserServiceGlobalExceptionHandler extends ResponseEntityExceptionHa
     @Override
     protected ResponseEntity<Object> handleMissingPathVariable(MissingPathVariableException ex, HttpHeaders headers,
                                                                HttpStatus status, WebRequest request) {
-        log.error(ex.getMessage(), ex);
+        log.error("handleMissingPathVariable", ex.getMessage(), ex);
         ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
                 status.value(),
                 status.getReasonPhrase(),
@@ -209,7 +208,7 @@ public class UserServiceGlobalExceptionHandler extends ResponseEntityExceptionHa
     @Override
     protected ResponseEntity<Object> handleMissingServletRequestParameter(MissingServletRequestParameterException ex,
                                                                           HttpHeaders headers, HttpStatus status, WebRequest request) {
-        log.error(ex.getMessage(), ex);
+        log.error("handleMissingServletRequestParameter", ex.getMessage(), ex);
         ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
                 status.value(),
                 status.getReasonPhrase(),
@@ -220,7 +219,7 @@ public class UserServiceGlobalExceptionHandler extends ResponseEntityExceptionHa
     @Override
     protected ResponseEntity<Object> handleMissingServletRequestPart(MissingServletRequestPartException ex,
                                                                      HttpHeaders headers, HttpStatus status, WebRequest request) {
-        log.error(ex.getMessage(), ex);
+        log.error("handleMissingServletRequestPart", ex.getMessage(), ex);
         ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
                 status.value(),
                 status.getReasonPhrase(),
@@ -231,7 +230,7 @@ public class UserServiceGlobalExceptionHandler extends ResponseEntityExceptionHa
     @Override
     protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers,
                                                                    HttpStatus status, WebRequest request) {
-        log.error(ex.getMessage(), ex);
+        log.error("handleNoHandlerFoundException", ex.getMessage(), ex);
         ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
                 status.value(),
                 status.getReasonPhrase(),
@@ -242,7 +241,7 @@ public class UserServiceGlobalExceptionHandler extends ResponseEntityExceptionHa
     @Override
     protected ResponseEntity<Object> handleServletRequestBindingException(ServletRequestBindingException ex,
                                                                           HttpHeaders headers, HttpStatus status, WebRequest request) {
-        log.error(ex.getMessage(), ex);
+        log.error("handleServletRequestBindingException", ex.getMessage(), ex);
         ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
                 status.value(),
                 status.getReasonPhrase(),
@@ -254,7 +253,7 @@ public class UserServiceGlobalExceptionHandler extends ResponseEntityExceptionHa
     protected ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex, HttpHeaders headers,
                                                         HttpStatus status,
                                                         WebRequest request) {
-        log.error(ex.getMessage(), ex);
+        log.error("handleTypeMismatch", ex.getMessage(), ex);
         ErrorResponse errorDetails = new ErrorResponse(new Timestamp(System.currentTimeMillis()),
                 status.value(),
                 status.getReasonPhrase(),

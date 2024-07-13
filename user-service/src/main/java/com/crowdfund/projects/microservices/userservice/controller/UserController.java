@@ -33,7 +33,7 @@ import javax.validation.Valid;
  */
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(value = "/user", produces = "application/json")
+@RequestMapping(value = "/v1/user-service/user", produces = "application/json")
 @Api(value = "User-App", description = "User operations")
 @Validated
 @Slf4j

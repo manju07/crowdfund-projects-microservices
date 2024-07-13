@@ -2,21 +2,20 @@ package com.crowdfund.projects.microservices.projectservice.service;
 
 import com.crowdfund.projects.microservices.common.code.dto.ProjectReqDTO;
 import com.crowdfund.projects.microservices.common.code.dto.ProjectResDTO;
-import com.crowdfund.projects.microservices.projectservice.dao.ProjectDAO;
-import com.crowdfund.projects.microservices.projectservice.mapper.ProjectMapper;
-import com.crowdfund.projects.microservices.projectservice.repository.ProjectRepository;
 import com.crowdfund.projects.microservices.common.code.entity.Project;
 import com.crowdfund.projects.microservices.common.code.exception.CustomException;
 import com.crowdfund.projects.microservices.common.code.exception.ResourceNotFoundException;
+import com.crowdfund.projects.microservices.projectservice.dao.ProjectDAO;
+//import com.crowdfund.projects.microservices.projectservice.mapper.ProjectMapper;
+import com.crowdfund.projects.microservices.projectservice.mapper.ProjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @Slf4j
-public class ProjectServiceImpl implements ProjectService  {
+public class ProjectServiceImpl implements ProjectService {
 
     private static final ProjectMapper MAPPER = ProjectMapper.INSTANCE;
 
@@ -72,9 +71,11 @@ public class ProjectServiceImpl implements ProjectService  {
     }
 
     @Override
-    public List<ProjectResDTO> getAll(int offset, int limit) throws ResourceNotFoundException, CustomException {
+    public Page<Project> getAll(int offset, int limit) throws ResourceNotFoundException, CustomException {
         try {
-            return null;
+//            List<Project> listOfProjects = projectDAO.getAll(offset, limit);
+//            return MAPPER.convert(listOfProjects);
+            return projectDAO.getAll(offset, limit);
         } catch (Exception e) {
             log.error("getProjectById method exception", e);
             throw e;

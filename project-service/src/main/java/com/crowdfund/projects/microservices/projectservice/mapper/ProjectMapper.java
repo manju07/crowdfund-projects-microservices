@@ -8,6 +8,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper
 public interface ProjectMapper {
     ProjectMapper INSTANCE = Mappers.getMapper(ProjectMapper.class);
@@ -16,4 +18,7 @@ public interface ProjectMapper {
     Project projectReqDTOToProject(ProjectReqDTO projectReqDTO);
 
     ProjectResDTO projectToProjectResDTO(Project project);
+
+    List<ProjectResDTO> convert(List<Project> projects);
+
 }

@@ -79,8 +79,7 @@ public class User implements Serializable {
     private Address address;
 
     @JsonManagedReference
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "innovator_project", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "project_id"))
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "user")
     private Set<Project> projectSet = new HashSet<Project>();
 
     public void addProject(Project project) {
@@ -106,14 +105,6 @@ public class User implements Serializable {
         this.email = email;
         this.password = password;
     }
-
-//    public void addEngagement(Engagement engagement) {
-//        this.engagementList.add(engagement);
-//    }
-//
-//    public void removeEngagement(Engagement engagement) {
-//        this.engagementList.remove(engagement);
-//    }
 
     public User(String fName, String lName, String phone, String userName, String email, String password, Role role) {
         this.fName = fName;
