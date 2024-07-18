@@ -16,15 +16,6 @@ INSERT IGNORE INTO `role` VALUES
 --(1, 'Vijayanagar','Bangalore','india', CURRENT_TIMESTAMP, '560040',
 --'Karnataka', CURRENT_TIMESTAMP);
 
---INSERT IGNORE INTO `corporate`
---(`id`,`gst`,`created_time`,`name`, `client_spoc_name`, `client_spoc_email`,`client_spoc_phone`,`updated_time` , `is_deleted`, `address_id`)
---VALUES
---(1, '22AAA1EA000', CURRENT_TIMESTAMP, 'sample-app', 'manjunath asundi', 'manjunathasundi07@gmail.com', '+919886988915', CURRENT_TIMESTAMP, 0, 1);
---
---INSERT IGNORE INTO `corporate_domain`(`id`, `name`, `corporate_id`)
---VALUES
---(1, 'gmail.com', 1),
---(2, 'live.com', 1);
 
 -- password=Test@123
 INSERT IGNORE INTO `user`
@@ -52,4 +43,3 @@ VALUES(1,1),(2,2),(3,3);
 
 INSERT IGNORE INTO address_seq_gen (next_val) VALUES(2);
 INSERT IGNORE INTO user_seq_gen (next_val) VALUES(4);
---INSERT IGNORE INTO corporate_domain_seq_gen (next_val) VALUES(2);
