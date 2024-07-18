@@ -74,11 +74,10 @@ public class User implements Serializable {
     @Column(nullable = false)
     private String gender;
 
-    @JsonManagedReference
     @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
-    @JsonManagedReference
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "user")
     private Set<Project> projectSet = new HashSet<Project>();
 
@@ -90,7 +89,6 @@ public class User implements Serializable {
         projectSet.remove(project);
     }
 
-    @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = {
             @JoinColumn(name = "user_id", referencedColumnName = "id")}, inverseJoinColumns = {

@@ -44,8 +44,8 @@ public class Project implements Serializable {
     @Column(nullable = false)
     private ProjectStatus status;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JsonBackReference
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     @CreationTimestamp

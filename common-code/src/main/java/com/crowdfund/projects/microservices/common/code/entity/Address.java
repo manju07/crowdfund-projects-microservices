@@ -57,7 +57,6 @@ public class Address implements Serializable {
     @UpdateTimestamp
     private LocalDateTime updated_time;
 
-    @JsonBackReference
     @OneToOne(mappedBy = "address", fetch = FetchType.LAZY)
     private User user;
 }

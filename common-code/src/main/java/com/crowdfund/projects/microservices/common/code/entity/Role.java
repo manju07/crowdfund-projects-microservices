@@ -40,7 +40,6 @@ public class Role implements Serializable {
     private UserRole name;
 
     @OneToMany(mappedBy = "role")
-    @JsonBackReference
     private List<User> userList = new ArrayList<User>();
 
     public void addUser(User user) {
