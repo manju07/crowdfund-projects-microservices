@@ -92,10 +92,10 @@ services:
       java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=8787,suspend=n -jar -Dspring.profiles.active=docker /app.jar
       "
 
-  group-service:
-    container_name: group-service
-    image: manju0707/sample-springboot-microservice-docker-group-service:0.0.1-SNAPSHOT
-    # build: ./group-service
+  project-service:
+    container_name: project-service
+    image: manju0707/sample-springboot-microservice-docker-project-service:0.0.1-SNAPSHOT
+    # build: ./project-service
     ports:
       - "9900:9900"
     # restart: always

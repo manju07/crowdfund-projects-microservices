@@ -15,8 +15,8 @@ docker image rm manju0707/sample-springboot-microservice-docker-user-service:0.0
 cd ../user-service
 mvn clean package
 
-docker image rm manju0707/sample-springboot-microservice-docker-group-service:0.0.1-SNAPSHOT -f
-cd ../group-service
+docker image rm manju0707/sample-springboot-microservice-docker-project-service:0.0.1-SNAPSHOT -f
+cd ../project-service
 mvn clean package
 
 docker image rm manju0707/sample-springboot-microservice-docker-zuul-api-gateway-server:0.0.1-SNAPSHOT -f
