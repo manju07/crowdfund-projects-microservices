@@ -34,16 +34,14 @@ public class ContributeDAOImpl implements ContributeDAO {
     @Autowired
     private ProjectRepository projectRepository;
 
-//    @PersistenceContext
-//    private EntityManager entityManager;
 
     @Override
-//    @Transactional
+    @Transactional
     public Contribute saveContribute(Contribute contribute, Long projectId) throws CustomException, ResourceNotFoundException {
         try {
             String userName = UserData.getUserName();
             Optional<User> userOptional = userRepository.findByUserName(userName);
-//
+
             if (!userOptional.isPresent())
                 throw new CustomException("Invalid User", HttpStatus.NOT_FOUND, "User does not exist");
             User user = userOptional.get();
@@ -67,13 +65,11 @@ public class ContributeDAOImpl implements ContributeDAO {
 
             project.addContribute(contribute);
             contribute.setProject(project);
-//            user.addContribute(contribute);
+            user.addContribute(contribute);
 
             contribute.setCreatedBy(userName);
             contribute.setUpdatedBy(userName);
-//            entityManager.persist(contribute);
-//            entityManager.flush();
-//            entityManager.clear();
+
             return contributeRepository.save(contribute);
         } catch (Exception e) {
             log.error("ContributeDAOImpl exception", e);

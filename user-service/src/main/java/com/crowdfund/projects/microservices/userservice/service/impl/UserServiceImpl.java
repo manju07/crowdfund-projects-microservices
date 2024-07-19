@@ -10,12 +10,15 @@ import com.crowdfund.projects.microservices.userservice.util.UserData;
 import com.crowdfund.projects.microservices.userservice.repository.RoleRepository;
 import com.crowdfund.projects.microservices.userservice.service.UserService;
 
+// import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+// import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * User service implementation
@@ -29,8 +32,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-//    @Autowired
-//    private CorporateRepository corporateRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -39,17 +40,18 @@ public class UserServiceImpl implements UserService {
     private RoleRepository roleRepository;
 
     @Override
+    @Transactional
     public User addUser(User user) throws ResourceNotFoundException, CustomException {
         try {
             if (userRepository.findByEmail(user.getEmail()).isPresent())
-                throw new CustomException("bad request", HttpStatus.BAD_REQUEST, "Email already exist");
+                throw new CustomException("conflict", HttpStatus.CONFLICT, "Email already exist");
 
             if (userRepository.findByPhone(user.getPhone()).isPresent())
-                throw new CustomException("bad request", HttpStatus.BAD_REQUEST, "Phone number already exist");
+                throw new CustomException("conflict", HttpStatus.CONFLICT, "Phone number already exist");
 
             Role role = roleRepository.findByName(user.getRole().getName());
             if (role == null)
-                throw new CustomException("bad request", HttpStatus.BAD_REQUEST, "Role doesn't exist");
+                throw new CustomException("Invalid role", HttpStatus.BAD_REQUEST, "Role doesn't exist");
 
             user.setRole(role);
             String userName = UserData.getUserName();
@@ -58,7 +60,8 @@ public class UserServiceImpl implements UserService {
             user.setCreatedBy(userName);
             user.setUpdatedBy(userName);
 
-            return userRepository.save(user);
+            User savedUser = userRepository.save(user);
+            return savedUser;
         } catch (Exception e) {
             log.error("addUser thrown error" + e);
             throw e;
@@ -75,12 +78,6 @@ public class UserServiceImpl implements UserService {
             userData.setLName(user.getLName());
             userData.setGender(user.getGender());
 
-//            Corporate corporate = corporateRepository.findById(user.getCorporate().getId())
-//                    .orElseThrow(() -> new ResourceNotFoundException(
-//                            "Corporate doesn't exist with id:" + user.getCorporate().getId()));
-//
-//            corporate.addEmployee(user);
-//            user.setCorporate(corporate);
 
             UserRole userRole = user.getRole().getName();
             if (!userRole.toString().equals("MANAGER") && !userRole.toString().equals("PARTNER"))

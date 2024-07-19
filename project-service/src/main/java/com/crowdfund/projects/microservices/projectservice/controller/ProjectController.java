@@ -42,7 +42,7 @@ public class ProjectController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_INNOVATOR', 'ROLE_ADMIN', 'ROLE_DONOR')")
+    @PreAuthorize("hasRole('ROLE_INNOVATOR') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DONOR')")
     @ApiOperation(value = "getProjectById", response = ProjectResDTO.class)
     public ResponseEntity<ProjectResDTO> getProjectById(@PathVariable("id") Long projectID)
             throws CustomException, ResourceNotFoundException {
@@ -52,7 +52,7 @@ public class ProjectController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ROLE_INNOVATOR', 'ROLE_ADMIN', 'ROLE_DONOR')")
+    @PreAuthorize("hasRole('ROLE_INNOVATOR') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DONOR')")
     @ApiOperation(value = "getAllProjects", response = ProjectResDTO.class)
     public ResponseEntity<Page<Project>> getAllProjects(@RequestParam("offset") int offset, @RequestParam("limit") int limit)
             throws CustomException, ResourceNotFoundException {

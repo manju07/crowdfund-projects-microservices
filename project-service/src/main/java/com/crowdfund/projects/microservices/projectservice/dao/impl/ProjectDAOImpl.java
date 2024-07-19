@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -28,11 +29,9 @@ public class ProjectDAOImpl implements ProjectDAO {
     @Autowired
     private UserRepository userRepository;
 
-//    @PersistenceContext
-//    private EntityManager entityManager;
 
     @Override
-//    @Transactional
+    @Transactional
     public Project addProject(Project project) throws CustomException {
         try {
             String userName = UserData.getUserName();
@@ -40,6 +39,11 @@ public class ProjectDAOImpl implements ProjectDAO {
 
             if (!user.isPresent())
                 throw new CustomException("Invalid User", HttpStatus.NOT_FOUND, "User doesn't exist");
+
+            Optional<Project> existingProject = projectRepository.findByName(project.getName());
+            if (existingProject.isPresent()) {
+                throw new CustomException("name exist", HttpStatus.CONFLICT, "Project name already exist");
+            }
 
             project.setUser(user.get());
             project.setCreatedBy(userName);

@@ -60,7 +60,7 @@ public class UserController {
     @PostMapping("/innovator")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @ApiOperation(value = "innovator signup", response = UserResDTO.class)
-    public ResponseEntity<UserResDTO> innovatorSignUp(@RequestBody UserReqDTO userAddDto)
+    public ResponseEntity<UserResDTO> innovatorSignUp(@Valid @RequestBody UserReqDTO userAddDto)
             throws CustomException, ResourceNotFoundException {
         log.info("calling user innovator signup API");
         validateUserAddDTO(userAddDto, UserRole.INNOVATOR);

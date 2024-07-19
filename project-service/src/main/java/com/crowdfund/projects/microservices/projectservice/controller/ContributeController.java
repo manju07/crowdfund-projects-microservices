@@ -34,7 +34,7 @@ public class ContributeController {
     private ContributeService contributeService;
 
     @PostMapping
-    @PreAuthorize("hasRole('ROLE_INNOVATOR', 'ROLE_ADMIN', 'ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_INNOVATOR') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DONOR')")
     @ApiOperation(value = "saveContribute", response = ProjectResDTO.class)
     public ResponseEntity<ContributeResDTO> saveContribute(@Valid @RequestBody ContributeReqDTO contributeReqDTO)
             throws CustomException, ResourceNotFoundException {
