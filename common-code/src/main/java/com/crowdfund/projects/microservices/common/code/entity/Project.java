@@ -1,18 +1,13 @@
 package com.crowdfund.projects.microservices.common.code.entity;
 
 import com.crowdfund.projects.microservices.common.code.constant.ProjectStatus;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.crowdfund.projects.microservices.common.code.entity.base.BaseEntity;
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.LastModifiedBy;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Set;
 
 /**
  * @author Manjunath Asundi
@@ -22,7 +17,7 @@ import java.time.LocalDateTime;
 @SQLDelete(sql = "update project set is_deleted = true where id =?")
 @Where(clause = "is_deleted=false")
 @Data
-public class Project implements Serializable {
+public class Project extends BaseEntity {
 
     @Id
     @GeneratedValue(generator = "project_seq_gen")
@@ -48,20 +43,8 @@ public class Project implements Serializable {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @CreationTimestamp
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime created_time;
-
-    @UpdateTimestamp
-    private LocalDateTime updated_time;
-
-    @CreatedBy
-    @Column(nullable = true, updatable = false)
-    private String createdBy;
-
-    @Column(nullable = true)
-    @LastModifiedBy
-    private String updatedBy;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, mappedBy = "project")
+    private Set<Contribute> contributes;
 
     @Column(columnDefinition = "tinyint default 0")
     private Boolean isDeleted = false;

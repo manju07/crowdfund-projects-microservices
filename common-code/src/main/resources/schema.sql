@@ -1,4 +1,4 @@
--- spring_app_dev.`user` definition
+-- projects_db.`user` definition
 
 create table if not exists `user` (
   `id` bigint NOT NULL,
@@ -21,7 +21,7 @@ create table if not exists `user` (
   UNIQUE KEY `UK_lqjrcobrh9jc8wpcar64q1bfh` (`user_name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- spring_app_dev.`role` definition
+-- projects_db.`role` definition
 
 create table if not exists `role` (
   `id` bigint NOT NULL,
@@ -29,7 +29,7 @@ create table if not exists `role` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- spring_app_dev.user_role definition
+-- projects_db.user_role definition
 
 create table if not exists `user_role` (
   `role_id` bigint DEFAULT NULL,
@@ -39,14 +39,14 @@ create table if not exists `user_role` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
--- spring_app_dev.user_seq_gen definition
+-- projects_db.user_seq_gen definition
 
 create table if not exists `user_seq_gen` (
   `next_val` bigint DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
--- spring_app_dev.address definition
+-- projects_db.address definition
 
 create table if not exists `address` (
   `id` bigint NOT NULL,
@@ -61,7 +61,7 @@ create table if not exists `address` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
--- spring_app_dev.address_seq_gen definition
+-- projects_db.address_seq_gen definition
 
 create table if not exists `address_seq_gen` (
   `next_val` bigint DEFAULT NULL

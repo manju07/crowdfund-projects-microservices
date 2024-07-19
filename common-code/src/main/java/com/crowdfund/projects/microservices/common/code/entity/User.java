@@ -1,17 +1,14 @@
 package com.crowdfund.projects.microservices.common.code.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.*;
+import com.crowdfund.projects.microservices.common.code.entity.base.BaseEntity;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NamedQueries;
 import org.hibernate.annotations.NamedQuery;
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import javax.persistence.*;
-import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,7 +25,7 @@ import java.util.Set;
 @Where(clause = "is_deleted=false")
 @Data
 @NoArgsConstructor
-public class User implements Serializable {
+public class User extends BaseEntity {
 
     private static final long serialVersionUID = 4163077184739255229L;
 
@@ -55,21 +52,9 @@ public class User implements Serializable {
     @Column(nullable = false, length = 255)
     private String password;
 
-    @CreationTimestamp
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createdTime;
-
-    @UpdateTimestamp
-    private LocalDateTime updatedTime;
-
     private Boolean isDeleted = false;
 
     private Boolean isEnabled = false;
-
-    @Column(updatable = false)
-    private String createdBy;
-
-    private String updatedBy;
 
     @Column(nullable = false)
     private String gender;
@@ -79,16 +64,10 @@ public class User implements Serializable {
     private Address address;
 
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "user")
-    private Set<Project> projectSet = new HashSet<Project>();
+    private Set<Project> projectSet = new HashSet<>();
 
-    public void addProject(Project project) {
-        projectSet.add(project);
-    }
-
-    public void removeProject(Project project) {
-        projectSet.remove(project);
-    }
-
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "user")
+    private Set<Contribute> contributes = new HashSet<>();
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = {
             @JoinColumn(name = "user_id", referencedColumnName = "id")}, inverseJoinColumns = {
@@ -122,5 +101,13 @@ public class User implements Serializable {
         this.email = user.email;
         this.password = user.password;
         this.role = user.role;
+    }
+
+    public void addProject(Project project) {
+        projectSet.add(project);
+    }
+
+    public void removeProject(Project project) {
+        projectSet.remove(project);
     }
 }
