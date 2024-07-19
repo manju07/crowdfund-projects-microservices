@@ -18,10 +18,10 @@ public abstract class BaseEntity implements Serializable {
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
-    private LocalDateTime created_time;
+    private LocalDateTime createdTime;
 
     @UpdateTimestamp
-    private LocalDateTime updated_time;
+    private LocalDateTime updatedTime;
 
     @CreatedBy
     @Column(nullable = true, updatable = false)

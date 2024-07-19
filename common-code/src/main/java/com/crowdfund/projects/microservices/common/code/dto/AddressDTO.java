@@ -2,7 +2,7 @@ package com.crowdfund.projects.microservices.common.code.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
+import lombok.Data;
 
 /**
  * @author Manjunath Asundi

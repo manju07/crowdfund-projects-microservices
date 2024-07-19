@@ -15,7 +15,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -29,13 +28,19 @@ public class ProjectDAOImpl implements ProjectDAO {
     @Autowired
     private UserRepository userRepository;
 
+//    @PersistenceContext
+//    private EntityManager entityManager;
+
     @Override
+//    @Transactional
     public Project addProject(Project project) throws CustomException {
         try {
             String userName = UserData.getUserName();
             Optional<User> user = userRepository.findByUserName(userName);
+
             if (!user.isPresent())
                 throw new CustomException("Invalid User", HttpStatus.NOT_FOUND, "User doesn't exist");
+
             project.setUser(user.get());
             project.setCreatedBy(userName);
             project.setUpdatedBy(userName);
@@ -94,7 +99,6 @@ public class ProjectDAOImpl implements ProjectDAO {
 //                return projectPage.stream().collect(Collectors.toList());
                 return projectPage;
             }
-
             log.info("Project list is empty");
             return Page.empty();
         } catch (Exception e) {

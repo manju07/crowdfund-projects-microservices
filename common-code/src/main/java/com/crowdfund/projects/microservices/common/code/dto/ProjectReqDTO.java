@@ -2,14 +2,13 @@ package com.crowdfund.projects.microservices.common.code.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
+import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
- *
  * @author Manjunath Asundi
  */
 @Data
@@ -17,13 +16,13 @@ import java.io.Serializable;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ProjectReqDTO implements Serializable {
 
-    @NotEmpty
+    @NotEmpty(message = "name is missing/null")
     private String name;
 
-    @NotEmpty
+    @NotEmpty(message = "description is missing/null")
     private String description;
 
-    @NotNull
-    private float required_amount;
+    @NotNull(message = "requiredAmount is null")
+    private float requiredAmount;
 
-   }
+}

@@ -1,6 +1,8 @@
 package com.crowdfund.projects.microservices.common.code.entity;
 
 import com.crowdfund.projects.microservices.common.code.entity.base.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NamedQueries;
@@ -10,6 +12,8 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -59,15 +63,21 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String gender;
 
+    @JsonManagedReference
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "user")
-    private Set<Project> projectSet = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "user")
-    private Set<Contribute> contributes = new HashSet<>();
+    @JsonBackReference
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Project> projectSet = new LinkedList<>();
+
+    @JsonBackReference
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Contribute> contributes = new LinkedList<>();
+
+    @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = {
             @JoinColumn(name = "user_id", referencedColumnName = "id")}, inverseJoinColumns = {
@@ -109,5 +119,13 @@ public class User extends BaseEntity {
 
     public void removeProject(Project project) {
         projectSet.remove(project);
+    }
+
+    public void addContribute(Contribute contribute) {
+        this.contributes.add(contribute);
+    }
+
+    public void removeContribute(Contribute contribute) {
+        this.contributes.remove(contribute);
     }
 }

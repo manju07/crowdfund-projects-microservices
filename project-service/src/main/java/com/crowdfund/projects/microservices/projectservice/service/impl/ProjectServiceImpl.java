@@ -1,4 +1,4 @@
-package com.crowdfund.projects.microservices.projectservice.service;
+package com.crowdfund.projects.microservices.projectservice.service.impl;
 
 import com.crowdfund.projects.microservices.common.code.dto.ProjectReqDTO;
 import com.crowdfund.projects.microservices.common.code.dto.ProjectResDTO;
@@ -8,6 +8,8 @@ import com.crowdfund.projects.microservices.common.code.exception.ResourceNotFou
 import com.crowdfund.projects.microservices.projectservice.dao.ProjectDAO;
 //import com.crowdfund.projects.microservices.projectservice.mapper.ProjectMapper;
 import com.crowdfund.projects.microservices.projectservice.mapper.ProjectMapper;
+import com.crowdfund.projects.microservices.projectservice.service.ContributeService;
+import com.crowdfund.projects.microservices.projectservice.service.ProjectService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -39,7 +41,7 @@ public class ProjectServiceImpl implements ProjectService {
     public ProjectResDTO updateProject(ProjectReqDTO projectReqDTO) throws ResourceNotFoundException, CustomException {
         try {
             Project project = MAPPER.projectReqDTOToProject(projectReqDTO);
-            Project responseProject = projectDAO.addProject(project);
+            Project responseProject = projectDAO.updateProject(project);
             ProjectResDTO projectResDTO = MAPPER.projectToProjectResDTO(responseProject);
             return projectResDTO;
         } catch (Exception e) {

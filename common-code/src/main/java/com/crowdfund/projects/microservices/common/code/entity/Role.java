@@ -1,6 +1,7 @@
 package com.crowdfund.projects.microservices.common.code.entity;
 
 import com.crowdfund.projects.microservices.common.code.constant.UserRole;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -28,6 +29,7 @@ public class Role implements Serializable {
     @Column(name = "name", updatable = false)
     private UserRole name;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "role")
     private List<User> userList = new ArrayList<User>();
 

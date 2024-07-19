@@ -1,6 +1,7 @@
 package com.crowdfund.projects.microservices.common.code.entity;
 
 import lombok.Data;
+import org.codehaus.jackson.annotate.JsonBackReference;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -42,11 +43,12 @@ public class Address implements Serializable {
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
-    private LocalDateTime created_time;
+    private LocalDateTime createdTime;
 
     @UpdateTimestamp
-    private LocalDateTime updated_time;
+    private LocalDateTime updatedTime;
 
+    @JsonBackReference
     @OneToOne(mappedBy = "address", fetch = FetchType.LAZY)
     private User user;
 }

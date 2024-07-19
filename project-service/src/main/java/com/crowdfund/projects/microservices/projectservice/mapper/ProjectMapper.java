@@ -14,7 +14,7 @@ import java.util.List;
 public interface ProjectMapper {
     ProjectMapper INSTANCE = Mappers.getMapper(ProjectMapper.class);
 
-    @Mapping(target = "status", constant = "INITIATED", resultType = ProjectStatus.class)
+    @Mapping(target = "status", constant = "IN_PROGRESS", resultType = ProjectStatus.class)
     Project projectReqDTOToProject(ProjectReqDTO projectReqDTO);
 
     ProjectResDTO projectToProjectResDTO(Project project);

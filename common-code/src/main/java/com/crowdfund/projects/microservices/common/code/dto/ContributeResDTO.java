@@ -1,30 +1,25 @@
 package com.crowdfund.projects.microservices.common.code.dto;
 
+import com.crowdfund.projects.microservices.common.code.constant.PaymentStatus;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
-/**
- * UserResponse
- *
- * @author Manjunath Asundi
- */
 @Data
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserResDTO implements Serializable {
-
+public class ContributeResDTO implements Serializable {
+    @NotEmpty
     private Long id;
+    @NotEmpty
+    private float amount;
 
-    private String fName;
+    @NotEmpty
+    private PaymentStatus paymentStatus;
 
-    private String lName;
-
-    private String phone;
-
-    private String email;
-
-    private String gender;
+    @NotEmpty
+    private Long projectId;
 }

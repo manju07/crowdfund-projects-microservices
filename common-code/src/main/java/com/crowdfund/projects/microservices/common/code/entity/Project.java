@@ -2,11 +2,16 @@ package com.crowdfund.projects.microservices.common.code.entity;
 
 import com.crowdfund.projects.microservices.common.code.constant.ProjectStatus;
 import com.crowdfund.projects.microservices.common.code.entity.base.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
+import org.codehaus.jackson.annotate.JsonManagedReference;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -20,8 +25,7 @@ import java.util.Set;
 public class Project extends BaseEntity {
 
     @Id
-    @GeneratedValue(generator = "project_seq_gen")
-    @SequenceGenerator(name = "project_seq_gen", initialValue = 1, allocationSize = 1)
+    @GeneratedValue
     private Long id;
 
     @Column(nullable = false, unique = true, length = 100)
@@ -31,20 +35,32 @@ public class Project extends BaseEntity {
     private String description;
 
     @Column(nullable = false)
-    private float required_amount;
+    private float requiredAmount;
 
     @Column(nullable = false)
-    private float received_amount;
+    private float receivedAmount;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ProjectStatus status;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @JsonManagedReference
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, mappedBy = "project")
-    private Set<Contribute> contributes;
+
+    @JsonBackReference
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
+    private List<Contribute> contributes = new ArrayList<>();
+
+    public void addContribute(Contribute contribute) {
+        this.contributes.add(contribute);
+    }
+
+    public void removeContribute(Contribute contribute) {
+        this.contributes.remove(contribute);
+    }
 
     @Column(columnDefinition = "tinyint default 0")
     private Boolean isDeleted = false;
