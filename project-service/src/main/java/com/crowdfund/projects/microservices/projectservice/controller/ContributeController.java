@@ -33,10 +33,10 @@ public class ContributeController {
     @PostMapping
     @PreAuthorize("hasRole('ROLE_INNOVATOR') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DONOR')")
     @ApiOperation(value = "saveContribute", response = TransactionResDTO.class)
-    public ResponseEntity<TransactionResDTO> saveContribute(@Valid @RequestBody TransactionReqDTO transactionReqDTO)
+    public ResponseEntity<TransactionResDTO> saveContribute(@Valid @RequestBody TransactionReqDTO transactionReqDTO, OAuth2Authentication authentication)
             throws CustomException, ResourceNotFoundException {
         log.info("calling save contribute API");
-        TransactionResDTO transactionResDTO = contributeService.saveContribute(transactionReqDTO);
+        TransactionResDTO transactionResDTO = contributeService.saveContribute(transactionReqDTO, authentication);
         return new ResponseEntity<TransactionResDTO>(transactionResDTO, HttpStatus.CREATED);
     }
 

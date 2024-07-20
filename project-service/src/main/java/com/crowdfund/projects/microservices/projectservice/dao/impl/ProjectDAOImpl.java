@@ -8,12 +8,12 @@ import com.crowdfund.projects.microservices.common.code.exception.ResourceNotFou
 import com.crowdfund.projects.microservices.projectservice.dao.ProjectDAO;
 import com.crowdfund.projects.microservices.projectservice.repository.ProjectRepository;
 import com.crowdfund.projects.microservices.projectservice.repository.UserRepository;
-import com.crowdfund.projects.microservices.projectservice.util.UserData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,9 +33,9 @@ public class ProjectDAOImpl implements ProjectDAO {
 
     @Override
     @Transactional
-    public Project addProject(Project project) throws CustomException {
+    public Project addProject(Project project, OAuth2Authentication authentication) throws CustomException {
         try {
-            String userName = UserData.getUserName();
+            String userName = authentication.getName();
             Optional<User> user = userRepository.findByUserName(userName);
 
             if (!user.isPresent())
@@ -60,15 +60,16 @@ public class ProjectDAOImpl implements ProjectDAO {
     @Override
     @Transactional
     public Project updateProject(Project project) {
-        try {
-            String userName = UserData.getUserName();
-            project.setUpdatedBy(userName);
-            Project response = projectRepository.save(project);
-            return response;
-        } catch (Exception e) {
-            log.error("ProjectDAOImpl -  updateProject exception", e);
-            throw e;
-        }
+//        try {
+//            String userName = UserData.getUserName();
+//            project.setUpdatedBy(userName);
+//            Project response = projectRepository.save(project);
+//            return response;
+//        } catch (Exception e) {
+//            log.error("ProjectDAOImpl -  updateProject exception", e);
+//            throw e;
+//        }
+        return null;
     }
 
     @Override

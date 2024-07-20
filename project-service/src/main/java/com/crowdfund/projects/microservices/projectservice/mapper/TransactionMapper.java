@@ -5,7 +5,6 @@ import com.crowdfund.projects.microservices.common.code.dto.ContributeReqDTO;
 import com.crowdfund.projects.microservices.common.code.dto.ContributeResDTO;
 import com.crowdfund.projects.microservices.common.code.dto.TransactionReqDTO;
 import com.crowdfund.projects.microservices.common.code.dto.TransactionResDTO;
-import com.crowdfund.projects.microservices.common.code.entity.Contribute;
 import com.crowdfund.projects.microservices.common.code.entity.Transaction;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

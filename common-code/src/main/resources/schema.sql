@@ -67,5 +67,19 @@ create table if not exists `address_seq_gen` (
   `next_val` bigint DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+-- projects_db.wallet definition
+
+CREATE TABLE if not exists `wallet` (
+  `id` bigint NOT NULL,
+  `created_by` varchar(255) DEFAULT NULL,
+  `created_time` datetime NOT NULL,
+  `updated_by` varchar(255) DEFAULT NULL,
+  `updated_time` datetime DEFAULT NULL,
+  `balance` float NOT NULL,
+  `user_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKbs4ogwiknsup4rpw8d47qw9dx` (`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 
 

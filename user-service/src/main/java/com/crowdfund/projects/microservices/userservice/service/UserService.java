@@ -4,6 +4,7 @@ import com.crowdfund.projects.microservices.common.code.entity.User;
 import com.crowdfund.projects.microservices.common.code.exception.CustomException;
 import com.crowdfund.projects.microservices.common.code.exception.ResourceNotFoundException;
 
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface UserService {
-    User addUser(User user) throws CustomException, ResourceNotFoundException;
+    User addUser(User user, OAuth2Authentication authentication) throws CustomException, ResourceNotFoundException;
 
     User updateUser(Long mId, User user) throws ResourceNotFoundException, CustomException;
 }

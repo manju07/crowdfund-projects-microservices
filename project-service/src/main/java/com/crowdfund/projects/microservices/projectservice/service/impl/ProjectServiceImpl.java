@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,10 +29,10 @@ public class ProjectServiceImpl implements ProjectService {
     private ProjectDAO projectDAO;
 
     @Override
-    public ProjectResDTO addProject(ProjectReqDTO projectReqDTO) throws CustomException, ResourceNotFoundException {
+    public ProjectResDTO addProject(ProjectReqDTO projectReqDTO, OAuth2Authentication authentication) throws CustomException, ResourceNotFoundException {
         try {
             Project project = MAPPER.projectReqDTOToProject(projectReqDTO);
-            Project responseProject = projectDAO.addProject(project);
+            Project responseProject = projectDAO.addProject(project, authentication);
             ProjectResDTO projectResDTO = MAPPER.projectToProjectResDTO(responseProject);
             return projectResDTO;
         } catch (Exception e) {
@@ -42,15 +43,16 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public ProjectResDTO updateProject(ProjectReqDTO projectReqDTO) throws ResourceNotFoundException, CustomException {
-        try {
-            Project project = MAPPER.projectReqDTOToProject(projectReqDTO);
-            Project responseProject = projectDAO.updateProject(project);
-            ProjectResDTO projectResDTO = MAPPER.projectToProjectResDTO(responseProject);
-            return projectResDTO;
-        } catch (Exception e) {
-            log.error("addProject method exception", e);
-            throw e;
-        }
+        return null;
+//        try {
+//            Project project = MAPPER.projectReqDTOToProject(projectReqDTO);
+//            Project responseProject = projectDAO.updateProject(project);
+//            ProjectResDTO projectResDTO = MAPPER.projectToProjectResDTO(responseProject);
+//            return projectResDTO;
+//        } catch (Exception e) {
+//            log.error("addProject method exception", e);
+//            throw e;
+//        }
     }
 
     @Override

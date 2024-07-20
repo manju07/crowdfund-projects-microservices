@@ -73,10 +73,6 @@ public class User extends BaseEntity {
     private List<Project> projectSet = new ArrayList<>();
 
     @JsonBackReference
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private List<Contribute> contributes = new ArrayList<>();
-
-    @JsonBackReference
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, mappedBy = "user")
     private Wallet wallet;
 
@@ -123,13 +119,5 @@ public class User extends BaseEntity {
 
     public void removeProject(Project project) {
         projectSet.remove(project);
-    }
-
-    public void addContribute(Contribute contribute) {
-        this.contributes.add(contribute);
-    }
-
-    public void removeContribute(Contribute contribute) {
-        this.contributes.remove(contribute);
     }
 }

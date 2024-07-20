@@ -10,6 +10,7 @@ import com.crowdfund.projects.microservices.projectservice.mapper.TransactionMap
 import com.crowdfund.projects.microservices.projectservice.service.ContributeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,10 +23,10 @@ public class ContributeServiceImpl implements ContributeService {
     private ContributeDAO contributeDAO;
 
     @Override
-    public TransactionResDTO saveContribute(TransactionReqDTO transactionReqDTO) throws CustomException, ResourceNotFoundException {
+    public TransactionResDTO saveContribute(TransactionReqDTO transactionReqDTO, OAuth2Authentication authentication) throws CustomException, ResourceNotFoundException {
         try {
             Transaction transaction = MAPPER.transactionReqDTOToTransaction(transactionReqDTO);
-            Transaction savedTransaction = contributeDAO.saveContribute(transaction, transactionReqDTO.getProjectId());
+            Transaction savedTransaction = contributeDAO.saveContribute(transaction, transactionReqDTO.getProjectId(), authentication);
             TransactionResDTO transactionResDTO = MAPPER.transactionToTransactionResDTO(savedTransaction);
             return transactionResDTO;
         } catch (Exception e) {

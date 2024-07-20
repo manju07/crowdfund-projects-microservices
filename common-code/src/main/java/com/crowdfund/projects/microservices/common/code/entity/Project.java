@@ -51,22 +51,9 @@ public class Project extends BaseEntity {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-
-    @JsonBackReference
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
-    private List<Contribute> contributes = new ArrayList<>();
-
     @JsonBackReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
     private List<Transaction> transactionsList = new ArrayList<>();
-
-    public void addContribute(Contribute contribute) {
-        this.contributes.add(contribute);
-    }
-
-    public void removeContribute(Contribute contribute) {
-        this.contributes.remove(contribute);
-    }
 
     public void addTransaction(Transaction transaction) {
         this.transactionsList.add(transaction);

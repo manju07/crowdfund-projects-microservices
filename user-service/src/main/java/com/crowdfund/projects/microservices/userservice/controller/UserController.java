@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,12 +48,12 @@ public class UserController {
 
     @PostMapping("/donor")
     @ApiOperation(value = "donor signup", response = UserResDTO.class)
-    public ResponseEntity<UserResDTO> donorSignUp(@Valid @RequestBody UserReqDTO userAddDto)
+    public ResponseEntity<UserResDTO> donorSignUp(@Valid @RequestBody UserReqDTO userAddDto, OAuth2Authentication authentication)
             throws CustomException, ResourceNotFoundException {
         log.info("calling user donor signup API");
         validateUserAddDTO(userAddDto, UserRole.DONOR);
         User user = MAPPER.userAddDTOToUser(userAddDto);
-        User returnUser = userService.addUser(user);
+        User returnUser = userService.addUser(user, authentication);
         UserResDTO userResponse = MAPPER.userToUserResponse(returnUser);
         return new ResponseEntity<UserResDTO>(userResponse, HttpStatus.CREATED);
     }
@@ -60,12 +61,12 @@ public class UserController {
     @PostMapping("/innovator")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @ApiOperation(value = "innovator signup", response = UserResDTO.class)
-    public ResponseEntity<UserResDTO> innovatorSignUp(@Valid @RequestBody UserReqDTO userAddDto)
+    public ResponseEntity<UserResDTO> innovatorSignUp(@Valid @RequestBody UserReqDTO userAddDto, OAuth2Authentication authentication)
             throws CustomException, ResourceNotFoundException {
         log.info("calling user innovator signup API");
         validateUserAddDTO(userAddDto, UserRole.INNOVATOR);
         User user = MAPPER.userAddDTOToUser(userAddDto);
-        User returnUser = userService.addUser(user);
+        User returnUser = userService.addUser(user, authentication);
         UserResDTO userResponse = MAPPER.userToUserResponse(returnUser);
         return new ResponseEntity<UserResDTO>(userResponse, HttpStatus.CREATED);
     }

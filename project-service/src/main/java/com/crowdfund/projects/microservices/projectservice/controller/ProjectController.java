@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,10 +33,10 @@ public class ProjectController {
     @PostMapping
     @PreAuthorize("hasRole('ROLE_INNOVATOR')")
     @ApiOperation(value = "createProject", response = ProjectResDTO.class)
-    public ResponseEntity<ProjectResDTO> createProject(@Valid @RequestBody ProjectReqDTO projectReqDTO)
+    public ResponseEntity<ProjectResDTO> createProject(@Valid @RequestBody ProjectReqDTO projectReqDTO, OAuth2Authentication authentication)
             throws CustomException, ResourceNotFoundException {
         log.info("calling create project API");
-        ProjectResDTO projectResDTO = projectService.addProject(projectReqDTO);
+        ProjectResDTO projectResDTO = projectService.addProject(projectReqDTO, authentication);
         return new ResponseEntity<ProjectResDTO>(projectResDTO, HttpStatus.CREATED);
     }
 

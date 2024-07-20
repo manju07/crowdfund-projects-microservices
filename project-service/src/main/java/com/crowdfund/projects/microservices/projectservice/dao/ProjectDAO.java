@@ -5,9 +5,10 @@ import com.crowdfund.projects.microservices.common.code.entity.Project;
 import com.crowdfund.projects.microservices.common.code.exception.CustomException;
 import com.crowdfund.projects.microservices.common.code.exception.ResourceNotFoundException;
 import org.springframework.data.domain.Page;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 
 public interface ProjectDAO {
-    Project addProject(Project project) throws CustomException;
+    Project addProject(Project project, OAuth2Authentication authentication) throws CustomException;
 
     Project updateProject(Project project);
 

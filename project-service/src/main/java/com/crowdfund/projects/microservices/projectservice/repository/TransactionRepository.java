@@ -1,6 +1,5 @@
 package com.crowdfund.projects.microservices.projectservice.repository;
 
-import com.crowdfund.projects.microservices.common.code.entity.Contribute;
 import com.crowdfund.projects.microservices.common.code.entity.Transaction;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

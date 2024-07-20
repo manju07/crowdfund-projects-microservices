@@ -10,10 +10,10 @@ import com.crowdfund.projects.microservices.common.code.exception.CustomExceptio
 import com.crowdfund.projects.microservices.common.code.exception.ResourceNotFoundException;
 import com.crowdfund.projects.microservices.projectservice.dao.ContributeDAO;
 import com.crowdfund.projects.microservices.projectservice.repository.*;
-import com.crowdfund.projects.microservices.projectservice.util.UserData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,8 +23,6 @@ import java.util.Optional;
 @Slf4j
 public class ContributeDAOImpl implements ContributeDAO {
 
-    @Autowired
-    private ContributeRepository contributeRepository;
 
     @Autowired
     private TransactionRepository transactionRepository;
@@ -41,9 +39,9 @@ public class ContributeDAOImpl implements ContributeDAO {
 
     @Override
     @Transactional
-    public Transaction saveContribute(Transaction transaction, Long projectId) throws CustomException, ResourceNotFoundException {
+    public Transaction saveContribute(Transaction transaction, Long projectId, OAuth2Authentication authentication) throws CustomException, ResourceNotFoundException {
         try {
-            String userName = UserData.getUserName();
+            String userName = authentication.getName();
             Optional<User> userOptional = userRepository.findByUserName(userName);
 
             if (!userOptional.isPresent())
