@@ -1,5 +1,6 @@
 package com.crowdfund.projects.microservices.projectservice.service.impl;
 
+import com.crowdfund.projects.microservices.common.code.constant.ProjectStatus;
 import com.crowdfund.projects.microservices.common.code.dto.ProjectReqDTO;
 import com.crowdfund.projects.microservices.common.code.dto.ProjectResDTO;
 import com.crowdfund.projects.microservices.common.code.entity.Project;
@@ -8,12 +9,14 @@ import com.crowdfund.projects.microservices.common.code.exception.ResourceNotFou
 import com.crowdfund.projects.microservices.projectservice.dao.ProjectDAO;
 //import com.crowdfund.projects.microservices.projectservice.mapper.ProjectMapper;
 import com.crowdfund.projects.microservices.projectservice.mapper.ProjectMapper;
-import com.crowdfund.projects.microservices.projectservice.service.ContributeService;
 import com.crowdfund.projects.microservices.projectservice.service.ProjectService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @Slf4j
@@ -73,11 +76,12 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Page<Project> getAll(int offset, int limit) throws ResourceNotFoundException, CustomException {
+    public Page<ProjectResDTO> getAll(ProjectStatus projectStatus, int offset, int limit) throws ResourceNotFoundException, CustomException {
         try {
-//            List<Project> listOfProjects = projectDAO.getAll(offset, limit);
-//            return MAPPER.convert(listOfProjects);
-            return projectDAO.getAll(offset, limit);
+            Page<Project> pageProject = projectDAO.getAll(projectStatus, offset, limit);
+            List<ProjectResDTO> projectResDTOS = MAPPER.convert(pageProject.getContent());
+            PageImpl<ProjectResDTO> pageImpl = new PageImpl<>(projectResDTOS, pageProject.getPageable(), pageProject.getTotalElements());
+            return pageImpl;
         } catch (Exception e) {
             log.error("getProjectById method exception", e);
             throw e;

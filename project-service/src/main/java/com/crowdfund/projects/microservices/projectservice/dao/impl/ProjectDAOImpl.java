@@ -1,5 +1,6 @@
 package com.crowdfund.projects.microservices.projectservice.dao.impl;
 
+import com.crowdfund.projects.microservices.common.code.constant.ProjectStatus;
 import com.crowdfund.projects.microservices.common.code.entity.Project;
 import com.crowdfund.projects.microservices.common.code.entity.User;
 import com.crowdfund.projects.microservices.common.code.exception.CustomException;
@@ -57,6 +58,7 @@ public class ProjectDAOImpl implements ProjectDAO {
     }
 
     @Override
+    @Transactional
     public Project updateProject(Project project) {
         try {
             String userName = UserData.getUserName();
@@ -70,6 +72,7 @@ public class ProjectDAOImpl implements ProjectDAO {
     }
 
     @Override
+    @Transactional
     public boolean deleteProject(Long projectId) {
         try {
             projectRepository.deleteById(projectId);
@@ -95,12 +98,11 @@ public class ProjectDAOImpl implements ProjectDAO {
     }
 
     @Override
-    public Page<Project> getAll(int offset, int limit) {
+    public Page<Project> getAll(ProjectStatus projectStatus, int offset, int limit) {
         try {
-            Page<Project> projectPage = projectRepository.findAll(PageRequest.of(offset, limit));
+            Page<Project> projectPage = projectRepository.findAllByStatus(projectStatus, PageRequest.of(offset, limit));
 
             if (Objects.nonNull(projectPage) && (!projectPage.isEmpty())) {
-//                return projectPage.stream().collect(Collectors.toList());
                 return projectPage;
             }
             log.info("Project list is empty");

@@ -1,10 +1,10 @@
 package com.crowdfund.projects.microservices.common.code.entity;
 
 import com.crowdfund.projects.microservices.common.code.constant.PaymentStatus;
+import com.crowdfund.projects.microservices.common.code.constant.TransactionType;
 import com.crowdfund.projects.microservices.common.code.entity.base.BaseEntity;
 import lombok.Data;
 import lombok.ToString;
-import org.codehaus.jackson.annotate.JsonBackReference;
 import org.codehaus.jackson.annotate.JsonManagedReference;
 
 import javax.persistence.*;
@@ -12,11 +12,11 @@ import javax.persistence.*;
 /**
  * @author Manjunath Asundi
  */
-@Entity(name = "contribute")
-@Table(name = "contribute")
+@Entity(name = "transaction")
+@Table(name = "transaction")
 @Data
 @ToString
-public class Contribute extends BaseEntity {
+public class Transaction extends BaseEntity {
 
     @Id
     @GeneratedValue
@@ -29,13 +29,17 @@ public class Contribute extends BaseEntity {
     @Column(nullable = false)
     private PaymentStatus paymentStatus;
 
-    @JsonManagedReference
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "contribute_user_id", referencedColumnName = "id")
-    private User user;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TransactionType transactionType;
 
     @JsonManagedReference
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "wallet_id", referencedColumnName = "id")
+    private Wallet wallet;
+
+    @JsonManagedReference
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id", referencedColumnName = "id")
     private Project project;
 }

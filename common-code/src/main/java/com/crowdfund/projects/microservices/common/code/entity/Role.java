@@ -3,6 +3,7 @@ package com.crowdfund.projects.microservices.common.code.entity;
 import com.crowdfund.projects.microservices.common.code.constant.UserRole;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;

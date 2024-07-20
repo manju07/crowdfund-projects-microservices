@@ -4,15 +4,15 @@ import com.crowdfund.projects.microservices.common.code.constant.ProjectStatus;
 import com.crowdfund.projects.microservices.common.code.entity.base.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.codehaus.jackson.annotate.JsonManagedReference;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Manjunath Asundi
@@ -22,6 +22,8 @@ import java.util.Set;
 @SQLDelete(sql = "update project set is_deleted = true where id =?")
 @Where(clause = "is_deleted=false")
 @Data
+@NoArgsConstructor
+@ToString
 public class Project extends BaseEntity {
 
     @Id
@@ -54,12 +56,24 @@ public class Project extends BaseEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
     private List<Contribute> contributes = new ArrayList<>();
 
+    @JsonBackReference
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
+    private List<Transaction> transactionsList = new ArrayList<>();
+
     public void addContribute(Contribute contribute) {
         this.contributes.add(contribute);
     }
 
     public void removeContribute(Contribute contribute) {
         this.contributes.remove(contribute);
+    }
+
+    public void addTransaction(Transaction transaction) {
+        this.transactionsList.add(transaction);
+    }
+
+    public void removeTransaction(Transaction transaction) {
+        this.transactionsList.remove(transaction);
     }
 
     @Column(columnDefinition = "tinyint default 0")

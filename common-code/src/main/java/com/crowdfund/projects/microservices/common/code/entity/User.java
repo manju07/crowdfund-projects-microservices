@@ -5,16 +5,14 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.NamedQueries;
 import org.hibernate.annotations.NamedQuery;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * User Entity
@@ -28,6 +26,7 @@ import java.util.Set;
 @SQLDelete(sql = "update user set is_deleted=true where id =?")
 @Where(clause = "is_deleted=false")
 @Data
+@ToString
 @NoArgsConstructor
 public class User extends BaseEntity {
 
@@ -71,11 +70,16 @@ public class User extends BaseEntity {
 
     @JsonBackReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private List<Project> projectSet = new LinkedList<>();
+    private List<Project> projectSet = new ArrayList<>();
 
     @JsonBackReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private List<Contribute> contributes = new LinkedList<>();
+    private List<Contribute> contributes = new ArrayList<>();
+
+    @JsonBackReference
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, mappedBy = "user")
+    private Wallet wallet;
+
 
     @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

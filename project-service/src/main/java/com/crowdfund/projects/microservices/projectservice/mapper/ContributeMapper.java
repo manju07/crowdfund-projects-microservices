@@ -1,3 +1,4 @@
+/*
 package com.crowdfund.projects.microservices.projectservice.mapper;
 
 import com.crowdfund.projects.microservices.common.code.constant.PaymentStatus;
@@ -18,9 +19,10 @@ import java.util.List;
 public interface ContributeMapper {
     ContributeMapper INSTANCE = Mappers.getMapper(ContributeMapper.class);
 
-    @Mapping(target = "paymentStatus", constant = "COMPLETED", resultType = PaymentStatus.class)
+    @Mapping(target = "paymentStatus", constant = "SUCCESS", resultType = PaymentStatus.class)
     Contribute contributeReqDTOToProject(ContributeReqDTO contributeReqDTO);
 
     ContributeResDTO contributeToContributeResDTO(Contribute project);
 
 }
+*/

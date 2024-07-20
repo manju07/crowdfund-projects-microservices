@@ -1,11 +1,10 @@
 package com.crowdfund.projects.microservices.projectservice.controller;
 
+import com.crowdfund.projects.microservices.common.code.constant.ProjectStatus;
 import com.crowdfund.projects.microservices.common.code.dto.ProjectReqDTO;
 import com.crowdfund.projects.microservices.common.code.dto.ProjectResDTO;
-import com.crowdfund.projects.microservices.common.code.entity.Project;
 import com.crowdfund.projects.microservices.common.code.exception.CustomException;
 import com.crowdfund.projects.microservices.common.code.exception.ResourceNotFoundException;
-import com.crowdfund.projects.microservices.projectservice.service.ContributeService;
 import com.crowdfund.projects.microservices.projectservice.service.ProjectService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,7 +14,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,13 +51,12 @@ public class ProjectController {
 
     @GetMapping
     @PreAuthorize("hasRole('ROLE_INNOVATOR') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DONOR')")
-    @ApiOperation(value = "getAllProjects", response = ProjectResDTO.class)
-    public ResponseEntity<Page<Project>> getAllProjects(@RequestParam("offset") int offset, @RequestParam("limit") int limit)
+    @ApiOperation(value = "getAllProjects", response = Page.class)
+    public ResponseEntity<Page<ProjectResDTO>> getAllProjects(@RequestParam("projectStatus") ProjectStatus projectStatus, @RequestParam("offset") int offset, @RequestParam("limit") int limit)
             throws CustomException, ResourceNotFoundException {
         log.info("calling getAllProjects API");
-//        List<ProjectResDTO> projectResDTOList = projectService.getAll(offset, limit);
-        Page<Project> projectPage = projectService.getAll(offset, limit);
-        return ResponseEntity.ok(projectPage);
+        Page<ProjectResDTO> page = projectService.getAll(projectStatus, offset, limit);
+        return new ResponseEntity<>(page, HttpStatus.OK);
     }
 
 }

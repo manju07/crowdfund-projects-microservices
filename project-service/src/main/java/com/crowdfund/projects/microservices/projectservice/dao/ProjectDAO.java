@@ -1,5 +1,6 @@
 package com.crowdfund.projects.microservices.projectservice.dao;
 
+import com.crowdfund.projects.microservices.common.code.constant.ProjectStatus;
 import com.crowdfund.projects.microservices.common.code.entity.Project;
 import com.crowdfund.projects.microservices.common.code.exception.CustomException;
 import com.crowdfund.projects.microservices.common.code.exception.ResourceNotFoundException;
@@ -14,6 +15,6 @@ public interface ProjectDAO {
 
     Project getProjectById(Long projectId) throws ResourceNotFoundException;
 
-    Page<Project> getAll(int offset, int limit);
+    Page<Project> getAll(ProjectStatus projectStatus, int offset, int limit);
 
 }

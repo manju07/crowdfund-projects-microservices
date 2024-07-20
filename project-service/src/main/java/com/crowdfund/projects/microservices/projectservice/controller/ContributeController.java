@@ -1,10 +1,7 @@
 package com.crowdfund.projects.microservices.projectservice.controller;
 
 
-import com.crowdfund.projects.microservices.common.code.dto.ContributeReqDTO;
-import com.crowdfund.projects.microservices.common.code.dto.ContributeResDTO;
-import com.crowdfund.projects.microservices.common.code.dto.ProjectReqDTO;
-import com.crowdfund.projects.microservices.common.code.dto.ProjectResDTO;
+import com.crowdfund.projects.microservices.common.code.dto.*;
 import com.crowdfund.projects.microservices.common.code.exception.CustomException;
 import com.crowdfund.projects.microservices.common.code.exception.ResourceNotFoundException;
 import com.crowdfund.projects.microservices.projectservice.service.ContributeService;
@@ -35,12 +32,12 @@ public class ContributeController {
 
     @PostMapping
     @PreAuthorize("hasRole('ROLE_INNOVATOR') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DONOR')")
-    @ApiOperation(value = "saveContribute", response = ProjectResDTO.class)
-    public ResponseEntity<ContributeResDTO> saveContribute(@Valid @RequestBody ContributeReqDTO contributeReqDTO)
+    @ApiOperation(value = "saveContribute", response = TransactionResDTO.class)
+    public ResponseEntity<TransactionResDTO> saveContribute(@Valid @RequestBody TransactionReqDTO transactionReqDTO)
             throws CustomException, ResourceNotFoundException {
         log.info("calling save contribute API");
-        ContributeResDTO contributeResDTO = contributeService.saveContribute(contributeReqDTO);
-        return new ResponseEntity<ContributeResDTO>(contributeResDTO, HttpStatus.CREATED);
+        TransactionResDTO transactionResDTO = contributeService.saveContribute(transactionReqDTO);
+        return new ResponseEntity<TransactionResDTO>(transactionResDTO, HttpStatus.CREATED);
     }
 
 }

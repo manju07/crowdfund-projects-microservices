@@ -1,15 +1,15 @@
 package com.crowdfund.projects.microservices.projectservice.dao.impl;
 
 import com.crowdfund.projects.microservices.common.code.constant.ProjectStatus;
-import com.crowdfund.projects.microservices.common.code.entity.Contribute;
+import com.crowdfund.projects.microservices.common.code.constant.TransactionType;
 import com.crowdfund.projects.microservices.common.code.entity.Project;
+import com.crowdfund.projects.microservices.common.code.entity.Transaction;
 import com.crowdfund.projects.microservices.common.code.entity.User;
+import com.crowdfund.projects.microservices.common.code.entity.Wallet;
 import com.crowdfund.projects.microservices.common.code.exception.CustomException;
 import com.crowdfund.projects.microservices.common.code.exception.ResourceNotFoundException;
 import com.crowdfund.projects.microservices.projectservice.dao.ContributeDAO;
-import com.crowdfund.projects.microservices.projectservice.repository.ContributeRepository;
-import com.crowdfund.projects.microservices.projectservice.repository.ProjectRepository;
-import com.crowdfund.projects.microservices.projectservice.repository.UserRepository;
+import com.crowdfund.projects.microservices.projectservice.repository.*;
 import com.crowdfund.projects.microservices.projectservice.util.UserData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.Optional;
 
 @Component
@@ -29,15 +27,21 @@ public class ContributeDAOImpl implements ContributeDAO {
     private ContributeRepository contributeRepository;
 
     @Autowired
+    private TransactionRepository transactionRepository;
+
+    @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private ProjectRepository projectRepository;
 
+    @Autowired
+    private WalletRepository walletRepository;
+
 
     @Override
     @Transactional
-    public Contribute saveContribute(Contribute contribute, Long projectId) throws CustomException, ResourceNotFoundException {
+    public Transaction saveContribute(Transaction transaction, Long projectId) throws CustomException, ResourceNotFoundException {
         try {
             String userName = UserData.getUserName();
             Optional<User> userOptional = userRepository.findByUserName(userName);
@@ -45,7 +49,7 @@ public class ContributeDAOImpl implements ContributeDAO {
             if (!userOptional.isPresent())
                 throw new CustomException("Invalid User", HttpStatus.NOT_FOUND, "User does not exist");
             User user = userOptional.get();
-            contribute.setUser(user);
+//            contribute.setUser(user);
 
             Optional<Project> projectOptional = projectRepository.findById(projectId);
 
@@ -57,20 +61,41 @@ public class ContributeDAOImpl implements ContributeDAO {
             if (!ProjectStatus.IN_PROGRESS.equals(project.getStatus()))
                 throw new CustomException("Invalid Project status", HttpStatus.BAD_REQUEST, "Project not in valid state");
 
-            project.setReceivedAmount(project.getReceivedAmount() + contribute.getAmount());
+            Optional<Wallet> walletOptional = walletRepository.findByUserId(user.getId());
+            if (!walletOptional.isPresent()) {
+                throw new CustomException("Invalid Wallet", HttpStatus.NOT_FOUND, "Wallet not found");
+            }
+
+            Wallet wallet = walletOptional.get();
+            Float balance = wallet.getBalance();
+
+            if (transaction.getAmount() > balance) {
+                throw new CustomException("Insufficient balance", HttpStatus.BAD_REQUEST, "You don't have required money in your wallet");
+            }
+
+            balance = balance - transaction.getAmount();
+            wallet.setBalance(balance);
+            wallet.addTransaction(transaction);
+            log.info("amount deducted user:{} from wallet", userName);
+
+            float receivedAmount = project.getReceivedAmount() + transaction.getAmount();
+            project.setReceivedAmount(receivedAmount);
 
             if (project.getReceivedAmount() >= project.getRequiredAmount() ) {
                 project.setStatus(ProjectStatus.COMPLETED);
             }
 
-            project.addContribute(contribute);
-            contribute.setProject(project);
-            user.addContribute(contribute);
+            project.addTransaction(transaction);
 
-            contribute.setCreatedBy(userName);
-            contribute.setUpdatedBy(userName);
+            transaction.setProject(project);
+            transaction.setWallet(wallet);
+            transaction.setTransactionType(TransactionType.DEBIT);
+//            user.addContribute(transaction);
 
-            return contributeRepository.save(contribute);
+            transaction.setCreatedBy(userName);
+            transaction.setUpdatedBy(userName);
+
+            return transactionRepository.save(transaction);
         } catch (Exception e) {
             log.error("ContributeDAOImpl exception", e);
             throw e;

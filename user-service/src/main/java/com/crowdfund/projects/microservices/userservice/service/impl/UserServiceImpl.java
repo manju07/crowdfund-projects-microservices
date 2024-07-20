@@ -3,6 +3,7 @@ package com.crowdfund.projects.microservices.userservice.service.impl;
 import com.crowdfund.projects.microservices.common.code.entity.Role;
 import com.crowdfund.projects.microservices.common.code.entity.User;
 import com.crowdfund.projects.microservices.common.code.constant.UserRole;
+import com.crowdfund.projects.microservices.common.code.entity.Wallet;
 import com.crowdfund.projects.microservices.common.code.exception.CustomException;
 import com.crowdfund.projects.microservices.common.code.exception.ResourceNotFoundException;
 import com.crowdfund.projects.microservices.userservice.repository.UserRepository;
@@ -59,6 +60,11 @@ public class UserServiceImpl implements UserService {
             user.setIsEnabled(true);
             user.setCreatedBy(userName);
             user.setUpdatedBy(userName);
+
+            Wallet wallet = new Wallet();
+            wallet.setBalance(10000f);
+            wallet.setUser(user);
+            user.setWallet(wallet);
 
             User savedUser = userRepository.save(user);
             return savedUser;

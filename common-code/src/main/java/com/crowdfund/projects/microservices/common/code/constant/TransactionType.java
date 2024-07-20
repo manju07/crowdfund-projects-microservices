@@ -1,5 +1,5 @@
 package com.crowdfund.projects.microservices.common.code.constant;
 
-public enum PaymentStatus {
-    IN_PROGRESS, DENIED, SUCCESS
+public enum TransactionType {
+    DEBIT, CREDIT
 }
