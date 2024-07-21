@@ -23,7 +23,7 @@
 		<module>cloud-config-server</module>
 		<module>eureka-naming-server</module>
 		<module>common-code</module>
-<!--		<module>oauth2-authentication-server</module>-->
+		<module>oauth2-authentication-server</module>
 		<module>project-service</module>
 		<module>user-service</module>
 		<module>zuul-api-gateway-server</module>
