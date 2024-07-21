@@ -26,7 +26,7 @@
       <module name="common-code" options="-parameters" />
       <module name="eureka-naming-server" options="-parameters" />
       <module name="oauth2-authentication-server" options="-parameters" />
-      <module name="project-service" options="-parameters" />
+      <module name="project-service" options="-parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=false -Amapstruct.suppressGeneratorTimestamp=false -Amapstruct.defaultInjectionStrategy=constructor" />
       <module name="user-service" options="-parameters" />
       <module name="zuul-api-gateway-server" options="-parameters" />
     </option>
