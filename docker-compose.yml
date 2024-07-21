@@ -2,6 +2,24 @@ version: "3"
 networks: 
   crowd-projects-app-network:
 services:
+
+  mysql-db:
+    container_name: mysql-db
+    image: mysql/mysql-server:latest
+    # restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: sergey 
+      MYSQL_DATABASE: projects_db_docker
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_TCP_PORT: 3307
+    ports:
+      - 3307:3307
+    expose:
+      - 3307
+    networks: 
+      - crowd-projects-app-network
+
   cloud-config-server:
     container_name: cloud-config-server
     image: manju0707/crowd-projects-app-microservice-docker-cloud-config-server:0.0.1-SNAPSHOT
@@ -49,11 +67,12 @@ services:
   oauth2-authentication-server:
     container_name: oauth2-authentication-server
     image: manju0707/crowd-projects-app-microservice-docker-oauth2-authentication-server:0.0.1-SNAPSHOT
-    # build: ./oauth2-authentication-server
+    build: ./oauth2-authentication-server
     ports:
       - "9898:9898"
     # restart: always
     depends_on:
+      - mysql-db
       - cloud-config-server
       - eureka-naming-server
       - zuul-api-gateway-server
@@ -72,14 +91,16 @@ services:
   user-service:
     container_name: user-service
     image: manju0707/crowd-projects-app-microservice-docker-user-service:0.0.1-SNAPSHOT
-    # build: ./user-service
+    build: ./user-service
     ports:
       - "9000:9000"
     # restart: always
     depends_on:
+      - mysql-db
       - cloud-config-server
       - eureka-naming-server
       - zuul-api-gateway-server
+      - oauth2-authentication-server
     networks:
       - crowd-projects-app-network
     environment:
@@ -95,14 +116,16 @@ services:
   project-service:
     container_name: project-service
     image: manju0707/crowd-projects-app-microservice-docker-project-service:0.0.1-SNAPSHOT
-    # build: ./project-service
+    build: ./project-service
     ports:
       - "9900:9900"
     # restart: always
     depends_on:
+      - mysql-db
       - cloud-config-server
       - eureka-naming-server
       - zuul-api-gateway-server
+      - oauth2-authentication-server
     networks:
       - crowd-projects-app-network
     environment:
