@@ -17,7 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -75,7 +74,7 @@ public class TransferMoneyToInnovatorJob {
             log.debug("debitTransactionFromAdminWallet:{}", debitTransactionFromAdminWallet);
             log.debug("creditTransactionToInnovatorWallet:{}", creditTransactionToInnovatorWallet);
 
-            project.setStatus(ProjectStatus.ARCHIEVED);
+            project.setStatus(ProjectStatus.ARCHIVED);
             projectRepository.save(project);
         } catch (CustomException e) {
             log.error("CustomException", e);
