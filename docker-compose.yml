@@ -1,33 +1,33 @@
 version: "3"
 networks: 
-  sample-app-network:
+  crowd-projects-app-network:
 services:
   cloud-config-server:
     container_name: cloud-config-server
-    image: manju0707/sample-springboot-microservice-docker-cloud-config-server:0.0.1-SNAPSHOT
-    # build: ./cloud-config-server
+    image: manju0707/crowd-projects-app-microservice-docker-cloud-config-server:0.0.1-SNAPSHOT
+    build: ./cloud-config-server
     ports:
       - "8888:8888"
     # restart: always
     networks: 
-      - sample-app-network
+      - crowd-projects-app-network
 
   eureka-naming-server:
     container_name: eureka-naming-server
-    image: manju0707/sample-springboot-microservice-docker-eureka-naming-server:0.0.1-SNAPSHOT
-    # build: ./eureka-naming-server
+    image: manju0707/crowd-projects-app-microservice-docker-eureka-naming-server:0.0.1-SNAPSHOT
+    build: ./eureka-naming-server
     ports:
       - "8761:8761"
     # restart: always
     depends_on:
       - cloud-config-server
     networks: 
-      - sample-app-network
+      - crowd-projects-app-network
 
   zuul-api-gateway-server:
     container_name: zuul-api-gateway-server
-    image: manju0707/sample-springboot-microservice-docker-zuul-api-gateway-server:0.0.1-SNAPSHOT
-    # build: ./zuul-api-gateway-server
+    image: manju0707/crowd-projects-app-microservice-docker-zuul-api-gateway-server:0.0.1-SNAPSHOT
+    build: ./zuul-api-gateway-server
     ports:
       - "8765:8765"
     # restart: always
@@ -35,7 +35,7 @@ services:
       - cloud-config-server
       - eureka-naming-server
     networks:
-      - sample-app-network
+      - crowd-projects-app-network
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eurekaServer:e12ur810Re2kA@eureka-naming-server:8761/eureka
       - CLOUD_CONFIG_SERVER_URL=http://cloud-config-server:8888
@@ -48,7 +48,7 @@ services:
 
   oauth2-authentication-server:
     container_name: oauth2-authentication-server
-    image: manju0707/sample-springboot-microservice-docker-oauth2-authentication-server:0.0.1-SNAPSHOT
+    image: manju0707/crowd-projects-app-microservice-docker-oauth2-authentication-server:0.0.1-SNAPSHOT
     # build: ./oauth2-authentication-server
     ports:
       - "9898:9898"
@@ -58,7 +58,7 @@ services:
       - eureka-naming-server
       - zuul-api-gateway-server
     networks:
-      - sample-app-network
+      - crowd-projects-app-network
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eurekaServer:e12ur810Re2kA@eureka-naming-server:8761/eureka
       - CLOUD_CONFIG_SERVER_URL=http://cloud-config-server:8888
@@ -71,7 +71,7 @@ services:
 
   user-service:
     container_name: user-service
-    image: manju0707/sample-springboot-microservice-docker-user-service:0.0.1-SNAPSHOT
+    image: manju0707/crowd-projects-app-microservice-docker-user-service:0.0.1-SNAPSHOT
     # build: ./user-service
     ports:
       - "9000:9000"
@@ -81,7 +81,7 @@ services:
       - eureka-naming-server
       - zuul-api-gateway-server
     networks:
-      - sample-app-network
+      - crowd-projects-app-network
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eurekaServer:e12ur810Re2kA@eureka-naming-server:8761/eureka
       - CLOUD_CONFIG_SERVER_URL=http://cloud-config-server:8888
@@ -94,7 +94,7 @@ services:
 
   project-service:
     container_name: project-service
-    image: manju0707/sample-springboot-microservice-docker-project-service:0.0.1-SNAPSHOT
+    image: manju0707/crowd-projects-app-microservice-docker-project-service:0.0.1-SNAPSHOT
     # build: ./project-service
     ports:
       - "9900:9900"
@@ -104,7 +104,7 @@ services:
       - eureka-naming-server
       - zuul-api-gateway-server
     networks:
-      - sample-app-network
+      - crowd-projects-app-network
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eurekaServer:e12ur810Re2kA@eureka-naming-server:8761/eureka
       - CLOUD_CONFIG_SERVER_URL=http://cloud-config-server:8888

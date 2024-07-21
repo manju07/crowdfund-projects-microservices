@@ -76,7 +76,7 @@
             <!--					</execution>-->
             <!--				</executions>-->
             <!--				<configuration>-->
-            <!--					<repository>manju0707/sample-springboot-microservice-docker-${project.artifactId}</repository>-->
+            <!--					<repository>manju0707/crowd-projects-app-microservice-docker-${project.artifactId}</repository>-->
             <!--					<tag>${project.version}</tag>-->
             <!--					<buildArgs>-->
             <!--						<JAR_FILE>${project.build.finalName}.jar</JAR_FILE>-->
