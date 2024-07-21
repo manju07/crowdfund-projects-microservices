@@ -11,7 +11,10 @@ import com.crowdfund.projects.microservices.common.code.exception.CustomExceptio
 import com.crowdfund.projects.microservices.common.code.exception.ResourceNotFoundException;
 import com.crowdfund.projects.microservices.common.code.util.UniqueIDGenerator;
 import com.crowdfund.projects.microservices.projectservice.dao.ContributeDAO;
-import com.crowdfund.projects.microservices.projectservice.repository.*;
+import com.crowdfund.projects.microservices.projectservice.repository.ProjectRepository;
+import com.crowdfund.projects.microservices.projectservice.repository.TransactionRepository;
+import com.crowdfund.projects.microservices.projectservice.repository.UserRepository;
+import com.crowdfund.projects.microservices.projectservice.repository.WalletRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -106,7 +109,7 @@ public class ContributeDAOImpl implements ContributeDAO {
         float receivedAmount = project.getReceivedAmount() + debitTransaction.getAmount();
         project.setReceivedAmount(receivedAmount);
 
-        if (project.getReceivedAmount() >= project.getRequiredAmount() ) {
+        if (project.getReceivedAmount() >= project.getRequiredAmount()) {
             project.setStatus(ProjectStatus.COMPLETED);
         }
 

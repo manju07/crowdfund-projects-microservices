@@ -1,8 +1,6 @@
 package com.crowdfund.projects.microservices.projectservice.mapper;
 
 import com.crowdfund.projects.microservices.common.code.constant.PaymentStatus;
-import com.crowdfund.projects.microservices.common.code.dto.ContributeReqDTO;
-import com.crowdfund.projects.microservices.common.code.dto.ContributeResDTO;
 import com.crowdfund.projects.microservices.common.code.dto.TransactionReqDTO;
 import com.crowdfund.projects.microservices.common.code.dto.TransactionResDTO;
 import com.crowdfund.projects.microservices.common.code.entity.Transaction;
