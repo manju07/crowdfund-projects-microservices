@@ -64,7 +64,7 @@ public class ContributeDAOImpl implements ContributeDAO {
             String transactionId = UniqueIDGenerator.generateUniqueID();
 
             Transaction debitTransaction = debitMoneyFromDonorWallet(transaction, userName, user, project, transactionId);
-            Transaction creditTransaction = creditMoneyToAdminWallet(debitTransaction);
+            Transaction creditTransaction = creditMoneyToAdminWallet(debitTransaction, userName);
             log.debug("username:{}, debitTransaction:{}", userName, debitTransaction);
             log.debug("username:{}, creditTransaction:{}", userName, creditTransaction);
             return debitTransaction;
@@ -115,7 +115,7 @@ public class ContributeDAOImpl implements ContributeDAO {
         return transactionRepository.save(debitTransaction);
     }
 
-    private Transaction creditMoneyToAdminWallet(Transaction debitTransaction) {
+    private Transaction creditMoneyToAdminWallet(Transaction debitTransaction, String userName) {
         Optional<Wallet> adminWalletOptional = walletRepository.findByUserId(1L);
         Wallet adminWallet = adminWalletOptional.get();
 
@@ -126,6 +126,8 @@ public class ContributeDAOImpl implements ContributeDAO {
         creditTransaction.setAmount(debitTransaction.getAmount());
         creditTransaction.setPaymentStatus(PaymentStatus.SUCCESS);
         creditTransaction.setTransactionId(debitTransaction.getTransactionId());
+        creditTransaction.setCreatedBy(userName);
+        creditTransaction.setUpdatedBy(userName);
 
         Float adminBalance = adminWallet.getBalance();
         adminWallet.setBalance(adminBalance + debitTransaction.getAmount());

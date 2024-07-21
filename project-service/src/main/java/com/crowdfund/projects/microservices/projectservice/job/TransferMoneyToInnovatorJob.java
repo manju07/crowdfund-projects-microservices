@@ -43,7 +43,7 @@ public class TransferMoneyToInnovatorJob {
     @Autowired
     private TransactionRepository transactionRepository;
 
-    @Scheduled(cron = "* */2 * * * *")
+    @Scheduled(cron = "*/5 * * * * ?")
     public void transferMoneyToInnovator() throws InterruptedException, CustomException {
         try {
             log.info(
@@ -115,9 +115,8 @@ public class TransferMoneyToInnovatorJob {
         project.addTransaction(debitTransaction);
 
         try {
-            Wallet walletSave = walletRepository.save(adminWallet);
-            Transaction save = transactionRepository.save(debitTransaction);
-            return save;
+            walletRepository.save(adminWallet);
+            return transactionRepository.save(debitTransaction);
         } catch (Exception e) {
             throw e;
         }
@@ -164,17 +163,11 @@ public class TransferMoneyToInnovatorJob {
         log.info("amount credited to innovator wallet username:{} ", userName);
 
         try {
-            Wallet innovatorWalletSave = walletRepository.save(innovatorWallet);
-            Transaction save = transactionRepository.save(creditTransaction);
-            return save;
+            walletRepository.save(innovatorWallet);
+            return transactionRepository.save(creditTransaction);
         } catch (Exception e) {
             throw e;
         }
-    }
-
-    public static void main(String[] args) throws CustomException, InterruptedException {
-        TransferMoneyToInnovatorJob transferMoneyToInnovatorJob = new TransferMoneyToInnovatorJob();
-        transferMoneyToInnovatorJob.transferMoneyToInnovator();
     }
 
 }
