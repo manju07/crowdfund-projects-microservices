@@ -1,7 +1,5 @@
 package com.crowdfund.projects.microservices.oauth2authenticationserver.config;
 
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,8 +13,11 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
+import javax.sql.DataSource;
+
 /**
  * Authorization server
+ *
  * @author Manjunath A
  */
 @Configuration
@@ -28,7 +29,7 @@ public class AuthorizationServerConfig implements AuthorizationServerConfigurer 
 
     @Autowired
     private DataSource dataSource;
-    
+
     @Autowired
     private AuthenticationManager authenticationManager;
 

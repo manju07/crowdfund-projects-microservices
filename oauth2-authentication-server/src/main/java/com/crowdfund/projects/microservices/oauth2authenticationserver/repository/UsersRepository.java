@@ -1,12 +1,14 @@
 package com.crowdfund.projects.microservices.oauth2authenticationserver.repository;
 
-import java.util.Optional;
-
 import com.crowdfund.projects.microservices.common.code.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
+
 /**
  * User Repository
+ *
  * @author Manjunath Asundi
  */
 @Repository

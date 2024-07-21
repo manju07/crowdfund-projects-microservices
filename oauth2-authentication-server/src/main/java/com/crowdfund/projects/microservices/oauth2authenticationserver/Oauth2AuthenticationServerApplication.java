@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 @EntityScan(basePackages = {"com.crowdfund.projects.microservices.common.code.entity"})
 public class Oauth2AuthenticationServerApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(Oauth2AuthenticationServerApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(Oauth2AuthenticationServerApplication.class, args);
+    }
 }

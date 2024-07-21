@@ -1,16 +1,17 @@
 package com.crowdfund.projects.microservices.oauth2authenticationserver.entity;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import com.crowdfund.projects.microservices.common.code.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 /**
  * CustomUserDetails
+ *
  * @author Manjunath Asundi
  */
 public class CustomUserDetails extends User implements UserDetails {

@@ -1,19 +1,19 @@
 package com.crowdfund.projects.microservices.oauth2authenticationserver.service;
 
-import java.util.Optional;
-
 import com.crowdfund.projects.microservices.common.code.entity.User;
 import com.crowdfund.projects.microservices.oauth2authenticationserver.entity.CustomUserDetails;
 import com.crowdfund.projects.microservices.oauth2authenticationserver.repository.UsersRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 /**
  * CustomUserDetailsService
+ *
  * @author Manjunath Asundi
  */
 @Service
