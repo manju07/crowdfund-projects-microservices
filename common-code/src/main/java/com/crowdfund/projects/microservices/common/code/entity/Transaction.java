@@ -8,6 +8,7 @@ import lombok.ToString;
 import org.codehaus.jackson.annotate.JsonManagedReference;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 /**
  * @author Manjunath Asundi
@@ -33,8 +34,11 @@ public class Transaction extends BaseEntity {
     @Column(nullable = false)
     private TransactionType transactionType;
 
+    @Column(nullable = false)
+    private String transactionId;
+
     @JsonManagedReference
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "wallet_id", referencedColumnName = "id")
     private Wallet wallet;
 

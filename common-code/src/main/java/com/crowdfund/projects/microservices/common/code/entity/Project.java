@@ -52,7 +52,7 @@ public class Project extends BaseEntity {
     private User user;
 
     @JsonBackReference
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "project")
     private List<Transaction> transactionsList = new ArrayList<>();
 
     public void addTransaction(Transaction transaction) {

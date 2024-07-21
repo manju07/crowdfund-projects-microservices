@@ -1,5 +1,6 @@
 package com.crowdfund.projects.microservices.projectservice.dao.impl;
 
+import com.crowdfund.projects.microservices.common.code.constant.PaymentStatus;
 import com.crowdfund.projects.microservices.common.code.constant.ProjectStatus;
 import com.crowdfund.projects.microservices.common.code.constant.TransactionType;
 import com.crowdfund.projects.microservices.common.code.entity.Project;
@@ -8,6 +9,7 @@ import com.crowdfund.projects.microservices.common.code.entity.User;
 import com.crowdfund.projects.microservices.common.code.entity.Wallet;
 import com.crowdfund.projects.microservices.common.code.exception.CustomException;
 import com.crowdfund.projects.microservices.common.code.exception.ResourceNotFoundException;
+import com.crowdfund.projects.microservices.common.code.util.UniqueIDGenerator;
 import com.crowdfund.projects.microservices.projectservice.dao.ContributeDAO;
 import com.crowdfund.projects.microservices.projectservice.repository.*;
 import lombok.extern.slf4j.Slf4j;
@@ -43,60 +45,92 @@ public class ContributeDAOImpl implements ContributeDAO {
         try {
             String userName = authentication.getName();
             Optional<User> userOptional = userRepository.findByUserName(userName);
-
-            if (!userOptional.isPresent())
-                throw new CustomException("Invalid User", HttpStatus.NOT_FOUND, "User does not exist");
             User user = userOptional.get();
-//            contribute.setUser(user);
 
             Optional<Project> projectOptional = projectRepository.findById(projectId);
 
-            if (!projectOptional.isPresent())
+            if (!projectOptional.isPresent()) {
+                log.debug("Project does not exist with id:{}", projectId);
                 throw new ResourceNotFoundException("Project does not exist with id = " + projectId);
+            }
 
             Project project = projectOptional.get();
 
-            if (!ProjectStatus.IN_PROGRESS.equals(project.getStatus()))
+            if (!ProjectStatus.IN_PROGRESS.equals(project.getStatus())) {
+                log.debug("Project status is incorrect,  ProjectId:{}, ProjectStatus:{}", projectId, project.getStatus());
                 throw new CustomException("Invalid Project status", HttpStatus.BAD_REQUEST, "Project not in valid state");
-
-            Optional<Wallet> walletOptional = walletRepository.findByUserId(user.getId());
-            if (!walletOptional.isPresent()) {
-                throw new CustomException("Invalid Wallet", HttpStatus.NOT_FOUND, "Wallet not found");
             }
 
-            Wallet wallet = walletOptional.get();
-            Float balance = wallet.getBalance();
+            String transactionId = UniqueIDGenerator.generateUniqueID();
 
-            if (transaction.getAmount() > balance) {
-                throw new CustomException("Insufficient balance", HttpStatus.BAD_REQUEST, "You don't have required money in your wallet");
-            }
-
-            balance = balance - transaction.getAmount();
-            wallet.setBalance(balance);
-            wallet.addTransaction(transaction);
-            log.info("amount deducted user:{} from wallet", userName);
-
-            float receivedAmount = project.getReceivedAmount() + transaction.getAmount();
-            project.setReceivedAmount(receivedAmount);
-
-            if (project.getReceivedAmount() >= project.getRequiredAmount() ) {
-                project.setStatus(ProjectStatus.COMPLETED);
-            }
-
-            project.addTransaction(transaction);
-
-            transaction.setProject(project);
-            transaction.setWallet(wallet);
-            transaction.setTransactionType(TransactionType.DEBIT);
-//            user.addContribute(transaction);
-
-            transaction.setCreatedBy(userName);
-            transaction.setUpdatedBy(userName);
-
-            return transactionRepository.save(transaction);
+            Transaction debitTransaction = debitMoneyFromDonorWallet(transaction, userName, user, project, transactionId);
+            Transaction creditTransaction = creditMoneyToAdminWallet(debitTransaction);
+            log.debug("username:{}, debitTransaction:{}", userName, debitTransaction);
+            log.debug("username:{}, creditTransaction:{}", userName, creditTransaction);
+            return debitTransaction;
         } catch (Exception e) {
-            log.error("ContributeDAOImpl exception", e);
+            log.error("ContributeDAOImpl.saveContribute() exception", e);
             throw e;
         }
+    }
+
+    private Transaction debitMoneyFromDonorWallet(Transaction debitTransaction, String userName, User user, Project project, String transactionId) throws CustomException {
+
+        Optional<Wallet> donorWalletOptional = walletRepository.findByUserId(user.getId());
+        if (!donorWalletOptional.isPresent()) {
+            log.debug("Wallet not found for username:{}", userName);
+            throw new CustomException("Invalid Wallet", HttpStatus.NOT_FOUND, "Wallet not found");
+        }
+
+        Wallet donorWallet = donorWalletOptional.get();
+        Float balance = donorWallet.getBalance();
+
+        if (debitTransaction.getAmount() > balance) {
+            log.debug("Insufficient balance for username:{}", userName);
+            throw new CustomException("Insufficient balance", HttpStatus.BAD_REQUEST, "You don't have required money in your wallet");
+        }
+
+        balance = balance - debitTransaction.getAmount();
+        donorWallet.setBalance(balance);
+        donorWallet.addTransaction(debitTransaction);
+
+        debitTransaction.setWallet(donorWallet);
+        debitTransaction.setProject(project);
+        debitTransaction.setTransactionType(TransactionType.DEBIT);
+        debitTransaction.setCreatedBy(userName);
+        debitTransaction.setUpdatedBy(userName);
+        debitTransaction.setTransactionId(transactionId);
+
+        log.info("amount debited from donor wallet username:{} ", userName);
+
+        float receivedAmount = project.getReceivedAmount() + debitTransaction.getAmount();
+        project.setReceivedAmount(receivedAmount);
+
+        if (project.getReceivedAmount() >= project.getRequiredAmount() ) {
+            project.setStatus(ProjectStatus.COMPLETED);
+        }
+
+        project.addTransaction(debitTransaction);
+
+        return transactionRepository.save(debitTransaction);
+    }
+
+    private Transaction creditMoneyToAdminWallet(Transaction debitTransaction) {
+        Optional<Wallet> adminWalletOptional = walletRepository.findByUserId(1L);
+        Wallet adminWallet = adminWalletOptional.get();
+
+        Transaction creditTransaction = new Transaction();
+        creditTransaction.setTransactionType(TransactionType.CREDIT);
+        creditTransaction.setProject(debitTransaction.getProject());
+        creditTransaction.setWallet(adminWallet);
+        creditTransaction.setAmount(debitTransaction.getAmount());
+        creditTransaction.setPaymentStatus(PaymentStatus.SUCCESS);
+        creditTransaction.setTransactionId(debitTransaction.getTransactionId());
+
+        Float adminBalance = adminWallet.getBalance();
+        adminWallet.setBalance(adminBalance + debitTransaction.getAmount());
+        adminWallet.addTransaction(creditTransaction);
+
+        return transactionRepository.save(creditTransaction);
     }
 }

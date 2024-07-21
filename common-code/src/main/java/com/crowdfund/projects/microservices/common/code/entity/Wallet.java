@@ -33,14 +33,14 @@ public class Wallet extends BaseEntity {
     private User user;
 
     @JsonBackReference
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "wallet")
     private List<Transaction> transactions = new ArrayList<>();
 
     public void addTransaction(Transaction transaction) {
-        transactions.add(transaction);
+        this.transactions.add(transaction);
     }
 
     public void removeTransaction(Transaction transaction) {
-        transactions.remove(transaction);
+        this.transactions.remove(transaction);
     }
 }

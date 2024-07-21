@@ -64,14 +64,14 @@ INSERT IGNORE INTO user_seq_gen (next_val) VALUES(4);
 --values
 --(3, 100000, 3);
 
-INSERT INTO wallet
+INSERT IGNORE INTO wallet
 (id, created_by, created_time, updated_by, updated_time, balance, user_id)
 VALUES(1, NULL, '2024-07-20 19:19:05', NULL, '2024-07-20 19:23:42', 10000, 1);
 
-INSERT INTO wallet
+INSERT IGNORE INTO wallet
 (id, created_by, created_time, updated_by, updated_time, balance, user_id)
 VALUES(2, NULL, '2024-07-20 19:19:05', NULL, '2024-07-20 19:23:42', 100000, 2);
 
-INSERT INTO wallet
+INSERT IGNORE INTO wallet
 (id, created_by, created_time, updated_by, updated_time, balance, user_id)
 VALUES(3, NULL, '2024-07-20 19:19:05', NULL, '2024-07-20 19:23:42', 100000, 3);

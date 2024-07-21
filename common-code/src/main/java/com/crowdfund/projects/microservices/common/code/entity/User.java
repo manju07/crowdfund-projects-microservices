@@ -70,7 +70,7 @@ public class User extends BaseEntity {
 
     @JsonBackReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private List<Project> projectSet = new ArrayList<>();
+    private List<Project> projects = new ArrayList<>();
 
     @JsonBackReference
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, mappedBy = "user")
@@ -114,10 +114,10 @@ public class User extends BaseEntity {
     }
 
     public void addProject(Project project) {
-        projectSet.add(project);
+        projects.add(project);
     }
 
     public void removeProject(Project project) {
-        projectSet.remove(project);
+        projects.remove(project);
     }
 }
