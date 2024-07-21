@@ -10,22 +10,22 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 
 /**
  * User-Service
- * 
+ *
  * @author Manjunath Asundi
  */
 @SpringBootApplication
-//@EnableDiscoveryClient
+@EnableDiscoveryClient
 @EnableResourceServer
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EntityScan(basePackages = {"com.crowdfund.projects.microservices.common.code.entity"})
 public class UserServiceApplication implements CommandLineRunner {
 
-	public static void main(String[] args) {
-		SpringApplication.run(UserServiceApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(UserServiceApplication.class, args);
+    }
 
-	@Override
-	public void run(String... args) throws Exception {
-		System.out.println("User-service running");
-	}
+    @Override
+    public void run(String... args) throws Exception {
+        System.out.println("User-service running");
+    }
 }

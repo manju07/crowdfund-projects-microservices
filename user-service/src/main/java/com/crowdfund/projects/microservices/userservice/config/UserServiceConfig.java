@@ -7,14 +7,15 @@ import org.springframework.stereotype.Component;
 
 /**
  * User service config
- * @author Manjunath Asundi 
+ *
+ * @author Manjunath Asundi
  */
 @Component
 public class UserServiceConfig {
-	
+
     @Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
 }

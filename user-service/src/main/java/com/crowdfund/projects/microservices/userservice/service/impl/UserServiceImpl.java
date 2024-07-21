@@ -2,23 +2,18 @@ package com.crowdfund.projects.microservices.userservice.service.impl;
 
 import com.crowdfund.projects.microservices.common.code.entity.Role;
 import com.crowdfund.projects.microservices.common.code.entity.User;
-import com.crowdfund.projects.microservices.common.code.constant.UserRole;
 import com.crowdfund.projects.microservices.common.code.entity.Wallet;
 import com.crowdfund.projects.microservices.common.code.exception.CustomException;
 import com.crowdfund.projects.microservices.common.code.exception.ResourceNotFoundException;
-import com.crowdfund.projects.microservices.userservice.repository.UserRepository;
 import com.crowdfund.projects.microservices.userservice.repository.RoleRepository;
+import com.crowdfund.projects.microservices.userservice.repository.UserRepository;
 import com.crowdfund.projects.microservices.userservice.service.UserService;
-
-// import org.apache.kafka.clients.producer.ProducerRecord;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-// import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Service;
-
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
