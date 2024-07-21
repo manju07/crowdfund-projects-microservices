@@ -8,7 +8,6 @@ import lombok.ToString;
 import org.codehaus.jackson.annotate.JsonManagedReference;
 
 import javax.persistence.*;
-import java.util.UUID;
 
 /**
  * @author Manjunath Asundi

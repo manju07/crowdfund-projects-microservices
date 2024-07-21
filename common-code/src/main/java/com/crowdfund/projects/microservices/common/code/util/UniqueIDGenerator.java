@@ -4,20 +4,18 @@ import java.util.UUID;
 import java.util.stream.IntStream;
 
 /**
- *
- * @author shrivl
- *
+ * @author Manjunath Asundi
  */
 public final class UniqueIDGenerator {
 
     private static final int NO_OF_UUIDS = 7;
 
-    public static String generateUniqueID() {
-        return UUID.randomUUID().toString();
-    }
-
     private UniqueIDGenerator() {
 
+    }
+
+    public static String generateUniqueID() {
+        return UUID.randomUUID().toString();
     }
 
     public static void main(String[] args) {

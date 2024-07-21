@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * User Role enum
- * 
+ *
  * @author Manjunath Asundi
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)

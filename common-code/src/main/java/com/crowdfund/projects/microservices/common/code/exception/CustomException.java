@@ -1,12 +1,12 @@
 package com.crowdfund.projects.microservices.common.code.exception;
 
-import java.sql.Timestamp;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.http.HttpStatus;
+
+import java.sql.Timestamp;
 
 /**
  * @author Manjunath Asundi

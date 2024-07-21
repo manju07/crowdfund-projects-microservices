@@ -2,6 +2,7 @@ package com.crowdfund.projects.microservices.common.code.exception;
 
 /**
  * Custom ResourceNotFoundException
+ *
  * @author Manjunath Asundi
  */
 public class ResourceNotFoundException extends Exception {

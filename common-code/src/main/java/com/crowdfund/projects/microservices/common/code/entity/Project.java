@@ -54,6 +54,9 @@ public class Project extends BaseEntity {
     @JsonBackReference
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "project")
     private List<Transaction> transactionsList = new ArrayList<>();
+    
+    @Column(columnDefinition = "tinyint default 0")
+    private Boolean isDeleted = false;
 
     public void addTransaction(Transaction transaction) {
         this.transactionsList.add(transaction);
@@ -62,7 +65,4 @@ public class Project extends BaseEntity {
     public void removeTransaction(Transaction transaction) {
         this.transactionsList.remove(transaction);
     }
-
-    @Column(columnDefinition = "tinyint default 0")
-    private Boolean isDeleted = false;
 }

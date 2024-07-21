@@ -1,8 +1,9 @@
 package com.crowdfund.projects.microservices.common.code.entity;
 
-import com.crowdfund.projects.microservices.common.code.constant.PaymentStatus;
 import com.crowdfund.projects.microservices.common.code.entity.base.BaseEntity;
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.codehaus.jackson.annotate.JsonBackReference;
 import org.codehaus.jackson.annotate.JsonManagedReference;
 

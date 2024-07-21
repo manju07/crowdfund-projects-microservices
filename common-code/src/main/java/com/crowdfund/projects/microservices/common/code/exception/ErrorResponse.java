@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 
 /**
  * The type Error response.
- * 
+ *
  * @author Manjunath Asundi
  */
 
