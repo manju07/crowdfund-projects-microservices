@@ -42,7 +42,7 @@ public class TransferMoneyToInnovatorJob {
     @Autowired
     private TransactionRepository transactionRepository;
 
-    @Scheduled(cron = "*/5 * * * * ?")
+    @Scheduled(cron = "* */1 * * * *")
     public void transferMoneyToInnovator() throws InterruptedException, CustomException {
         try {
             log.info(
@@ -58,7 +58,7 @@ public class TransferMoneyToInnovatorJob {
         }
     }
 
-    @Transactional()
+    @Transactional(rollbackFor = Exception.class)
     private void transferMoney(Project project) throws CustomException {
         try {
             log.debug("Running transferMoney()");
@@ -76,9 +76,6 @@ public class TransferMoneyToInnovatorJob {
 
             project.setStatus(ProjectStatus.ARCHIVED);
             projectRepository.save(project);
-        } catch (CustomException e) {
-            log.error("CustomException", e);
-            throw e;
         } catch (Exception e) {
             log.error("Exception", e);
         }
@@ -113,12 +110,8 @@ public class TransferMoneyToInnovatorJob {
         adminWallet.addTransaction(debitTransaction);
         project.addTransaction(debitTransaction);
 
-        try {
-            walletRepository.save(adminWallet);
-            return transactionRepository.save(debitTransaction);
-        } catch (Exception e) {
-            throw e;
-        }
+        walletRepository.save(adminWallet);
+        return transactionRepository.save(debitTransaction);
     }
 
     private Transaction creditMoneyToInnovatorWallet(Transaction debitTransaction, Project project) throws CustomException {
@@ -161,12 +154,8 @@ public class TransferMoneyToInnovatorJob {
         innovatorWallet.addTransaction(creditTransaction);
         log.info("amount credited to innovator wallet username:{} ", userName);
 
-        try {
-            walletRepository.save(innovatorWallet);
-            return transactionRepository.save(creditTransaction);
-        } catch (Exception e) {
-            throw e;
-        }
+        walletRepository.save(innovatorWallet);
+        return transactionRepository.save(creditTransaction);
     }
 
 }

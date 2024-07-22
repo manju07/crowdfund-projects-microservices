@@ -32,7 +32,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Project addProject(Project project, OAuth2Authentication authentication) throws CustomException {
         try {
             String userName = authentication.getName();
@@ -58,7 +58,7 @@ public class ProjectDAOImpl implements ProjectDAO {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Project updateProject(Project project) {
 //        try {
 //            String userName = UserData.getUserName();
@@ -73,7 +73,7 @@ public class ProjectDAOImpl implements ProjectDAO {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public boolean deleteProject(Long projectId) {
         try {
             projectRepository.deleteById(projectId);

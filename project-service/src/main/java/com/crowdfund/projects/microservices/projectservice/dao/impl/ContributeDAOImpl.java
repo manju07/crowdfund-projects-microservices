@@ -43,7 +43,7 @@ public class ContributeDAOImpl implements ContributeDAO {
 
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Transaction saveContribute(Transaction transaction, Long projectId, OAuth2Authentication authentication) throws CustomException, ResourceNotFoundException {
         try {
             String userName = authentication.getName();
@@ -61,20 +61,43 @@ public class ContributeDAOImpl implements ContributeDAO {
 
             if (!ProjectStatus.IN_PROGRESS.equals(project.getStatus())) {
                 log.debug("Project status is incorrect,  ProjectId:{}, ProjectStatus:{}", projectId, project.getStatus());
-                throw new CustomException("Invalid Project status", HttpStatus.BAD_REQUEST, "Project not in valid state");
+
+                if (ProjectStatus.COMPLETED.equals(project.getStatus()) || ProjectStatus.ARCHIVED.equals(project.getStatus())) {
+                    throw new CustomException("Project is completed", HttpStatus.BAD_REQUEST, "This project already received requested money");
+                }
+
+                throw new CustomException("Invalid Project status", HttpStatus.BAD_REQUEST, "Project is not in valid state");
             }
 
             String transactionId = UniqueIDGenerator.generateUniqueID();
 
             Transaction debitTransaction = debitMoneyFromDonorWallet(transaction, userName, user, project, transactionId);
             Transaction creditTransaction = creditMoneyToAdminWallet(debitTransaction, userName);
+
             log.debug("username:{}, debitTransaction:{}", userName, debitTransaction);
             log.debug("username:{}, creditTransaction:{}", userName, creditTransaction);
+
+            markProjectStatusToCompleted(project, debitTransaction, creditTransaction);
+
             return debitTransaction;
         } catch (Exception e) {
             log.error("ContributeDAOImpl.saveContribute() exception", e);
             throw e;
         }
+    }
+
+    private void markProjectStatusToCompleted(Project project, Transaction debitTransaction, Transaction creditTransaction) {
+        float receivedAmount = project.getReceivedAmount() + debitTransaction.getAmount();
+        project.setReceivedAmount(receivedAmount);
+
+        project.addTransaction(debitTransaction);
+        project.addTransaction(creditTransaction);
+
+        if (project.getReceivedAmount() >= project.getRequiredAmount()) {
+            project.setStatus(ProjectStatus.COMPLETED);
+        }
+
+        projectRepository.save(project);
     }
 
     private Transaction debitMoneyFromDonorWallet(Transaction debitTransaction, String userName, User user, Project project, String transactionId) throws CustomException {
@@ -106,15 +129,6 @@ public class ContributeDAOImpl implements ContributeDAO {
 
         log.info("amount debited from donor wallet username:{} ", userName);
 
-        float receivedAmount = project.getReceivedAmount() + debitTransaction.getAmount();
-        project.setReceivedAmount(receivedAmount);
-
-        if (project.getReceivedAmount() >= project.getRequiredAmount()) {
-            project.setStatus(ProjectStatus.COMPLETED);
-        }
-
-        project.addTransaction(debitTransaction);
-
         return transactionRepository.save(debitTransaction);
     }
 
@@ -136,6 +150,7 @@ public class ContributeDAOImpl implements ContributeDAO {
         adminWallet.setBalance(adminBalance + debitTransaction.getAmount());
         adminWallet.addTransaction(creditTransaction);
 
+        log.info("amount credited to admin wallet");
         return transactionRepository.save(creditTransaction);
     }
 }
