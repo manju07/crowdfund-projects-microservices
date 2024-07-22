@@ -42,8 +42,8 @@ public class TransferMoneyToInnovatorJob {
     @Autowired
     private TransactionRepository transactionRepository;
 
-    @Scheduled(cron = "* */1 * * * *")
-    public void transferMoneyToInnovator() throws InterruptedException, CustomException {
+    @Scheduled(cron = "0 0/2 0 ? * *")
+    public void transferMoneyToInnovator() throws CustomException {
         try {
             log.info(
                     "Scheduler running - Transfer Money to innovator  - " + System.currentTimeMillis() / 1000);
