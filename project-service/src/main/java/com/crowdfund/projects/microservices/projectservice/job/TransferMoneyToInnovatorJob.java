@@ -79,7 +79,7 @@ public class TransferMoneyToInnovatorJob {
             projectRepository.save(project);
         } catch (Exception e) {
             log.error("transferMoney() Exception", e);
-            throw  e;
+            throw e;
         }
     }
 

@@ -12,13 +12,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.stubbing.OngoingStubbing;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -29,6 +28,22 @@ class ContributeControllerTest {
 
     @InjectMocks
     private ContributeController contributeController;
+
+    private static TransactionResDTO getTransactionResDTO() {
+        TransactionResDTO transactionResDTO = new TransactionResDTO();
+        transactionResDTO.setAmount(100);
+        transactionResDTO.setId(1L);
+        transactionResDTO.setPaymentStatus(PaymentStatus.SUCCESS);
+        transactionResDTO.setProjectId(1L);
+        return transactionResDTO;
+    }
+
+    private static TransactionReqDTO getTransactionReqDTO() {
+        TransactionReqDTO transactionReqDTO = new TransactionReqDTO();
+        transactionReqDTO.setProjectId(1L);
+        transactionReqDTO.setAmount(100);
+        return transactionReqDTO;
+    }
 
     @Test
     void saveContributeTest() throws CustomException, ResourceNotFoundException {
@@ -47,21 +62,5 @@ class ContributeControllerTest {
         assertEquals(1, transactionResDTO.getProjectId());
         assertEquals(100, transactionResDTO.getAmount());
         assertEquals(PaymentStatus.SUCCESS, transactionResDTO.getPaymentStatus());
-    }
-
-    private static TransactionResDTO getTransactionResDTO() {
-        TransactionResDTO transactionResDTO = new TransactionResDTO();
-        transactionResDTO.setAmount(100);
-        transactionResDTO.setId(1L);
-        transactionResDTO.setPaymentStatus(PaymentStatus.SUCCESS);
-        transactionResDTO.setProjectId(1L);
-        return transactionResDTO;
-    }
-
-    private static TransactionReqDTO getTransactionReqDTO() {
-        TransactionReqDTO transactionReqDTO = new TransactionReqDTO();
-        transactionReqDTO.setProjectId(1L);
-        transactionReqDTO.setAmount(100);
-        return transactionReqDTO;
     }
 }

@@ -18,8 +18,6 @@ import org.springframework.stereotype.Service;
 public interface ProjectService {
     ProjectResDTO addProject(ProjectReqDTO project, OAuth2Authentication authentication) throws CustomException, ResourceNotFoundException;
 
-    ProjectResDTO updateProject(ProjectReqDTO project) throws ResourceNotFoundException, CustomException;
-
     boolean deleteProject(Long projectId) throws ResourceNotFoundException, CustomException;
 
     ProjectResDTO getProjectById(Long projectId) throws ResourceNotFoundException, CustomException;

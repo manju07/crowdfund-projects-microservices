@@ -2,14 +2,11 @@ package com.crowdfund.projects.microservices.projectservice.dao.impl;
 
 import com.crowdfund.projects.microservices.common.code.constant.ProjectStatus;
 import com.crowdfund.projects.microservices.common.code.entity.Project;
-import com.crowdfund.projects.microservices.common.code.entity.Role;
-import com.crowdfund.projects.microservices.common.code.entity.User;
 import com.crowdfund.projects.microservices.common.code.exception.CustomException;
 import com.crowdfund.projects.microservices.common.code.exception.ResourceNotFoundException;
 import com.crowdfund.projects.microservices.projectservice.TestUtils;
 import com.crowdfund.projects.microservices.projectservice.repository.ProjectRepository;
 import com.crowdfund.projects.microservices.projectservice.repository.UserRepository;
-import com.crowdfund.projects.microservices.projectservice.service.impl.ProjectServiceImplTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,18 +14,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.security.oauth2.provider.OAuth2Request;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -176,8 +167,6 @@ class ProjectDAOImplTest {
 
         verify(projectRepository).findAllByStatus(ProjectStatus.IN_PROGRESS, PageRequest.of(0, 1));
     }
-
-
 
 
 }

@@ -41,20 +41,6 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public ProjectResDTO updateProject(ProjectReqDTO projectReqDTO) throws ResourceNotFoundException, CustomException {
-        return null;
-//        try {
-//            Project project = MAPPER.projectReqDTOToProject(projectReqDTO);
-//            Project responseProject = projectDAO.updateProject(project);
-//            ProjectResDTO projectResDTO = MAPPER.projectToProjectResDTO(responseProject);
-//            return projectResDTO;
-//        } catch (Exception e) {
-//            log.error("updateProject method exception", e);
-//            throw e;
-//        }
-    }
-
-    @Override
     public boolean deleteProject(Long projectId) throws ResourceNotFoundException, CustomException {
         try {
             return projectDAO.deleteProject(projectId);

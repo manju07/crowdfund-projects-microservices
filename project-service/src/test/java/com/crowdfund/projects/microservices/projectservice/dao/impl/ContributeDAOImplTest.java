@@ -18,7 +18,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.stubbing.OngoingStubbing;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 
@@ -60,12 +59,12 @@ class ContributeDAOImplTest {
         when(projectRepository.findById(project.getId()))
                 .thenReturn(Optional.empty());
 
-        CustomException customException = assertThrows(CustomException.class, () -> contributeDAO.saveContribute(getTransaction(),1L,  new OAuth2Authentication(null, TestUtils.getUserAuthentication())));
+        CustomException customException = assertThrows(CustomException.class, () -> contributeDAO.saveContribute(getTransaction(), 1L, new OAuth2Authentication(null, TestUtils.getUserAuthentication())));
 
         assertEquals("Invalid User", customException.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, customException.getStatus());
 
-        ResourceNotFoundException resourceNotFoundException = assertThrows(ResourceNotFoundException.class, () -> contributeDAO.saveContribute(getTransaction(),1L,  new OAuth2Authentication(null, TestUtils.getUserAuthentication())));
+        ResourceNotFoundException resourceNotFoundException = assertThrows(ResourceNotFoundException.class, () -> contributeDAO.saveContribute(getTransaction(), 1L, new OAuth2Authentication(null, TestUtils.getUserAuthentication())));
 
         assertEquals("Project does not exist with id = 1", resourceNotFoundException.getMessage());
 
@@ -85,7 +84,7 @@ class ContributeDAOImplTest {
         when(projectRepository.findById(project.getId()))
                 .thenReturn(Optional.of(project));
 
-        CustomException customException = assertThrows(CustomException.class, () -> contributeDAO.saveContribute(getTransaction(),1L,  new OAuth2Authentication(null, TestUtils.getUserAuthentication())));
+        CustomException customException = assertThrows(CustomException.class, () -> contributeDAO.saveContribute(getTransaction(), 1L, new OAuth2Authentication(null, TestUtils.getUserAuthentication())));
 
         assertEquals("Project is completed", customException.getMessage());
         assertEquals("This project already received requested money", customException.getDescription());
@@ -108,7 +107,7 @@ class ContributeDAOImplTest {
         when(walletRepository.findByUserId(1L))
                 .thenReturn(Optional.empty());
 
-        CustomException customException = assertThrows(CustomException.class, () -> contributeDAO.saveContribute(getTransaction(),1L,  new OAuth2Authentication(null, TestUtils.getUserAuthentication())));
+        CustomException customException = assertThrows(CustomException.class, () -> contributeDAO.saveContribute(getTransaction(), 1L, new OAuth2Authentication(null, TestUtils.getUserAuthentication())));
         assertEquals("Wallet not found", customException.getDescription());
         assertEquals(HttpStatus.NOT_FOUND, customException.getStatus());
     }
@@ -130,7 +129,7 @@ class ContributeDAOImplTest {
         Transaction transaction = getTransaction();
         transaction.setAmount(1001);
 
-        CustomException customException = assertThrows(CustomException.class, () -> contributeDAO.saveContribute(transaction,1L,  new OAuth2Authentication(null, TestUtils.getUserAuthentication())));
+        CustomException customException = assertThrows(CustomException.class, () -> contributeDAO.saveContribute(transaction, 1L, new OAuth2Authentication(null, TestUtils.getUserAuthentication())));
 
         assertEquals("Insufficient balance", customException.getMessage());
         assertEquals("You don't have required money in your wallet", customException.getDescription());
@@ -156,10 +155,11 @@ class ContributeDAOImplTest {
                 .thenThrow(new RuntimeException("Internal server error"));
 
 
-        RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> contributeDAO.saveContribute(getTransaction(),1L,  new OAuth2Authentication(null, TestUtils.getUserAuthentication())));
+        RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> contributeDAO.saveContribute(getTransaction(), 1L, new OAuth2Authentication(null, TestUtils.getUserAuthentication())));
 
         assertEquals("Internal server error", runtimeException.getMessage());
     }
+
     @Test
     void saveContribute_SaveTransactions_Test() throws CustomException, ResourceNotFoundException {
 
