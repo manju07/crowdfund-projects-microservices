@@ -2,7 +2,9 @@ package com.crowdfund.projects.microservices.projectservice;
 
 import com.crowdfund.projects.microservices.common.code.constant.ProjectStatus;
 import com.crowdfund.projects.microservices.common.code.entity.Project;
+import com.crowdfund.projects.microservices.common.code.entity.Transaction;
 import com.crowdfund.projects.microservices.common.code.entity.User;
+import com.crowdfund.projects.microservices.common.code.entity.Wallet;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -34,6 +36,22 @@ public class TestUtils {
         project.setReceivedAmount(0);
         project.setStatus(ProjectStatus.IN_PROGRESS);
         return project;
+    }
+
+    public static Transaction getTransaction() {
+        Transaction transaction = new Transaction();
+        transaction.setId(1L);
+        transaction.setAmount(1000);
+        transaction.setProject(TestUtils.getProject());
+        return transaction;
+    }
+
+    public static Wallet getWallet() {
+        Wallet wallet = new Wallet();
+        wallet.setId(1L);
+        wallet.setBalance(1000F);
+        wallet.setUser(TestUtils.getUser());
+        return wallet;
     }
 
     public static Authentication getUserAuthentication() {

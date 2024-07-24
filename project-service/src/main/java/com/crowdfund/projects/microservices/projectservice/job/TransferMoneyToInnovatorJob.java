@@ -55,6 +55,7 @@ public class TransferMoneyToInnovatorJob {
             }
         } catch (Exception e) {
             log.error("caught exception", e);
+            throw e;
         }
     }
 
@@ -64,7 +65,7 @@ public class TransferMoneyToInnovatorJob {
             log.debug("Running transferMoney()");
             if (!ProjectStatus.COMPLETED.equals(project.getStatus())) {
                 log.info("Project-Id:" + project.getId() + " is not in COMPLETED state");
-                return;
+                throw new CustomException("Project status is not in COMPLETED state");
             }
 
             String transactionId = UniqueIDGenerator.generateUniqueID();
@@ -77,7 +78,8 @@ public class TransferMoneyToInnovatorJob {
             project.setStatus(ProjectStatus.ARCHIVED);
             projectRepository.save(project);
         } catch (Exception e) {
-            log.error("Exception", e);
+            log.error("transferMoney() Exception", e);
+            throw  e;
         }
     }
 
@@ -129,8 +131,8 @@ public class TransferMoneyToInnovatorJob {
 
         Optional<Wallet> innovatorWalletOptional = walletRepository.findByUserId(user.getId());
         if (!innovatorWalletOptional.isPresent()) {
-            log.debug("Wallet not found for username:{}", userName);
-            throw new CustomException("Wallet not found");
+            log.debug("Innovator Wallet not found for username:{}", userName);
+            throw new CustomException("Innovator Wallet not found");
         }
 
         Wallet innovatorWallet = innovatorWalletOptional.get();

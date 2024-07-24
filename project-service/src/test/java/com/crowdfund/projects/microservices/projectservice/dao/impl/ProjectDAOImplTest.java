@@ -105,7 +105,7 @@ class ProjectDAOImplTest {
     void deleteProjectTest() {
         doNothing().when(projectRepository).deleteById(1L);
         boolean result = projectDAO.deleteProject(1L);
-        assertTrue(true);
+        assertTrue(result);
     }
 
     @Test
