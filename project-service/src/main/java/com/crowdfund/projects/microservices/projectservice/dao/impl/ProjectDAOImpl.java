@@ -73,7 +73,7 @@ public class ProjectDAOImpl implements ProjectDAO {
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(rollbackFor = RuntimeException.class)
     public boolean deleteProject(Long projectId) {
         try {
             projectRepository.deleteById(projectId);
@@ -93,7 +93,7 @@ public class ProjectDAOImpl implements ProjectDAO {
             }
             throw new ResourceNotFoundException("Project does not exist with id = " + projectId);
         } catch (Exception e) {
-            log.error("ProjectDAOImpl -  deleteProject exception", e);
+            log.error("ProjectDAOImpl - getProjectById exception", e);
             throw e;
         }
     }
@@ -109,7 +109,7 @@ public class ProjectDAOImpl implements ProjectDAO {
             log.info("Project list is empty");
             return Page.empty();
         } catch (Exception e) {
-            log.error("ProjectDAOImpl -  deleteProject exception", e);
+            log.error("ProjectDAOImpl -  getAll exception", e);
             throw e;
         }
     }

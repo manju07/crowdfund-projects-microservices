@@ -48,6 +48,10 @@ public class ContributeDAOImpl implements ContributeDAO {
         try {
             String userName = authentication.getName();
             Optional<User> userOptional = userRepository.findByUserName(userName);
+
+            if (!userOptional.isPresent())
+                throw new CustomException("Invalid User", HttpStatus.NOT_FOUND, "User doesn't exist");
+
             User user = userOptional.get();
 
             Optional<Project> projectOptional = projectRepository.findById(projectId);
@@ -66,7 +70,6 @@ public class ContributeDAOImpl implements ContributeDAO {
                     throw new CustomException("Project is completed", HttpStatus.BAD_REQUEST, "This project already received requested money");
                 }
 
-                throw new CustomException("Invalid Project status", HttpStatus.BAD_REQUEST, "Project is not in valid state");
             }
 
             String transactionId = UniqueIDGenerator.generateUniqueID();

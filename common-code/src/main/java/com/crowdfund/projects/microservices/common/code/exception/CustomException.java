@@ -39,4 +39,8 @@ public class CustomException extends Exception {
         this.message = message;
         this.description = description;
     }
+
+    public CustomException(Throwable throwable) {
+        super(throwable);
+    }
 }

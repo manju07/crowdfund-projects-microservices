@@ -49,7 +49,7 @@ public class ProjectServiceImpl implements ProjectService {
 //            ProjectResDTO projectResDTO = MAPPER.projectToProjectResDTO(responseProject);
 //            return projectResDTO;
 //        } catch (Exception e) {
-//            log.error("addProject method exception", e);
+//            log.error("updateProject method exception", e);
 //            throw e;
 //        }
     }
@@ -84,7 +84,7 @@ public class ProjectServiceImpl implements ProjectService {
             PageImpl<ProjectResDTO> pageImpl = new PageImpl<>(projectResDTOS, pageProject.getPageable(), pageProject.getTotalElements());
             return pageImpl;
         } catch (Exception e) {
-            log.error("getProjectById method exception", e);
+            log.error("getAll method exception", e);
             throw e;
         }
     }
