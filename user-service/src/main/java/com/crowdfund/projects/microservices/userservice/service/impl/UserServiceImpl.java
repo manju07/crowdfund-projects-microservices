@@ -72,32 +72,4 @@ public class UserServiceImpl implements UserService {
             throw e;
         }
     }
-
-    @Override
-    public User updateUser(Long userId, User user) throws ResourceNotFoundException, CustomException {
-//        try {
-//            String userName = UserData.getUserName();
-//            User userData = userRepository.findById(userId)
-//                    .orElseThrow(() -> new ResourceNotFoundException("User doesn't exist with id:" + userId));
-//            userData.setFName(user.getFName());
-//            userData.setLName(user.getLName());
-//            userData.setGender(user.getGender());
-//
-//
-//            UserRole userRole = user.getRole().getName();
-//            if (!userRole.toString().equals("MANAGER") && !userRole.toString().equals("PARTNER"))
-//                throw new CustomException("You can update account for Manager/Partner only...!");
-//            else {
-//                Role role = roleRepository.findByName(userRole);
-//                role.addUser(userData);
-//                userData.setRole(role);
-//            }
-//            userData.setUpdatedBy(userName);
-//            return userRepository.save(userData);
-//        } catch (Exception e) {
-//            log.error(e.getMessage(), e);
-//            throw e;
-//        }
-        return null;
-    }
 }

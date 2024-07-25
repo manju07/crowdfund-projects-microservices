@@ -14,6 +14,4 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserService {
     User addUser(User user, OAuth2Authentication authentication) throws CustomException, ResourceNotFoundException;
-
-    User updateUser(Long mId, User user) throws ResourceNotFoundException, CustomException;
 }

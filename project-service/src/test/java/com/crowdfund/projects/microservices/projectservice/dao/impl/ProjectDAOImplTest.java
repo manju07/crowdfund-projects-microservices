@@ -4,7 +4,7 @@ import com.crowdfund.projects.microservices.common.code.constant.ProjectStatus;
 import com.crowdfund.projects.microservices.common.code.entity.Project;
 import com.crowdfund.projects.microservices.common.code.exception.CustomException;
 import com.crowdfund.projects.microservices.common.code.exception.ResourceNotFoundException;
-import com.crowdfund.projects.microservices.projectservice.TestUtils;
+import com.crowdfund.projects.microservices.projectservice.ProjectServiceTestUtils;
 import com.crowdfund.projects.microservices.projectservice.repository.ProjectRepository;
 import com.crowdfund.projects.microservices.projectservice.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -48,13 +48,13 @@ class ProjectDAOImplTest {
     @Test
     void addProjectTest() throws CustomException {
 
-        Project project = TestUtils.getProject();
+        Project project = ProjectServiceTestUtils.getProject();
 
-        when(userRepository.findByUserName(TestUtils.USERNAME))
+        when(userRepository.findByUserName(ProjectServiceTestUtils.USERNAME))
                 .thenReturn(Optional.empty())
-                .thenReturn(Optional.of(TestUtils.getUser()))
-                .thenReturn(Optional.of(TestUtils.getUser()))
-                .thenReturn(Optional.of(TestUtils.getUser()));
+                .thenReturn(Optional.of(ProjectServiceTestUtils.getUser()))
+                .thenReturn(Optional.of(ProjectServiceTestUtils.getUser()))
+                .thenReturn(Optional.of(ProjectServiceTestUtils.getUser()));
 
         when(projectRepository.findByName(project.getName()))
                 .thenReturn(Optional.of(project))
@@ -65,21 +65,21 @@ class ProjectDAOImplTest {
                 .thenThrow(new RuntimeException("Internal server error"))
                 .thenReturn(project);
 
-        CustomException customException = assertThrows(CustomException.class, () -> projectDAO.addProject(project, new OAuth2Authentication(null, TestUtils.getUserAuthentication())));
+        CustomException customException = assertThrows(CustomException.class, () -> projectDAO.addProject(project, new OAuth2Authentication(null, ProjectServiceTestUtils.getUserAuthentication())));
 
         assertEquals("Invalid User", customException.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, customException.getStatus());
 
-        customException = assertThrows(CustomException.class, () -> projectDAO.addProject(project, new OAuth2Authentication(null, TestUtils.getUserAuthentication())));
+        customException = assertThrows(CustomException.class, () -> projectDAO.addProject(project, new OAuth2Authentication(null, ProjectServiceTestUtils.getUserAuthentication())));
 
         assertEquals("name exist", customException.getMessage());
         assertEquals(HttpStatus.CONFLICT, customException.getStatus());
 
-        RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> projectDAO.addProject(project, new OAuth2Authentication(null, TestUtils.getUserAuthentication())));
+        RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> projectDAO.addProject(project, new OAuth2Authentication(null, ProjectServiceTestUtils.getUserAuthentication())));
 
         assertEquals("Internal server error", runtimeException.getMessage());
 
-        Project savedProject = projectDAO.addProject(project, new OAuth2Authentication(null, TestUtils.getUserAuthentication()));
+        Project savedProject = projectDAO.addProject(project, new OAuth2Authentication(null, ProjectServiceTestUtils.getUserAuthentication()));
 
         assertNotNull(savedProject);
         assertEquals(1L, savedProject.getId());
@@ -87,7 +87,7 @@ class ProjectDAOImplTest {
         assertEquals(1000, savedProject.getRequiredAmount());
         assertEquals(0, savedProject.getReceivedAmount());
 
-        verify(userRepository, times(4)).findByUserName(TestUtils.USERNAME);
+        verify(userRepository, times(4)).findByUserName(ProjectServiceTestUtils.USERNAME);
         verify(projectRepository, times(3)).findByName(project.getName());
         verify(projectRepository, times(2)).save(any(Project.class));
     }
@@ -110,7 +110,7 @@ class ProjectDAOImplTest {
 
     @Test
     void getProjectByIdTest() throws ResourceNotFoundException {
-        when(projectRepository.findById(1L)).thenReturn(Optional.of(TestUtils.getProject()));
+        when(projectRepository.findById(1L)).thenReturn(Optional.of(ProjectServiceTestUtils.getProject()));
         Project projectById = projectDAO.getProjectById(1L);
 
         assertNotNull(projectById);
@@ -132,7 +132,7 @@ class ProjectDAOImplTest {
 
     @Test
     void getAllProjectsTest() {
-        PageImpl<Project> pageImpl = new PageImpl<>(Collections.singletonList(TestUtils.getProject()), PageRequest.of(0, 1), 1);
+        PageImpl<Project> pageImpl = new PageImpl<>(Collections.singletonList(ProjectServiceTestUtils.getProject()), PageRequest.of(0, 1), 1);
 
         when(projectRepository.findAllByStatus(ProjectStatus.IN_PROGRESS, PageRequest.of(0, 1)))
                 .thenThrow(new RuntimeException("Internal server error"))

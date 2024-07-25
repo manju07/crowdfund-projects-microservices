@@ -10,7 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
 
-public class TestUtils {
+public class ProjectServiceTestUtils {
 
     public static final String USERNAME = "manjunath@gmail.com";
 
@@ -42,7 +42,7 @@ public class TestUtils {
         Transaction transaction = new Transaction();
         transaction.setId(1L);
         transaction.setAmount(1000);
-        transaction.setProject(TestUtils.getProject());
+        transaction.setProject(getProject());
         return transaction;
     }
 
@@ -50,7 +50,7 @@ public class TestUtils {
         Wallet wallet = new Wallet();
         wallet.setId(1L);
         wallet.setBalance(1000F);
-        wallet.setUser(TestUtils.getUser());
+        wallet.setUser(getUser());
         return wallet;
     }
 

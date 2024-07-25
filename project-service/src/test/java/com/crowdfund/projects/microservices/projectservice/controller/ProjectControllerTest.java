@@ -5,7 +5,7 @@ import com.crowdfund.projects.microservices.common.code.dto.ProjectReqDTO;
 import com.crowdfund.projects.microservices.common.code.dto.ProjectResDTO;
 import com.crowdfund.projects.microservices.common.code.exception.CustomException;
 import com.crowdfund.projects.microservices.common.code.exception.ResourceNotFoundException;
-import com.crowdfund.projects.microservices.projectservice.TestUtils;
+import com.crowdfund.projects.microservices.projectservice.ProjectServiceTestUtils;
 import com.crowdfund.projects.microservices.projectservice.service.ProjectService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -60,7 +60,7 @@ class ProjectControllerTest {
         when(projectService.addProject(any(ProjectReqDTO.class), any(OAuth2Authentication.class)))
                 .thenReturn(getProjectResDTO());
 
-        ResponseEntity<ProjectResDTO> projectResDTOResponseEntity = projectController.createProject(getProjectReqDTO(), new OAuth2Authentication(null, TestUtils.getUserAuthentication()));
+        ResponseEntity<ProjectResDTO> projectResDTOResponseEntity = projectController.createProject(getProjectReqDTO(), new OAuth2Authentication(null, ProjectServiceTestUtils.getUserAuthentication()));
 
         assertNotNull(projectResDTOResponseEntity);
         assertEquals(HttpStatus.CREATED, projectResDTOResponseEntity.getStatusCode());

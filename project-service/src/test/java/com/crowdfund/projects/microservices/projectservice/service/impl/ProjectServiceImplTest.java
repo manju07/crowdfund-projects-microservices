@@ -6,7 +6,7 @@ import com.crowdfund.projects.microservices.common.code.dto.ProjectResDTO;
 import com.crowdfund.projects.microservices.common.code.entity.Project;
 import com.crowdfund.projects.microservices.common.code.exception.CustomException;
 import com.crowdfund.projects.microservices.common.code.exception.ResourceNotFoundException;
-import com.crowdfund.projects.microservices.projectservice.TestUtils;
+import com.crowdfund.projects.microservices.projectservice.ProjectServiceTestUtils;
 import com.crowdfund.projects.microservices.projectservice.dao.ProjectDAO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -44,7 +44,7 @@ public class ProjectServiceImplTest {
     @Test
     public void addProjectTest() throws CustomException, ResourceNotFoundException {
         when(projectDAO.addProject(any(Project.class), any()))
-                .thenReturn(TestUtils.getProject());
+                .thenReturn(ProjectServiceTestUtils.getProject());
         ProjectResDTO projectResDTO = projectService.addProject(getProjectReqDTO(), null);
 
         assertNotNull(projectResDTO);
@@ -78,7 +78,7 @@ public class ProjectServiceImplTest {
 
     @Test
     void getProjectByIdTest() throws CustomException, ResourceNotFoundException {
-        when(projectDAO.getProjectById(1L)).thenReturn(TestUtils.getProject());
+        when(projectDAO.getProjectById(1L)).thenReturn(ProjectServiceTestUtils.getProject());
         ProjectResDTO projectResDTO = projectService.getProjectById(1L);
 
         assertNotNull(projectResDTO);
@@ -92,7 +92,7 @@ public class ProjectServiceImplTest {
 
     @Test
     void getAllProjectsByTest() throws CustomException, ResourceNotFoundException {
-        PageImpl<Project> pageImpl = new PageImpl<>(Collections.singletonList(TestUtils.getProject()), PageRequest.of(0, 1), 1);
+        PageImpl<Project> pageImpl = new PageImpl<>(Collections.singletonList(ProjectServiceTestUtils.getProject()), PageRequest.of(0, 1), 1);
         when(projectDAO.getAll(ProjectStatus.IN_PROGRESS, 0, 1))
                 .thenReturn(pageImpl);
         Page<ProjectResDTO> pageResponse = projectService.getAll(ProjectStatus.IN_PROGRESS, 0, 1);

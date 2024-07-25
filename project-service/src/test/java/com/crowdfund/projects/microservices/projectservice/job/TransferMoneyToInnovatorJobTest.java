@@ -6,7 +6,7 @@ import com.crowdfund.projects.microservices.common.code.entity.Project;
 import com.crowdfund.projects.microservices.common.code.entity.Transaction;
 import com.crowdfund.projects.microservices.common.code.entity.Wallet;
 import com.crowdfund.projects.microservices.common.code.exception.CustomException;
-import com.crowdfund.projects.microservices.projectservice.TestUtils;
+import com.crowdfund.projects.microservices.projectservice.ProjectServiceTestUtils;
 import com.crowdfund.projects.microservices.projectservice.repository.ProjectRepository;
 import com.crowdfund.projects.microservices.projectservice.repository.TransactionRepository;
 import com.crowdfund.projects.microservices.projectservice.repository.UserRepository;
@@ -22,8 +22,8 @@ import org.springframework.data.domain.PageRequest;
 import java.util.Collections;
 import java.util.Optional;
 
-import static com.crowdfund.projects.microservices.projectservice.TestUtils.getTransaction;
-import static com.crowdfund.projects.microservices.projectservice.TestUtils.getWallet;
+import static com.crowdfund.projects.microservices.projectservice.ProjectServiceTestUtils.getTransaction;
+import static com.crowdfund.projects.microservices.projectservice.ProjectServiceTestUtils.getWallet;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -49,7 +49,7 @@ class TransferMoneyToInnovatorJobTest {
 
     @Test
     void transferMoneyToInnovator_ProjectIsNotInCompletedState_Test() throws CustomException, InterruptedException {
-        Project project = TestUtils.getProject();
+        Project project = ProjectServiceTestUtils.getProject();
 
         PageImpl<Project> pageImpl = new PageImpl<>(Collections.singletonList(project), PageRequest.of(0, 1), 1);
 
@@ -64,7 +64,7 @@ class TransferMoneyToInnovatorJobTest {
 
     @Test
     void transferMoneyToInnovator_AdminBalanceLessThanReceivedAmountForProject_Test() throws CustomException, InterruptedException {
-        Project project = TestUtils.getProject();
+        Project project = ProjectServiceTestUtils.getProject();
         project.setStatus(ProjectStatus.COMPLETED);
         project.setReceivedAmount(100);
 
@@ -89,7 +89,7 @@ class TransferMoneyToInnovatorJobTest {
 
     @Test
     void transferMoneyToInnovator_ProjectIsNotMappedToInnovator_ThrowsCustomException_Test() throws CustomException, InterruptedException {
-        Project project = TestUtils.getProject();
+        Project project = ProjectServiceTestUtils.getProject();
         project.setStatus(ProjectStatus.COMPLETED);
 
         PageImpl<Project> pageImpl = new PageImpl<>(Collections.singletonList(project), PageRequest.of(0, 1), 1);
@@ -125,9 +125,9 @@ class TransferMoneyToInnovatorJobTest {
 
     @Test
     void transferMoneyToInnovator_InnovatorWalletNotFound_ThrowsCustomException_Test() throws CustomException, InterruptedException {
-        Project project = TestUtils.getProject();
+        Project project = ProjectServiceTestUtils.getProject();
         project.setStatus(ProjectStatus.COMPLETED);
-        project.setUser(TestUtils.getUser());
+        project.setUser(ProjectServiceTestUtils.getUser());
 
         PageImpl<Project> pageImpl = new PageImpl<>(Collections.singletonList(project), PageRequest.of(0, 1), 1);
 
@@ -156,7 +156,7 @@ class TransferMoneyToInnovatorJobTest {
                 .thenReturn(innovatorWallet);
 
         when(userRepository.findById(1L))
-                .thenReturn(Optional.of(TestUtils.getUser()));
+                .thenReturn(Optional.of(ProjectServiceTestUtils.getUser()));
 
         CustomException customException = assertThrows(CustomException.class, () -> transferMoneyToInnovatorJob.transferMoneyToInnovator());
 
@@ -165,9 +165,9 @@ class TransferMoneyToInnovatorJobTest {
 
     @Test
     void transferMoneyToInnovator_Success_Test() throws CustomException, InterruptedException {
-        Project project = TestUtils.getProject();
+        Project project = ProjectServiceTestUtils.getProject();
         project.setStatus(ProjectStatus.COMPLETED);
-        project.setUser(TestUtils.getUser());
+        project.setUser(ProjectServiceTestUtils.getUser());
 
         PageImpl<Project> pageImpl = new PageImpl<>(Collections.singletonList(project), PageRequest.of(0, 1), 1);
 
@@ -196,7 +196,7 @@ class TransferMoneyToInnovatorJobTest {
                 .thenReturn(innovatorWallet);
 
         when(userRepository.findById(1L))
-                .thenReturn(Optional.of(TestUtils.getUser()));
+                .thenReturn(Optional.of(ProjectServiceTestUtils.getUser()));
 
         when(projectRepository.save(any(Project.class)))
                 .thenReturn(project);

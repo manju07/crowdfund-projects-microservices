@@ -5,7 +5,7 @@ import com.crowdfund.projects.microservices.common.code.dto.TransactionReqDTO;
 import com.crowdfund.projects.microservices.common.code.dto.TransactionResDTO;
 import com.crowdfund.projects.microservices.common.code.exception.CustomException;
 import com.crowdfund.projects.microservices.common.code.exception.ResourceNotFoundException;
-import com.crowdfund.projects.microservices.projectservice.TestUtils;
+import com.crowdfund.projects.microservices.projectservice.ProjectServiceTestUtils;
 import com.crowdfund.projects.microservices.projectservice.service.ContributeService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -51,7 +51,7 @@ class ContributeControllerTest {
         when(contributeService.saveContribute(any(TransactionReqDTO.class), any(OAuth2Authentication.class)))
                 .thenReturn(getTransactionResDTO());
 
-        ResponseEntity<TransactionResDTO> transactionResDTOResponseEntity = contributeController.saveContribute(getTransactionReqDTO(), new OAuth2Authentication(null, TestUtils.getUserAuthentication()));
+        ResponseEntity<TransactionResDTO> transactionResDTOResponseEntity = contributeController.saveContribute(getTransactionReqDTO(), new OAuth2Authentication(null, ProjectServiceTestUtils.getUserAuthentication()));
 
         assertNotNull(transactionResDTOResponseEntity);
         assertEquals(HttpStatus.OK, transactionResDTOResponseEntity.getStatusCode());
