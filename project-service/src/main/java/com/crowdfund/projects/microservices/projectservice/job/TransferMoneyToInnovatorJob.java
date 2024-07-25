@@ -19,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -59,7 +60,7 @@ public class TransferMoneyToInnovatorJob {
         }
     }
 
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     private void transferMoney(Project project) throws CustomException {
         try {
             log.debug("Running transferMoney()");
