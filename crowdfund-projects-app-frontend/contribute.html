@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>crowdfund-projects-app</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+    <div class="text-info display-5 text-center bg-dark">
+        Crowd Funded Projects App
+    </div>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="home.html">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="postProject.html">Post Project</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="projectsList.html">Pending Projects</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="completedProjectsList.html">Completed Projects</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="archivedProjectsList.html">Archived Projects</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="container">
+        <form id="contributeForm" class="was-validated">
+            <div class="form-group">
+                <label for="projectId">Project Id:</label>
+                <input disabled type="text" class="form-control" id="id">
+            </div>
+            <div class="form-group">
+                <label for="name">Project Name:</label>
+                <input disabled type="text" class="form-control" id="name">
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label><br>
+                <textarea disabled id="description" cols="100" rows="10"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="requiredAmount">Required Amount:</label>
+                <input type="number" disabled class="form-control"  id="requiredAmount">
+            </div>
+            <div class="form-group">
+                <label for="receivedAmount">Received Amount:</label>
+                <input type="number" disabled class="form-control"  id="receivedAmount">
+            </div>
+            <div class="form-group">
+                <label for="contributionAmount">Contribute Amount</label>
+                <input type="number" class="form-control" placeholder="Enter Contribution Amount" id="contributionAmount" required>
+                <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Please fill out this field.</div>
+            </div>
+            <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+        </form>
+    </div>
+</body>
+<script>
+    $(document).ready(() => {
+
+        function getUrlVars() {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (var i = 0; i < hashes.length; i++) {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        }
+
+        let queryParams = getUrlVars();
+        console.log(queryParams);
+        getProjectById(queryParams["projectId"])
+
+        function getProjectById(projectId) {
+            console.log('projectId', projectId);
+            let url = "http://localhost:9900/microservice/secure/api/v1/project-service/project/"+projectId;
+            $.ajax({
+                url: url,
+                type: "GET",
+                headers: { 'Authorization': 'bearer d80dff6b-2ea7-48cb-9bdf-37984b586209' },
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    appendDataToForm(data);
+                },
+                error: function (error) {
+                    console.log("Encountered an error", error)
+                }
+            });
+        }
+
+        function appendDataToForm(data) {
+            $("#id").val(data.id);
+            $("#name").val(data.name);
+            $("#description").text(data.description);
+            $("#requiredAmount").val(data.requiredAmount);
+            $("#receivedAmount").val(data.receivedAmount);
+        }
+
+        $("#contributeForm").submit(function (e) {
+            e.preventDefault();
+
+            let contributionAmount = parseFloat($("#contributionAmount").val())
+
+            if (contributionAmount < 1) {
+                window.alert("Contribution amount should be greater than or equal to 1");
+                return;
+            }
+
+            console.log("clicked on contributeForm");
+            let url = "http://localhost:9900/microservice/secure/api/v1/project-service/contribute";
+            let body = {
+                amount: contributionAmount,
+                projectId: $("#id").val()
+            }
+
+            $.ajax({
+                url: url,
+                type: "POST",
+                headers: { 'Authorization': 'bearer d80dff6b-2ea7-48cb-9bdf-37984b586209', 'Content-type': 'application/json' },
+                data: JSON.stringify(body),
+                success: function (data) {
+                    console.log("data", data);
+                    alert("Successfully contributed")
+                    window.location.href = "projectsList.html";
+                },
+                error: function (error) {
+                    console.log("Encountered an error", error)
+                }
+            });
+        });
+
+
+    });
+
+</script>
+
+</html>
