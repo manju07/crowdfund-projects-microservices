@@ -3,6 +3,7 @@ package com.crowdfund.projects.microservices.projectservice.controller;
 import com.crowdfund.projects.microservices.common.code.constant.ProjectStatus;
 import com.crowdfund.projects.microservices.common.code.dto.ProjectReqDTO;
 import com.crowdfund.projects.microservices.common.code.dto.ProjectResDTO;
+import com.crowdfund.projects.microservices.common.code.dto.TransactionReqDTO;
 import com.crowdfund.projects.microservices.common.code.exception.CustomException;
 import com.crowdfund.projects.microservices.common.code.exception.ResourceNotFoundException;
 import com.crowdfund.projects.microservices.projectservice.service.ProjectService;
@@ -36,8 +37,15 @@ public class ProjectController {
     public ResponseEntity<ProjectResDTO> createProject(@Valid @RequestBody ProjectReqDTO projectReqDTO, OAuth2Authentication authentication)
             throws CustomException, ResourceNotFoundException {
         log.info("calling create project API");
+        validateProjectReqDTO(projectReqDTO);
         ProjectResDTO projectResDTO = projectService.addProject(projectReqDTO, authentication);
         return new ResponseEntity<ProjectResDTO>(projectResDTO, HttpStatus.CREATED);
+    }
+
+    private void validateProjectReqDTO(ProjectReqDTO projectReqDTO) throws CustomException {
+        if (projectReqDTO.getRequiredAmount() < 1) {
+            throw new CustomException("Amount is Invalid", HttpStatus.BAD_REQUEST, "Required Amount should be greater than 1");
+        }
     }
 
     @GetMapping("/{id}")

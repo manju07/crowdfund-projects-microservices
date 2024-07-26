@@ -10,8 +10,6 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 public interface ProjectDAO {
     Project addProject(Project project, OAuth2Authentication authentication) throws CustomException;
 
-    Project updateProject(Project project);
-
     boolean deleteProject(Long projectId);
 
     Project getProjectById(Long projectId) throws ResourceNotFoundException;

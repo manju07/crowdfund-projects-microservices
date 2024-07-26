@@ -16,8 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -62,5 +61,17 @@ class ContributeControllerTest {
         assertEquals(1, transactionResDTO.getProjectId());
         assertEquals(100, transactionResDTO.getAmount());
         assertEquals(PaymentStatus.SUCCESS, transactionResDTO.getPaymentStatus());
+    }
+
+    @Test
+    void saveContribute_InvalidAmount_Test() throws CustomException, ResourceNotFoundException {
+
+        TransactionReqDTO transactionReqDTO = getTransactionReqDTO();
+        transactionReqDTO.setAmount(-1);
+        CustomException customException = assertThrows(CustomException.class, () -> contributeController.saveContribute(transactionReqDTO, new OAuth2Authentication(null, ProjectServiceTestUtils.getUserAuthentication())));
+
+        assertNotNull(customException);
+        assertEquals("Contribution Amount should be greater than 1", customException.getDescription());
+
     }
 }

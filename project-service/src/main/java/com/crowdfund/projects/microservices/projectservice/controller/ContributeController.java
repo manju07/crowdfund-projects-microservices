@@ -37,8 +37,15 @@ public class ContributeController {
     public ResponseEntity<TransactionResDTO> saveContribute(@Valid @RequestBody TransactionReqDTO transactionReqDTO, OAuth2Authentication authentication)
             throws CustomException, ResourceNotFoundException {
         log.info("calling save contribute API");
+        validateTransactionReqDTO(transactionReqDTO);
         TransactionResDTO transactionResDTO = contributeService.saveContribute(transactionReqDTO, authentication);
         return new ResponseEntity<TransactionResDTO>(transactionResDTO, HttpStatus.OK);
+    }
+
+    private void validateTransactionReqDTO(TransactionReqDTO transactionReqDTO) throws CustomException {
+        if (transactionReqDTO.getAmount() < 1) {
+            throw new CustomException("Amount is Invalid", HttpStatus.BAD_REQUEST, "Contribution Amount should be greater than 1");
+        }
     }
 
 }

@@ -57,20 +57,6 @@ public class ProjectDAOImpl implements ProjectDAO {
         }
     }
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public Project updateProject(Project project) {
-//        try {
-//            String userName = UserData.getUserName();
-//            project.setUpdatedBy(userName);
-//            Project response = projectRepository.save(project);
-//            return response;
-//        } catch (Exception e) {
-//            log.error("ProjectDAOImpl -  updateProject exception", e);
-//            throw e;
-//        }
-        return null;
-    }
 
     @Override
     @Transactional(rollbackFor = RuntimeException.class)

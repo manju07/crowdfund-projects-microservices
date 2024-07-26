@@ -21,8 +21,7 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 
 import java.util.Collections;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -71,6 +70,17 @@ class ProjectControllerTest {
         assertEquals("Project-1", projectResDTO.getName());
         assertEquals("AI based analytics tool", projectResDTO.getDescription());
         assertEquals(ProjectStatus.IN_PROGRESS, projectResDTO.getStatus());
+    }
+
+    @Test
+    void createProject_InvalidRequiredAmount_ThrowsCustomException_Test() throws CustomException, ResourceNotFoundException {
+
+        ProjectReqDTO projectReqDTO = getProjectReqDTO();
+        projectReqDTO.setRequiredAmount(-1);
+        CustomException customException = assertThrows(CustomException.class, () -> projectController.createProject(projectReqDTO, new OAuth2Authentication(null, ProjectServiceTestUtils.getUserAuthentication())));
+
+        assertNotNull(customException);
+        assertEquals("Required Amount should be greater than 1", customException.getDescription());
     }
 
     @Test
