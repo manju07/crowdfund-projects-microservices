@@ -1,0 +1,366 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "crowdfund-projects-services",
+    "collectionId": "9879f2a7-937a-4943-9337-a90de0105478",
+    "dateExported": "2024-07-27T08:51:47.395Z",
+    "version": "1.2",
+    "folders": [
+        {
+            "_id": "441a3db8-8f21-4037-bc97-8f25e7538334",
+            "name": "user-service",
+            "containerId": "",
+            "created": "2024-07-10T18:40:57.123Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "40c5aaef-02cd-4f05-9394-45d95ec27c27",
+            "name": "project-service",
+            "containerId": "",
+            "created": "2024-07-10T18:40:57.125Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "045b7a75-2d0f-4643-b8eb-6843fc0a9dc4",
+            "name": "oauth-server",
+            "containerId": "",
+            "created": "2024-07-11T04:22:31.160Z",
+            "sortNum": 30000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "ed551e64-b355-4d98-afaa-8cd488090bc6",
+            "colId": "9879f2a7-937a-4943-9337-a90de0105478",
+            "containerId": "441a3db8-8f21-4037-bc97-8f25e7538334",
+            "name": "add user",
+            "url": "http://localhost:9000/microservice/secure/api/v1/user-service/user/donor",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2024-07-10T18:40:57.145Z",
+            "modified": "2024-07-26T08:49:43.050Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer 8b1b604d-a8d4-4876-b4b6-d50011956fcd",
+                    "isDisabled": true
+                },
+                {
+                    "name": "Accept",
+                    "value": "*/*",
+                    "isDisabled": true
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"donor@gmail.com\",\n  \"fname\": \"aadvika\",\n  \"gender\": \"female\",\n  \"lname\": \"Manjunath\",\n  \"password\": \"Test@123\",\n  \"phone\": \"9886988910\",\n  \"role\": \"DONOR\",\n  \"userName\": \"donor@gmail.com\",\n  \"address\": {\n    \"area\": \"vijaynagar\",\n    \"city\": \"Bangalore\",\n    \"country\": \"India\",\n    \"pincode\": \"560040\",\n    \"state\": \"string\"\n  }\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "95721f9f-7399-47a5-8c1b-5c4a70938197",
+            "colId": "9879f2a7-937a-4943-9337-a90de0105478",
+            "containerId": "441a3db8-8f21-4037-bc97-8f25e7538334",
+            "name": "add innovator",
+            "url": "http://localhost:9000/microservice/secure/api/v1/user-service/user/innovator",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2024-07-11T04:33:55.238Z",
+            "modified": "2024-07-26T08:47:47.437Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer c841ce94-f598-4617-891a-8a4d6340bd6a"
+                },
+                {
+                    "name": "Accept",
+                    "value": "*/*",
+                    "isDisabled": true
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"aadvika2@gmail.com\",\n  \"fname\": \"aadvika\",\n  \"gender\": \"male\",\n  \"lname\": \"Manjunath\",\n  \"password\": \"Test@123\",\n  \"phone\": \"9886988920\",\n  \"role\": \"INNOVATOR\",\n  \"userName\": \"aadvika2@gmail.com\",\n  \"address\": {\n    \"area\": \"vijaynagar\",\n    \"city\": \"Bangalore\",\n    \"country\": \"India\",\n    \"pincode\": \"560040\",\n    \"state\": \"string\"\n  }\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "43e64d68-1e0d-4002-ac2c-253dbc4bb500",
+            "colId": "9879f2a7-937a-4943-9337-a90de0105478",
+            "containerId": "40c5aaef-02cd-4f05-9394-45d95ec27c27",
+            "name": "add project",
+            "url": "http://localhost:9900/microservice/secure/api/v1/project-service/project",
+            "method": "POST",
+            "sortNum": 50000,
+            "created": "2024-07-10T18:40:57.148Z",
+            "modified": "2024-07-26T08:48:51.903Z",
+            "headers": [
+                {
+                    "name": "User-Agent",
+                    "value": "Thunder Client (https://www.thunderclient.com)",
+                    "isDisabled": true
+                },
+                {
+                    "name": "accept",
+                    "value": "application/json",
+                    "isDisabled": true
+                },
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "isDisabled": true
+                },
+                {
+                    "name": "Authorization",
+                    "value": "bearer a9638609-5fe2-405a-83b5-8c14fd105b0a"
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"project-22\",\n  \"description\": \"AI based analytics\",\n  \"requiredAmount\": 1000\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "e6634453-991b-425c-985f-217122133241",
+            "colId": "9879f2a7-937a-4943-9337-a90de0105478",
+            "containerId": "40c5aaef-02cd-4f05-9394-45d95ec27c27",
+            "name": "get project by Id",
+            "url": "http://localhost:9900/microservice/secure/api/v1/project-service/project/29",
+            "method": "GET",
+            "sortNum": 60000,
+            "created": "2024-07-11T09:05:09.848Z",
+            "modified": "2024-07-26T08:49:12.960Z",
+            "headers": [
+                {
+                    "name": "accept",
+                    "value": "application/json"
+                },
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "Authorization",
+                    "value": "bearer a9638609-5fe2-405a-83b5-8c14fd105b0a"
+                }
+            ]
+        },
+        {
+            "_id": "2f795339-fbc5-4620-98b0-e2d3b4a44150",
+            "colId": "9879f2a7-937a-4943-9337-a90de0105478",
+            "containerId": "40c5aaef-02cd-4f05-9394-45d95ec27c27",
+            "name": "contribute",
+            "url": "http://localhost:9900/microservice/secure/api/v1/project-service/contribute",
+            "method": "POST",
+            "sortNum": 60000,
+            "created": "2024-07-19T04:55:15.194Z",
+            "modified": "2024-07-26T08:51:52.556Z",
+            "headers": [
+                {
+                    "name": "User-Agent",
+                    "value": "Thunder Client (https://www.thunderclient.com)",
+                    "isDisabled": true
+                },
+                {
+                    "name": "accept",
+                    "value": "application/json",
+                    "isDisabled": true
+                },
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "isDisabled": true
+                },
+                {
+                    "name": "Authorization",
+                    "value": "bearer d0fef2a5-a8cf-4a97-a28f-89e19bf5e18d"
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"amount\": 400,\n  \"projectId\": 29\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "413e6629-6e0e-47e8-b2f3-64c46f3d7a60",
+            "colId": "9879f2a7-937a-4943-9337-a90de0105478",
+            "containerId": "40c5aaef-02cd-4f05-9394-45d95ec27c27",
+            "name": "get all projects",
+            "url": "http://localhost:9900/microservice/secure/api/v1/project-service/project?offset=0&limit=5&projectStatus=IN_PROGRESS",
+            "method": "GET",
+            "sortNum": 70000,
+            "created": "2024-07-11T09:10:54.587Z",
+            "modified": "2024-07-26T08:53:07.217Z",
+            "headers": [
+                {
+                    "name": "accept",
+                    "value": "application/json"
+                },
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "Authorization",
+                    "value": "bearer d80dff6b-2ea7-48cb-9bdf-37984b586209"
+                }
+            ],
+            "params": [
+                {
+                    "name": "offset",
+                    "value": "0",
+                    "isPath": false
+                },
+                {
+                    "name": "limit",
+                    "value": "5",
+                    "isPath": false
+                },
+                {
+                    "name": "projectStatus",
+                    "value": "IN_PROGRESS",
+                    "isPath": false
+                }
+            ]
+        },
+        {
+            "_id": "9ebbc00d-0c67-4541-bbac-d0ce8af6d5a9",
+            "colId": "9879f2a7-937a-4943-9337-a90de0105478",
+            "containerId": "045b7a75-2d0f-4643-b8eb-6843fc0a9dc4",
+            "name": "login innovator ",
+            "url": "http://localhost:9898/oauth/token",
+            "method": "POST",
+            "sortNum": 80000,
+            "created": "2024-07-13T06:23:30.717Z",
+            "modified": "2024-07-26T08:48:05.568Z",
+            "headers": [],
+            "body": {
+                "type": "formencoded",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "grant_type",
+                        "value": "password"
+                    },
+                    {
+                        "name": "username",
+                        "value": "aadvika2@gmail.com"
+                    },
+                    {
+                        "name": "password",
+                        "value": "Test@123"
+                    }
+                ]
+            },
+            "auth": {
+                "type": "basic",
+                "basic": {
+                    "username": "R2dpxQ3vPrtfgF72",
+                    "password": "Test@123"
+                }
+            }
+        },
+        {
+            "_id": "e10ebfff-ae63-470a-b5ff-dda3c0001f69",
+            "colId": "9879f2a7-937a-4943-9337-a90de0105478",
+            "containerId": "045b7a75-2d0f-4643-b8eb-6843fc0a9dc4",
+            "name": "login admin",
+            "url": "http://localhost:9898/oauth/token",
+            "method": "POST",
+            "sortNum": 85000,
+            "created": "2024-07-21T10:38:33.500Z",
+            "modified": "2024-07-26T04:19:52.060Z",
+            "headers": [],
+            "body": {
+                "type": "formencoded",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "grant_type",
+                        "value": "password"
+                    },
+                    {
+                        "name": "username",
+                        "value": "manjunath@gmail.com"
+                    },
+                    {
+                        "name": "password",
+                        "value": "Test@123"
+                    }
+                ]
+            },
+            "auth": {
+                "type": "basic",
+                "basic": {
+                    "username": "R2dpxQ3vPrtfgF72",
+                    "password": "Test@123"
+                }
+            }
+        },
+        {
+            "_id": "6c61723d-50ba-4d68-aed2-55b8d798dfee",
+            "colId": "9879f2a7-937a-4943-9337-a90de0105478",
+            "containerId": "045b7a75-2d0f-4643-b8eb-6843fc0a9dc4",
+            "name": "check token",
+            "url": "http://localhost:9898/oauth/check_token?token=d0fef2a5-a8cf-4a97-a28f-89e19bf5e18d",
+            "method": "GET",
+            "sortNum": 90000,
+            "created": "2024-07-13T07:07:36.520Z",
+            "modified": "2024-07-26T08:50:07.567Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "token",
+                    "value": "d0fef2a5-a8cf-4a97-a28f-89e19bf5e18d",
+                    "isPath": false
+                }
+            ],
+            "auth": {
+                "type": "basic",
+                "basic": {
+                    "username": "R2dpxQ3vPrtfgF72",
+                    "password": "Test@123"
+                }
+            }
+        },
+        {
+            "_id": "1f1bc749-4c6b-4b02-8ba2-1a40eeb51246",
+            "colId": "9879f2a7-937a-4943-9337-a90de0105478",
+            "containerId": "045b7a75-2d0f-4643-b8eb-6843fc0a9dc4",
+            "name": "login donor",
+            "url": "http://localhost:9898/oauth/token",
+            "method": "POST",
+            "sortNum": 90000,
+            "created": "2024-07-19T09:45:00.562Z",
+            "modified": "2024-07-26T08:49:51.110Z",
+            "headers": [],
+            "body": {
+                "type": "formencoded",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "grant_type",
+                        "value": "password"
+                    },
+                    {
+                        "name": "username",
+                        "value": "donor@gmail.com"
+                    },
+                    {
+                        "name": "password",
+                        "value": "Test@123"
+                    }
+                ]
+            },
+            "auth": {
+                "type": "basic",
+                "basic": {
+                    "username": "R2dpxQ3vPrtfgF72",
+                    "password": "Test@123"
+                }
+            }
+        }
+    ],
+    "ref": "9ikiDrwNwzfrHOHQwzVPAOcMFJz-if-TkK868BSVeOcdhWhBxtea0QLIuGtmneKrCWvS5uHgv8RIjYNdD4uLJg"
+}
