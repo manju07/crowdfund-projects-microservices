@@ -1,0 +1,678 @@
+{
+	"info": {
+		"_postman_id": "e905ce38-c693-49d9-9c5f-1f1c955c1f88",
+		"name": "crowdfunded-project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38418007"
+	},
+	"item": [
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "admin login",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "R2dpxQ3vPrtfgF72",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "Test@123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"disabled": true
+							},
+							{
+								"key": "User-Agent",
+								"value": "Thunder Client (https://www.thunderclient.com)",
+								"disabled": true
+							},
+							{
+								"key": "client_ID",
+								"value": "R2dpxQ3vPrtfgF72"
+							},
+							{
+								"key": "client_secret",
+								"value": "fDw7Mpkk5czHNuSRtmhGmAGL42CaxQB9",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password"
+								},
+								{
+									"key": "username",
+									"value": "manjunath@gmail.com"
+								},
+								{
+									"key": "password",
+									"value": "Test@123"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8765/oauth/token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8765",
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add innovator",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"disabled": true
+							},
+							{
+								"key": "User-Agent",
+								"value": "Thunder Client (https://www.thunderclient.com)",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "bearer aff75798-4b14-4f77-9c49-41634e67bd2a",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"aadvika2@gmail.com\",\n  \"fname\": \"aadvika\",\n  \"gender\": \"male\",\n  \"lname\": \"Manjunath\",\n  \"password\": \"Test@123\",\n  \"phone\": \"9886988920\",\n  \"role\": \"INNOVATOR\",\n  \"userName\": \"aadvika2@gmail.com\",\n  \"address\": {\n    \"area\": \"vijaynagar\",\n    \"city\": \"Bangalore\",\n    \"country\": \"India\",\n    \"pincode\": \"560040\",\n    \"state\": \"string\"\n  }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:9000/microservice/secure/api/v1/user-service/user/innovator",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"microservice",
+								"secure",
+								"api",
+								"v1",
+								"user-service",
+								"user",
+								"innovator"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "innovator",
+			"item": [
+				{
+					"name": "innovator login",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "R2dpxQ3vPrtfgF72",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "Test@123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"disabled": true
+							},
+							{
+								"key": "User-Agent",
+								"value": "Thunder Client (https://www.thunderclient.com)",
+								"disabled": true
+							},
+							{
+								"key": "client_ID",
+								"value": "R2dpxQ3vPrtfgF72"
+							},
+							{
+								"key": "client_secret",
+								"value": "fDw7Mpkk5czHNuSRtmhGmAGL42CaxQB9",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password"
+								},
+								{
+									"key": "username",
+									"value": "manju_innovator@gmail.com"
+								},
+								{
+									"key": "password",
+									"value": "Test@123"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8765/oauth/token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8765",
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add project",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"disabled": true
+							},
+							{
+								"key": "User-Agent",
+								"value": "Thunder Client (https://www.thunderclient.com)",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "bearer 696054fa-3327-4e27-8949-943f9884ee9a",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"project-22\",\n  \"description\": \"AI based analytics\",\n  \"requiredAmount\": 1000\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8765/microservice/secure/api/v1/project-service/project",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8765",
+							"path": [
+								"microservice",
+								"secure",
+								"api",
+								"v1",
+								"project-service",
+								"project"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get project by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"disabled": true
+							},
+							{
+								"key": "User-Agent",
+								"value": "Thunder Client (https://www.thunderclient.com)",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "bearer 696054fa-3327-4e27-8949-943f9884ee9a",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8765/microservice/secure/api/v1/project-service/project/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8765",
+							"path": [
+								"microservice",
+								"secure",
+								"api",
+								"v1",
+								"project-service",
+								"project",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all projects",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"disabled": true
+							},
+							{
+								"key": "User-Agent",
+								"value": "Thunder Client (https://www.thunderclient.com)",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "bearer 696054fa-3327-4e27-8949-943f9884ee9a",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8765/microservice/secure/api/v1/project-service/project?offset=0&limit=5&projectStatus=IN_PROGRESS",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8765",
+							"path": [
+								"microservice",
+								"secure",
+								"api",
+								"v1",
+								"project-service",
+								"project"
+							],
+							"query": [
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "5"
+								},
+								{
+									"key": "projectStatus",
+									"value": "IN_PROGRESS"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "donor",
+			"item": [
+				{
+					"name": "donor login",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "R2dpxQ3vPrtfgF72",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "Test@123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"disabled": true
+							},
+							{
+								"key": "User-Agent",
+								"value": "Thunder Client (https://www.thunderclient.com)",
+								"disabled": true
+							},
+							{
+								"key": "client_ID",
+								"value": "R2dpxQ3vPrtfgF72"
+							},
+							{
+								"key": "client_secret",
+								"value": "fDw7Mpkk5czHNuSRtmhGmAGL42CaxQB9",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password"
+								},
+								{
+									"key": "username",
+									"value": "manju_innovator@gmail.com"
+								},
+								{
+									"key": "password",
+									"value": "Test@123"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8765/oauth/token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8765",
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "contribute",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"disabled": true
+							},
+							{
+								"key": "User-Agent",
+								"value": "Thunder Client (https://www.thunderclient.com)",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "bearer 7205d266-e17e-4fce-8928-47da115758a3",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"amount\": 400,\n  \"projectId\": 29\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8765/microservice/secure/api/v1/project-service/contribute",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8765",
+							"path": [
+								"microservice",
+								"secure",
+								"api",
+								"v1",
+								"project-service",
+								"contribute"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "add donor",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"donor2@gmail.com\",\n  \"fname\": \"aadvika\",\n  \"gender\": \"female\",\n  \"lname\": \"Manjunath\",\n  \"password\": \"Test@123\",\n  \"phone\": \"9886988912\",\n  \"role\": \"DONOR\",\n  \"userName\": \"donor2@gmail.com\",\n  \"address\": {\n    \"area\": \"vijaynagar\",\n    \"city\": \"Bangalore\",\n    \"country\": \"India\",\n    \"pincode\": \"560040\",\n    \"state\": \"string\"\n  }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9000/microservice/secure/api/v1/user-service/user/donor",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"microservice",
+						"secure",
+						"api",
+						"v1",
+						"user-service",
+						"user",
+						"donor"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "validate token",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "R2dpxQ3vPrtfgF72",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "Test@123",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"disabled": true
+					},
+					{
+						"key": "User-Agent",
+						"value": "Thunder Client (https://www.thunderclient.com)",
+						"disabled": true
+					},
+					{
+						"key": "client_ID",
+						"value": "R2dpxQ3vPrtfgF72",
+						"disabled": true
+					},
+					{
+						"key": "client_secret",
+						"value": "fDw7Mpkk5czHNuSRtmhGmAGL42CaxQB9",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "password"
+						},
+						{
+							"key": "username",
+							"value": "manjunath@gmail.com"
+						},
+						{
+							"key": "password",
+							"value": "Test@123"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:9898/oauth/check_token?token=aff75798-4b14-4f77-9c49-41634e67bd2a",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9898",
+					"path": [
+						"oauth",
+						"check_token"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "aff75798-4b14-4f77-9c49-41634e67bd2a"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
